@@ -6,6 +6,9 @@ app.use(express.static(__dirname+'/public'));
 app.use(bodyParser.urlencoded({ extended: false }));
 var mysql = require('mysql');
 const session = require('express-session');
+var bcrypt = require('bcryptjs');
+const nodemailer = require('nodemailer');
+var smtpTransport = require('nodemailer-smtp-transport');
 
 app.set('views', path.join(__dirname+'/public', 'views'));
 app.set('view engine', 'ejs');
@@ -26,78 +29,88 @@ app.use(session({
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
-app.get('/home', (req, res)=>{
-    // go to home
-    // res.sendFile(path.join(__dirname, "/public/index.html"));
-});
-
 app.get('/login', (req,res)=>{
-    // go to login page
-    // res.sendFile(path.join(__dirname, "/public/login.html"));  
+    if (session.loggedin == true) {
+        // after login page
+        // res.render('')
+    } else {
+        // go to login page
+        // res.sendFile(path.join(__dirname, "/public/login.html")); 
+    } 
 });
 
-// authen + timestamp
-app.post('/authen', (req, res)=>{
-    var username = req.body.username;
-    var password = req.body.password;
+app.get('/signup', (req, res)=>{
+    // res.render('signup.ejs')
+});
 
-    // timestamp
-    // const dateObject = new Date();
-    // const date = (`0 ${dateObject.getDate()}`).slice(-2);
-    // const month = (`0 ${dateObject.getMonth() + 1}`).slice(-2);
-    // const year = dateObject.getFullYear();
-    // const hours = dateObject.getHours();
-    // const minutes = dateObject.getMinutes();
-    // const seconds = dateObject.getSeconds();
-    // const finaldate = `${year}-${month}-${date}`;
-    // const finaltime = `${hours}:${minutes}:${seconds}`;
-    
-    const time = {
-        username: username,
-        date: finaldate,
-        time: finaltime
-    };
+app.post('/signup', (req, res)=>{
+    const user_buasri = req.body.username;
+    const user_mail = req.body.email;
+    const user_password = req.body.password;
 
-    if (req.session.isLoggedIn != null && req.session.isLoggedIn == true){
-        // go to home
-        // res.redirect("/academic");
+    if (user_buasri && user_password) {
+        bcrypt.genSalt(10, (err, salt)=>{
+            console.log(salt);
+            console.log(user_buasri,user_mail,user_password);
+            bcrypt.hash(user_password, salt, (err, hash)=>{
+                connection.query(
+                    'insert into accounts set username = ?, password = ?, email = ?',
+                    [user_buasri, hash, user_mail],
+                    (err)=>{
+                        if (err) {console.error();}
+
+                        req.session.loggedin = true;
+                        req.session.userID = user_buasri;
+
+                        res.redirect('/checklogin');
+                    }
+                )
+            })
+        })
+    } else {
+        res.redirect('/');
     }
+});
 
-    if (username && password) {
+app.post('/authen', (req, res)=>{
+    var user_buasri = req.body.username;
+    var user_password = req.body.password;
+
+    if (user_buasri && user_password) {
         connection.query(
-            "select * from users where username = ? and password = ?",
-            [username, password],
-            (error, results, fields)=>{
+            'select * from accounts where username = ?', user_buasri,
+            (err, results)=>{
+                if (err) {console.error();}
+
                 if (results.length > 0) {
-                    req.session.isLoggedIn = true;
-                    req.session.username = username;
-
-                    // timestamp
-                    // connection.query(
-                    //     'insert into timestamp set ?', time, (err)=>{
-                    //         console.log('timestamp created', time);
-                    //     }
-                    // );
-                    // connection.query(
-                    //     'select count(username) as number from timestamp where username = ?',
-                    //     [username],
-                    //     (error, result)=>{
-                    //         number = result[0].number
-                    //         console.log('login count set', number, username)
-                    //         connection.query(
-                    //             'update users set logincount = ? where username = ?',
-                    //             [number, username], (err)=> {
-                    //                 console.log('login count updated', number, username);
-                    //             }
-                    //         );
-                    //     }
-                    // );
-
-                    // go to home
-                    // res.redirect('/academic');
+                    bcrypt.compare(user_password, results[0].password, (err, result)=>{
+                        if (result == true) {
+                            req.session.loggedin = true;
+                            req.session.userID = results[0].username;
+                            
+                            console.log(user_password, results[0].password);
+                            console.log(result);
+                            res.redirect('/webboard');
+                        } else {
+                            // res.render('index_error.ejs', {
+                            //     message: 'ชื่อผู้ใช้หรือรหัสผ่านไม่ถูกต้อง',
+                            //     username: user_buasri
+                            // });
+                        }
+                    })
+                } else {
+                    // res.render('index_error.ejs', {
+                    //     message: 'ชื่อผู้ใช้หรือรหัสผ่านไม่ถูกต้อง<br>(หากยังไม่เคยใช้งานเว็บไซต์นี้ ให้สมัครสมาชิกก่อน)',
+                    //     username: user_buasri
+                    // })
                 }
             }
-        );
+        )
+    } else {
+        // res.render('index_error.ejs', { 
+        //     message: 'โปรดใส่ข้อมูลให้ครบถ้วน!!',
+        //     username: user_buasri
+        // })
     }
 });
 
@@ -112,8 +125,7 @@ var router_db = require('./route_database');
 app.use('db',router_db);
 
 app.get('/', (req, res)=>{
-    // home
-    // res.sendFile(path.join(__dirname, "/public/index.html"));
+    res.redirect('/login')
 });
 
 app.get('/error', (req, res)=>{
