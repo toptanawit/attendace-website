@@ -106,3 +106,9 @@ input::placeholder {
     opacity: .5;
     color: rgba(185, 172, 172, 0.696) !important;
 }
+
+/* @media (max-height: 650px) {
+  .container-content-custom {
+    padding-top: 100px;
+  }
+} */

@@ -45,9 +45,3 @@ button {
   position: relative;
   height: 100vh;
 }
-
-@media (max-height: 650px) {
-  .container-content-custom {
-    padding-top: 100px;
-  }
-}
