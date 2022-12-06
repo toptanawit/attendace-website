@@ -1,3 +1,7 @@
+.container-custom {
+  background-color: #007cb7;
+}
+
 .background span:nth-child(odd) {
   border-radius: 50%;
 }

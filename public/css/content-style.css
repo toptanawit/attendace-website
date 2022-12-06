@@ -1,0 +1,51 @@
+.container-custom {
+    background-color: #F0F3F8;
+}
+
+/* Main Header */
+.header {
+  z-index: 2;
+}
+
+/* Flyout Navigation Bar */
+#navbar {
+  position: fixed;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.916);
+  z-index: 4;
+}
+
+.dropdown-nav__closeNavBtn {
+  position: absolute;
+  top: 20px;
+  right: 16px;
+  color: #FFFFFF !important;
+}
+
+.dropdown-nav__container {
+  height: 100vh;
+  padding: 0 1rem;
+}
+
+@media (min-width: 768px) {
+  #navbar {
+    display: none;
+  }
+}
+
+.point__nav-link:after {
+  content: "";
+  display: block;
+  background-color: var(--pointer-color);
+  height: 2px;
+  width: 0;
+  transition: 200ms ease-in-out;
+}
+
+.point__nav-link:hover::after {
+  width: 100%;
+  transition: width .3s;
+}
