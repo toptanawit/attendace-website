@@ -37,30 +37,34 @@
         <!-- Navbar End -->
 
         <!-- Login Form Start -->
-        <div class="container">
-            <div class="row vh-100 align-items-center justify-content-center">
-                <div class="col-8 col-md-6 col-lg-5 bg-transparent rounded p-4">
-                    <div class="mb-4">
-                        <h1 class="text-start text-white" style="font-weight: 500;">Student Attendance Management</h1>
+        <section class="container-content-custom">
+
+            <div class="d-flex h-100 justify-content-center position-relative">
+                <div class="d-flex h-100 justify-content-center align-items-center">
+                    <div class="col-8 bg-transparent rounded">
+                        <div class="mb-4">
+                            <h1 class="text-start text-white" style="font-weight: 500;">Student Attendance Management</h1>
+                        </div>
+                        <form action="/authen" method="post">
+                            <div class="mb-4">
+                                <label for="username" class="form-label text-white ">Buasri ID</label>
+                                <input type="username" class="form-control shadow-sm bg-transparent" id="username" name="username" placeholder="Buasri ID">
+                            </div>
+                            <div class="mb-4">
+                                <label for="password" class="form-label text-white">Password</label>
+                                <input type="password" class="form-control shadow-sm bg-transparent" id="password" name="password" placeholder="Password">
+                            </div>
+                            <div class="mb-4">
+                                <a href="#" class="text-white text-decoration-none">Forgot your password ?</a>
+                            </div>
+                            <button type="submit" class="btn btn-light w-100 shadow-sm" style="color: #007CB7;">Sign In</button>
+                        </form>
+                        <p class="mb-0 mt-4 text-start text-white">Not registered yet ? <a href="#" class="text-decoration-none text-dark"> &nbsp Sign Up Here!</a></p>
                     </div>
-                    <form action="/authen" method="post">
-                        <div class="mb-4">
-                            <label for="username" class="form-label text-white ">Buasri ID</label>
-                            <input type="username" class="form-control shadow-sm bg-transparent" id="username" name="username" placeholder="Buasri ID">
-                        </div>
-                        <div class="mb-4">
-                            <label for="password" class="form-label text-white">Password</label>
-                            <input type="password" class="form-control shadow-sm bg-transparent" id="password" name="password" placeholder="Password">
-                        </div>
-                        <div class="mb-4">
-                            <a href="#" class="text-white text-decoration-none">Forgot your password ?</a>
-                        </div>
-                        <button type="submit" class="btn btn-light w-100 shadow-sm" style="color: #007CB7;">Sign In</button>
-                    </form>
-                    <p class="mb-0 mt-4 text-start text-white">Not registered yet ? <a href="#" class="text-decoration-none text-dark"> &nbsp Sign Up Here!</a></p>
                 </div>
             </div>
-       </div>
+    
+        </section>
         <!-- Login Form End -->
 
         <!-- Background -->
