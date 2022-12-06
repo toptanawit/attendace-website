@@ -205,13 +205,16 @@
                             </tr>
                         </thead>
                         <tbody id="tableData">
+                             <!-- <% for(var i=0; i < students.length; i++) { 
+                                %> -->
                             <tr>
-                                <td>1</td>
-                                <td>1</td>
-                                <td>1</td>
-                                <td>1</td>
-                                <td>1</td>
-                                <td>1</td>
+                                <td><%= students[i].id %></td>
+                                <td><%= students[i].name %></td>
+                                <td><%= students[i].major %></td>
+                                <td><%= students[i].attendanceCount %></td>
+                                <td><%= students[i].abscentCount %></td>
+                                <td><%= students[i].leaveCount %></td>
+                                 <!-- href='delete-student/<%= students[i].id %>' -->
                                 <td><a type="submit"><i class="bi bi-x-square fs-4" style="color: #007CB7;"></i></a>
                                 </td>
                             </tr>

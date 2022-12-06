@@ -125,7 +125,7 @@
             </div>
 
             <!-- Text Field Start -->
-            <form method="post">
+            <form method="post" action="##########">
                 <div class="row">
                     <div class="col-12 col-sm-6 justify-content-md-ceneter">
                         <div class="mb-3">
@@ -198,12 +198,14 @@
                         </thead>
                         <tbody id="tableData">
                             <tr>
-                                <td>1</td>
-                                <td>1</td>
-                                <td>1</td>
+                                <td><%= students[i].id %></td>
+                                <td><%= students[i].name %></td>
+                                <td><%= students[i].major %></td>
+                                <td></td>
                                 <td>
                                     <div class="d-flex justify-content-end">
-                                        <a type="submit"><i class="bi bi-plus-square fs-4"
+                                        <!-- href='add-student/<%= students[i].id %>' -->
+                                        <a type="submit" href="############"><i class="bi bi-plus-square fs-4 me-4"
                                                 style="color: #007CB7;"></i></a>
                                     </div>
                                 </td>
@@ -214,7 +216,7 @@
                                 <td>2</td>
                                 <td>
                                     <div class="d-flex justify-content-end">
-                                        <a type="submit"><i class="bi bi-plus-square fs-4"
+                                        <a href="#########"><i class="bi bi-plus-square fs-4 me-4"
                                                 style="color: #007CB7;"></i></a>
                                     </div>
                                 </td>

@@ -140,14 +140,16 @@
                             </tr>
                         </thead>
                         <tbody id="tableData">
+                            <!-- <% for(var i=0; i < courses.length; i++) { 
+                                %> -->
                             <tr>
-                                <td>1</td>
-                                <td>1</td>
-                                <td>1</td>
-                                <td>1</td>
-                                <td>1</td>
-                                <td>1</td>
-                                <td>1</td>
+                                <td><%= courses[i].semester %></td>
+                                <td><%= courses[i].code %></td>
+                                <td><%= courses[i].name %></td>
+                                <td><%= courses[i].section %></td>
+                                <td><%= courses[i].teacher %></td>
+                                <td><%= courses[i].num_of_stu %></td>
+                                <td><%= courses[i].attendanceRate %></td>
                         </tbody>
                     </table>
                 </div>
@@ -177,13 +179,16 @@
                             </tr>
                         </thead>
                         <tbody id="tableData">
+                             <!-- <% for(var i=0; i < students.length; i++) { 
+                                %> -->
                             <tr>
-                                <td>1</td>
-                                <td>1</td>
-                                <td>1</td>
-                                <td>1</td>
-                                <td>1</td>
-                                <td>1</td>
+                                <td><%= students[i].id %></td>
+                                <td><%= students[i].name %></td>
+                                <td><%= students[i].major %></td>
+                                <td><%= students[i].attendanceCount %></td>
+                                <td><%= students[i].abscentCount %></td>
+                                <td><%= students[i].leaveCount %></td>
+                                <!-- href="students/<%= stuedents[i].id %>" -->
                                 <td><a href="################"><i class="bi bi-arrow-right-square fs-4"></i></a></td>
                             </tr>
                             <tr>

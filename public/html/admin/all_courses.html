@@ -145,15 +145,18 @@
                             </tr>
                         </thead>
                         <tbody id="tableData">
+                            <!-- <% for(var i=0; i < courses.length; i++) { 
+                                %> -->
                             <tr>
-                                <td>1</td>
-                                <td>1</td>
-                                <td>1</td>
-                                <td>1</td>
-                                <td>1</td>
-                                <td>1</td>
-                                <td>1</td>
-                                <td><a href="#"><i class="bi bi-arrow-right-square fs-4"></i></a></td>
+                                <td><%= courses[i].semester %></td>
+                                <td><%= courses[i].code %></td>
+                                <td><%= courses[i].name %></td>
+                                <td><%= courses[i].section %></td>
+                                <td><%= courses[i].teacher %></td>
+                                <td><%= courses[i].num_of_stu %></td>
+                                <td><%= courses[i].attendanceRate %></td>
+                                <!-- href="courses/<%= courses[i].id %>" -->
+                                <td><a href="############"><i class="bi bi-arrow-right-square fs-4"></i></a></td>
                             </tr>
                             <tr>
                                 <td>2</td>
@@ -163,7 +166,7 @@
                                 <td>2</td>
                                 <td>2</td>
                                 <td>2</td>
-                                <td><a href="#"><i class="bi bi-arrow-right-square fs-4"></i></a></td>
+                                <td><a href="############"><i class="bi bi-arrow-right-square fs-4"></i></a></td>
                             </tr>
 
 
