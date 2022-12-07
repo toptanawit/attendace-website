@@ -488,14 +488,6 @@ router_db.route('/delete-teachers/:buasri_id')
 
 router_db.route('/delete-courses/:subject_code-:section')
 .get((req, res)=>{
-    // connection.query(
-    //     'delete from subject where subject_code = ? and section = ?',
-    //     [req.params.subject_code, req.params.section],
-    //     (err)=>{
-    //         console.log('Delete successfully')
-    //     }
-    // )
-
     connection.query('delete from enrollment where subject_code = ? and section = ?',[req.params.subject_code, req.params.section],(err)=>{
         connection.query('delete from subject where subject_code = ? and section = ?',[req.params.subject_code, req.params.section],(err)=>{
             console.log('Delete Successfully');
@@ -504,5 +496,82 @@ router_db.route('/delete-courses/:subject_code-:section')
 
     // res.redirect('/courses')
 })
+
+// attendance check
+router_db.route('/attendance')
+.get((req,res)=>{
+    // upload page
+    // res.sendFile(path.join(__dirname, "/public/dbadd.html"));  
+    // res.render('attendance_student.ejs')
+})
+
+router_db.route('/attendance-create/:subject_code-:section')
+.get((req,res)=>{
+    const subject_code = req.params.subject_code;
+    const section = req.params.section;
+    
+    connection.query('select curtime() as time , curdate() as date',(err,results)=>{
+        const time = results[0].time;
+        const date = results[0].date;
+
+        const post = {
+            subject_code: subject_code,
+            section: section,
+            student_count: 0,
+            time: time,
+            date: date
+        }
+
+        connection.query('insert into class set ?',post,(err,result)=>{
+            console.log('Class created successfully')
+        })
+    })
+
+    // res.render('attendance_qr.ejs')
+})
+
+router_db.route('/attendance-check')
+.get((req,res)=>{
+    // res.render('attendance_check.ejs')
+})
+.post((req,res)=>{
+    const name = req.body.name;
+    const section = req.body.section;
+    const date = req.body.date;
+    const time = req.body.time;
+    const location = req.body.location;
+
+    const base64data = req.body.image;
+    var blob = Buffer.from(base64data,"base64");
+
+    connection.query('select subject_code from subject where name = ?',name,(err,result)=>{
+        const subject_code = result[0].subject_code;
+
+        connection.query('select class_id from class where subject_code = ? and section = ? and date = ?',[subject_code,section,date],(err,result)=>{
+            const class_id = result[0].class_id;
+
+            const post = {
+                subject_code: subject_code,
+                buasri_id: req.session.userID,
+                class_id: class_id,
+                section: section,
+                time: time,
+                date: date,
+                location: location,
+                image: blob
+            }
+
+            connection.query('insert into attendance set ?',post,(err,result)=>{
+                connection.query('select count(class_id) as student from attendance where class_id = ?',class_id,(err,result)=>{
+                    const studentno = result[0].student;
+                    connection.query('update class set student_count = ? where class_id = ?',[studentno,class_id],(err,result)=>{
+                        console.log('Add attendance successfully')
+                    })
+                })
+            })
+        })
+    })
+})
+
 
 module.exports = router_db;

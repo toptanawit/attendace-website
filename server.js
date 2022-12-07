@@ -9,6 +9,10 @@ const session = require('express-session');
 var bcrypt = require('bcryptjs');
 const nodemailer = require('nodemailer');
 var smtpTransport = require('nodemailer-smtp-transport');
+const fileUpload = require('express-fileupload');
+
+app.use(fileUpload());
+app.use(express.static('public'));
 
 app.set('views', path.join(__dirname+'/public', 'views'));
 app.set('view engine', 'ejs');
