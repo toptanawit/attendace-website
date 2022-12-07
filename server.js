@@ -30,7 +30,30 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
 app.get('/dashboard', (req, res)=>{
-    res.render('/dashboard.ejs')
+    connection.query('select status from users where buasri_id = ?', req.session.userID, (err,result)=>{
+        const status = result[0].status;
+        if (status == 'Student') {
+            res.redirect('/courses') 
+        } else if (status == 'Teacher') {
+            connection.query(
+                'select a.*, b.* from subject a, report b, users c where a.teacher = c.buasri_id and b.subject_code = a.subject_code and c.buasri_id = ?',
+                req.session.userID,
+                (err,results)=>{
+                    res.render('dashboarc.ejs',{
+                        courses: result[0],
+                        report: results[1]
+                    })
+                })
+        } else if (status == 'admin') {
+            connection.query('select a.*, b.*, c.* from subject a, report b, users c',(err,results)=>{
+                res.render('dashboard.ejs',{
+                    courses: results[0],
+                    report: results[1],
+                    users: results[2]
+                })
+            })
+        }
+    })
 })
 
 app.get('/login', (req,res)=>{
@@ -43,7 +66,8 @@ app.get('/login', (req,res)=>{
 });
 
 app.get('/signup', (req, res)=>{
-    res.render('signup.ejs')
+    // res.render('signup.ejs')
+    // res.sendFile(path.join(__dirname, "/public/login.html")); 
 });
 
 app.post('/signup', (req, res)=>{
