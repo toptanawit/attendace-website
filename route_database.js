@@ -223,7 +223,9 @@ router_db.route('/report')
     const subject_code = req.body.subject_code;
     const section = req.body.section;
     const type = req.body.type;
-    const file = req.body.file;
+
+    const base64data = req.body.file;
+    var blob = Buffer.from(base64data,"base64");
 
     connection.query('select curtime() as time, curdate() as date',(err,results)=>{
         const time = results[0].time;
@@ -235,7 +237,7 @@ router_db.route('/report')
             subject_code: subject_code,
             section: section,
             type: type,
-            file: file,
+            file: blob,
             time: time,
             date: date,
             status: 'Pending'
