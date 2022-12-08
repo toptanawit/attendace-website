@@ -9,10 +9,6 @@ const session = require('express-session');
 var bcrypt = require('bcryptjs');
 const nodemailer = require('nodemailer');
 var smtpTransport = require('nodemailer-smtp-transport');
-const fileUpload = require('express-fileupload');
-
-app.use(fileUpload());
-app.use(express.static('public'));
 
 app.set('views', path.join(__dirname+'/public', 'views'));
 app.set('view engine', 'ejs');
@@ -217,7 +213,7 @@ function sendmail(toemail, subject, html) {
     });
 }
 
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 5005;
 var server = app.listen(PORT, ()=>{
     console.log("Listening at port",PORT);
 });
