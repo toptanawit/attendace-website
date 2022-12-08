@@ -25,19 +25,19 @@ router_db.route('/courses')
             const status = result[0].status;
             if (status == 'admin') {
                 connection.query('select * from subject',(err, result)=>{
-                    res.render('courses.ejs', {
+                    res.render('a_all_courses.ejs', {
                         courses: result
                     })
                 });
             } else if (status == 'Teacher') {
                 connection.query('select s.* from subject s , users u where s.teacher = u.buasri_id and u.buasri_id = ?',req.session.userID,(err, result)=>{
-                    res.render('courses.ejs', {
+                    res.render('t_all_courses.ejs', {
                         courses: result
                     })
                 });
             } else if (status == "Student") {
                 connection.query('select s.* from subject s , enrollment e where s.subject_code = e.subject_code and e.buasri_id = ?',req.session.userID,(err, result)=>{
-                    res.render('courses.ejs', {
+                    res.render('s_all_courses.ejs', {
                         courses: result
                     })
                 });
@@ -49,7 +49,7 @@ router_db.route('/courses')
 router_db.route('/students')
 .get((req,res)=>{
     connection.query('select * from users where status = "Student"',(err,result)=>{
-        res.render('students.ejs', {
+        res.render('a_all_students.ejs', {
             students: result
         })
     }) 
@@ -58,7 +58,7 @@ router_db.route('/students')
 router_db.route('/teachers')
 .get((req,res)=>{
     connection.query('select * from users where status = "Teacher"',(err,result)=>{
-        res.render('teacher.ejs', {
+        res.render('a_all_teacher.ejs', {
             teachers: result
         })
     })
@@ -67,7 +67,7 @@ router_db.route('/teachers')
 router_db.route('/students/:buasri_id')
 .get((req,res)=>{
     connection.query('select * from users where buasri_id = ?', req.params.buasri_id,(err,result)=>{
-        res.render('students-detailed.ejs', {
+        res.render('a_details_student.ejs', {
             student: result[0]
         })
     }) 
@@ -76,7 +76,7 @@ router_db.route('/students/:buasri_id')
 router_db.route('/teachers/:buasri_id')
 .get((req,res)=>{
     connection.query('select * from users where buasri_id = ?', req.params.buasri_id,(err,result)=>{
-        res.render('students-detailed.ejs', {
+        res.render('a_details_teacher.ejs', {
             teacher: result[0]
         })
     }) 
@@ -84,17 +84,28 @@ router_db.route('/teachers/:buasri_id')
 
 router_db.route('/courses/:subject_code')
 .get((req,res)=>{
-    connection.query('select * from subject where subject_code = ?', req.params.subject_code,(err,result)=>{
-        res.render('course-detailed.ejs', {
-            course: result[0]
-        })
+    connection.query('select * from subject where subject_code = ?; select status from users where buasri_id = ?', [req.params.subject_code,req.session.userID],(err,result)=>{
+        const status = result[1].status;
+        if (status == 'admin') {
+            res.render('a_details_course.ejs', {
+                course: result[0]
+            })
+        } else if (status == 'Teacher') {
+            res.render('t_details_course.ejs', {
+                course: result[0]
+            })
+        } else if (status == 'Student') {
+            res.render('s_details_course.ejs', {
+                course: result[0]
+            })
+        }
     }) 
 });
 
 // add
 router_db.route('/add-students')
 .get((req,res)=>{
-    // res.sendFile(path.join(__dirname, "/public/dbadd.html"));  
+    res.sendFile(path.join(__dirname, "/public/html/admin/a_add_student.html"));  
 })
 .post((req, res)=>{
     const student_id = req.body.student_id;
@@ -124,12 +135,12 @@ router_db.route('/add-students')
         })
     })
     
-    // res.redirect('/students');
+    res.redirect('/students');
 });
 
 router_db.route('/add-teachers')
 .get((req,res)=>{
-    // res.sendFile(path.join(__dirname, "/public/dbadd.html"));  
+    res.sendFile(path.join(__dirname, "/public/html/admin/a_add_teacher.html"));  
 })
 .post((req, res)=>{
     const buasri_id = req.body.buasri_id;
@@ -154,12 +165,12 @@ router_db.route('/add-teachers')
             });
         })
     })
-    // res.redirect('/teachers');
+    res.redirect('/teachers');
 });
 
 router_db.route('/add-courses')
 .get((req,res)=>{
-    // res.sendFile(path.join(__dirname, "/public/dbadd.html"));  
+    res.sendFile(path.join(__dirname, "/public/html/admin/a_add_course.html"));
 })
 .post((req, res)=>{
     const semester = req.body.semester;
@@ -205,7 +216,7 @@ router_db.route('/add-courses')
             });
     })
 
-    // res.redirect('/courses');
+    res.redirect('/courses');
 });
 
 router_db.route('/report')
@@ -213,8 +224,8 @@ router_db.route('/report')
     connection.query('select status from users where buasri_id = ?', req.session.userID, (err,result)=>{
         const status = result[0].status;
         if (status == 'Student') {
-            // res.sendFile(path.join(__dirname, "/public/dbadd.html"));  
-        } else {
+            res.sendFile(path.join(__dirname, "/public/html/student/s_leave.html"));
+        } else if (status == 'Teacher') {
             res.redirect('/edit-report');
         }
     })
@@ -247,15 +258,17 @@ router_db.route('/report')
             console.log('Add report successfully');
         })
     })
+
+    res.redirect('/courses')
 });
 
 // edit
 router_db.route('/edit-students/:buasri_id')
 .get((req,res)=>{
     connection.query('select * from users where buasri_id = ?', req.params.buasri_id, (err, result)=>{
-        // res.render('edit-students.ejs', {
-        //     info: result
-        // })
+        res.render('a_edit_student.ejs', {
+            info: result
+        })
     }) 
 })
 .post((req, res)=>{
@@ -282,7 +295,7 @@ router_db.route('/edit-students/:buasri_id')
             if (results.changedRows === 1) {
                 console.log('Students Updated');
             }
-            // return res.redirect('/students');
+            return res.redirect('/students');
         }
     );
 });
@@ -290,9 +303,9 @@ router_db.route('/edit-students/:buasri_id')
 router_db.route('/edit-teachers/:buasri_id')
 .get((req,res)=>{
     connection.query('select * from users where buasri_id = ?', req.params.buasri_id, (err, result)=>{
-        // res.render('edit-teachers.ejs', {
-        //     info: result
-        // })
+        res.render('a_edit_teacher.ejs', {
+            info: result
+        })
     })  
 })
 .post((req, res)=>{
@@ -315,7 +328,7 @@ router_db.route('/edit-teachers/:buasri_id')
             if (results.changedRows === 1) {
                 console.log('Teachers Updated');
             }
-            // return res.redirect('/teachers');
+            return res.redirect('/teachers');
         }
     );
 });
@@ -325,14 +338,11 @@ router_db.route('/edit-courses/:subject_code-:section')
     connection.query('select * from subject where subject_code = ? and section = ?; select * from enrollment where subject_code = ? and section = ?; select count(class_id) as class_count from class where subject_code = ? and section = ?',
     [req.params.subject_code, req.params.section, req.params.subject_code, req.params.section, req.params.subject_code, req.params.section],
     (err, results)=>{
-        console.log('results[0]', results[0])
-        console.log('results[1]', results[1])
-        console.log('results[2]', results[2])
-        // res.render('edit_course.ejs', {
-        //     courseinfo: results[0],
-        //     students: results[1],
-        //     class: results[2].class_count
-        // })
+        res.render('a_edit_course.ejs', {
+            courseinfo: results[0],
+            students: results[1],
+            class: results[2].class_count
+        })
     })
 })
 .post((req,res)=>{
@@ -350,7 +360,7 @@ router_db.route('/edit-courses/:subject_code-:section')
     };
 
     connection.query('update subject set ? where subject_code = ?', [course, subject_code], (err)=>{
-        // console.log('Update Course Successfully');
+        console.log('Update Course Successfully');
     });
 
     const students = req.body.students // array of buasri_id
@@ -373,7 +383,6 @@ router_db.route('/edit-courses/:subject_code-:section')
                 }
             }
         )
-        
     }
 
     connection.query(
@@ -409,6 +418,8 @@ router_db.route('/edit-courses/:subject_code-:section')
                     });
                 })
         })
+    
+    res.redirect('/courses')
 })
 
 router_db.route('/edit-report')
@@ -420,16 +431,10 @@ router_db.route('/edit-report')
                 'select a.* from report a, subject b, users c where a.subject_code = b.subject_code and b.teacher = c.buasri_id and c.buasri_id = ?',
                 req.session.userID,
                 (err,result)=>{
-                    res.render('report.ejs',{
+                    res.render('t_leave.ejs',{
                         report: result
                     })
                 })
-        } else if (status == 'admin') {
-            connection.query('select * from report',(err,result)=>{
-                res.render('report.ejs',{
-                    report: result
-                })
-            })
         }
     })
 })
@@ -440,6 +445,8 @@ router_db.route('/edit-report')
     connection.query('update report set status = ? where report_id = ?',[status, report_id],(err,result)=>{
         console.log('Update report status successfully')
     })
+    
+    res.redirect('/report')
 })
 
 // delete
@@ -467,7 +474,7 @@ router_db.route('/delete-students/:buasri_id')
         })
     })
 
-    // res.redirect('/students')
+    res.redirect('/students')
 });
 
 router_db.route('/delete-teachers/:buasri_id')
@@ -485,7 +492,7 @@ router_db.route('/delete-teachers/:buasri_id')
         }
     )
 
-    // res.redirect('/teachers')
+    res.redirect('/teachers')
 });
 
 router_db.route('/delete-courses/:subject_code-:section')
@@ -496,15 +503,14 @@ router_db.route('/delete-courses/:subject_code-:section')
         })
     })
 
-    // res.redirect('/courses')
+    res.redirect('/courses')
 })
 
 // attendance check
 router_db.route('/attendance')
 .get((req,res)=>{
     // upload page
-    // res.sendFile(path.join(__dirname, "/public/dbadd.html"));  
-    // res.render('attendance_student.ejs')
+    res.sendFile(path.join(__dirname, "/public/html/student/s_qrcode.html"));  
 })
 
 router_db.route('/attendance-create/:subject_code-:section')
@@ -529,12 +535,12 @@ router_db.route('/attendance-create/:subject_code-:section')
         })
     })
 
-    // res.render('attendance_qr.ejs')
+    res.sendFile(path.join(__dirname, "/public/html/teacher/t_qrcode.html")); 
 })
 
 router_db.route('/attendance-check')
 .get((req,res)=>{
-    // res.render('attendance_check.ejs')
+    res.sendFile(path.join(__dirname, "/public/html/student/s_attendace.html")); 
 })
 .post((req,res)=>{
     const name = req.body.name;

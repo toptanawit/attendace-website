@@ -33,45 +33,44 @@ app.use(session({
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
-app.get('/dashboard', (req, res)=>{
-    connection.query('select status from users where buasri_id = ?', req.session.userID, (err,result)=>{
-        const status = result[0].status;
-        if (status == 'Student') {
-            res.redirect('/courses') 
-        } else if (status == 'Teacher') {
-            connection.query(
-                'select a.*, b.* from subject a, report b, users c where a.teacher = c.buasri_id and b.subject_code = a.subject_code and c.buasri_id = ?',
-                req.session.userID,
-                (err,results)=>{
-                    res.render('dashboarc.ejs',{
-                        courses: result[0],
-                        report: results[1]
-                    })
-                })
-        } else if (status == 'admin') {
-            connection.query('select a.*, b.*, c.* from subject a, report b, users c',(err,results)=>{
-                res.render('dashboard.ejs',{
-                    courses: results[0],
-                    report: results[1],
-                    users: results[2]
-                })
-            })
-        }
-    })
-})
+// app.get('/dashboard', (req, res)=>{
+//     connection.query('select status from users where buasri_id = ?', req.session.userID, (err,result)=>{
+//         const status = result[0].status;
+//         if (status == 'Student') {
+//             res.redirect('/courses') 
+//         } else if (status == 'Teacher') {
+//             connection.query(
+//                 'select a.*, b.* from subject a, report b, users c where a.teacher = c.buasri_id and b.subject_code = a.subject_code and c.buasri_id = ?',
+//                 req.session.userID,
+//                 (err,results)=>{
+//                     res.render('dashboard.ejs',{
+//                         courses: result[0],
+//                         report: results[1]
+//                     })
+//                 })
+//         } else if (status == 'admin') {
+//             connection.query('select a.*, b.*, c.* from subject a, report b, users c',(err,results)=>{
+//                 res.render('dashboard.ejs',{
+//                     courses: results[0],
+//                     report: results[1],
+//                     users: results[2]
+//                 })
+//             })
+//         }
+//     })
+// })
 
 app.get('/login', (req,res)=>{
-    if (session.loggedin == true) {
-        res.redirect('/dashboard')
+    if (req.session.loggedin == true) {
+        res.redirect('/courses')
     } else {
         // go to login page
-        // res.sendFile(path.join(__dirname, "/public/login.html")); 
+        res.sendFile(path.join(__dirname, "/public/html/login.html")); 
     } 
 });
 
 app.get('/signup', (req, res)=>{
-    // res.render('signup.ejs')
-    // res.sendFile(path.join(__dirname, "/public/login.html")); 
+    res.sendFile(path.join(__dirname, "/public/html/register.html")); 
 });
 
 app.post('/signup', (req, res)=>{
@@ -92,7 +91,7 @@ app.post('/signup', (req, res)=>{
             })
         })
     } else {
-        res.redirect('/');
+        res.redirect('/login');
     }
 });
 
@@ -111,33 +110,18 @@ app.post('/authen', (req, res)=>{
                         if (result == true) {
                             req.session.loggedin = true;
                             req.session.userID = results[0].buasri_id;
-                            res.redirect('/dashboard');
-                        } else {
-                            // res.render('index_error.ejs', {
-                            //     message: 'ชื่อผู้ใช้หรือรหัสผ่านไม่ถูกต้อง',
-                            //     username: user_buasri
-                            // });
-                        }
+                            res.redirect('/courses');
+                        } 
                     })
-                } else {
-                    // res.render('index_error.ejs', {
-                    //     message: 'ชื่อผู้ใช้หรือรหัสผ่านไม่ถูกต้อง<br>(หากยังไม่เคยใช้งานเว็บไซต์นี้ ให้สมัครสมาชิกก่อน)',
-                    //     username: user_buasri
-                    // })
-                }
+                } 
             }
         )
-    } else {
-        // res.render('index_error.ejs', { 
-        //     message: 'โปรดใส่ข้อมูลให้ครบถ้วน!!',
-        //     username: user_buasri
-        // })
-    }
+    } 
 });
 
 app.get('/forget', (req, res)=>{
     // forget password page
-    // res.sendFile(path.join(__dirname + '/login_forget.html'));
+    // res.sendFile(path.join(__dirname, "/public/html/register.html")); 
 })
 
 app.post("/forget", function(req, res) {
@@ -168,39 +152,15 @@ app.post("/forget", function(req, res) {
                                 "UPDATE users SET password = ? WHERE buasri_id = ?", [hash, user_buasri],
                                 function(err) {
                                     if (err) {console.error();}
-  
-                                    // const textMSG = 'เราจะส่งรหัสผ่านไปให้คุณทางอีเมล "' + rowM[0].email + '"<br>โปรดตรวจสอบรหัสใหม่ที่อีเมลของคุณ';
-                                    // res.render("index_forgotpass", {
-                                    //     message     : textMSG,
-                                    //     user_name   : user_buasri,
-                                    //     vhf1        : 'hidden',
-                                    //     vhf2        : 'visible'
-                                    // });
                                 }
                             );
                         });
                     });
                 }
-                else {
-                    // res.render("index_forgotpass", {
-                    //     message     : "ขออภัย..ไม่พบข้อมูล<br>คุณอาจยังไม่เป็นสมาชิก",
-                    //     user_name     : user_buasri,
-                    //     vhf1        : 'visible',
-                    //     vhf2        : 'hidden'
-                    // });
-                }
             }
         );
-    } else {
-    //     res.render("index_forgot",{
-    //       message     : "123ขออภัย..ไม่พบข้อมูล<br>คุณอาจยังไม่เป็นสมาชิก",
-    //       user_name     : user_buasri,
-    //       vhf1        : 'visible',
-    //       vhf2        : 'hidden'
-        
-    //   });
     }
-  })
+})
 
 app.get('/logout', function(req, res){
     req.session.destroy();
@@ -218,7 +178,7 @@ app.get('/', (req, res)=>{
 
 app.get('/error', (req, res)=>{
     // not found
-    // res.sendFile(path.join(__dirname, "/public/notfound.html"));
+    res.sendFile(path.join(__dirname, "/public/html/404page.html"));
 });
 
 app.get('*', (req, res)=>{
