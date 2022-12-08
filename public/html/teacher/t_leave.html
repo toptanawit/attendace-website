@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Courses | Student Attendance</title>
+    <title>Leave | Student Attendance</title>
     <link rel="icon" href="/public/img/title_icon.jpg" type="image/x-icon">
 
     <!-- css -->
@@ -21,6 +21,9 @@
         crossorigin="anonymous"></script>
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.1/font/bootstrap-icons.css" />
+
+    <!-- jquery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
 
 <body>
@@ -46,25 +49,21 @@
                     </button>
 
                     <div class="collapse navbar-collapse" id="navbarNav">
-                        <ul class="navbar-nav justify-content-between fs-5" style="width: 500px; height: 100%">
+                        <ul class="navbar-nav justify-content-between fs-5" style="width: 450px; height: 100%">
                             <li class="nav-item">
                                 <a class="nav-link text-white point__nav-link fw-bold" href="################"
                                     style="--pointer-color: white">Courses</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link text-white point__nav-link" href="################"
-                                    style="--pointer-color: white">Students</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-white point__nav-link" href="################"
-                                    style="--pointer-color: white">Teachers</a>
+                                    style="--pointer-color: white">Leave Requests</a>
                             </li>
                             <li class="nav-item">
                                 <img src="/public/img/vertical_line.png" alt="" style="height: 45px; width: 45px;">
                             </li>
                             <li class="nav-item dropdown">
-                                <a class="nav-link text-white" href="################" id="navbarDarkDropdownMenuLink" role="button"
-                                    data-bs-toggle="dropdown" aria-expanded="false"><i
+                                <a class="nav-link text-white" href="################" id="navbarDarkDropdownMenuLink"
+                                    role="button" data-bs-toggle="dropdown" aria-expanded="false"><i
                                         class="bi bi-person-fill"></i></a>
                                 <ul class="dropdown-menu" aria-labelledby="navbarDarkDropdownMenuLink">
                                     <li><a class="dropdown-item" href="################">Sign Out</a></li>
@@ -88,12 +87,7 @@
                     </div>
                     <div class="col-12 mt-4">
                         <a href="################" class="row text-decoration-none">
-                            <h1 class="display-4 text-white">Students</h1>
-                        </a>
-                    </div>
-                    <div class="col-12 mt-4">
-                        <a href="################" class="row text-decoration-none">
-                            <h1 class="display-4 text-white">Teachers</h1>
+                            <h1 class="display-4 text-white">Leave Requests</h1>
                         </a>
                     </div>
                     <div class="col-12 mt-4">
@@ -119,45 +113,57 @@
         <!-- Course Details Start -->
         <div class="container-fluid" style="padding: 130px 3rem 0 3rem;">
             <div class="my-4">
-                <h1>Courses</h1>
+                <h1>Leave Requests</h1>
             </div>
 
             <!-- Table -->
             <section>
                 <div class="mb-3 d-flex justify-content-between">
-                    <input type="text" id="myInput" name="myInput" placeholder="Search for courses" class="form-control"
-                        style="width: 87%;">
-                    <!-- <button onclick="sortTable()" type="button" class="btn btn-light btn-outline-secondary me-3" style="width: 120px;"><i class="bi bi-funnel-fill me-1 table-sortable"></i>Sort</button> -->
-                    <a href="################"><button type="button" class="btn text-white"
-                            style="width: 160px; background-color: #007CB7;">+ Add Course</button></a>
+                    <input type="text" id="myInput" name="myInput" placeholder="Search for courses"
+                        class="form-control">
                 </div>
                 <div class="table-responsive" id="no-more-tables">
-                    <table id="myTable" class="table bg-white table-striped">
+                    <table id="myTable" class="table bg-white table-striped" style="margin-bottom: 20%;">
                         <thead class="text-dark">
                             <tr>
-                                <th>Semester</th>
-                                <th>Course Code</th>
+                                <th>Student ID</th>
+                                <th>Student Name</th>
                                 <th>Course Name</th>
                                 <th>Section</th>
-                                <th>Teacher</th>
-                                <th>Number of Students</th>
-                                <th>Attendance Rate</th>
+                                <th>Leave Type</th>
+                                <th>Leave Date</th>
+                                <th>File</th>
+                                <th>Status</th>
                             </tr>
                         </thead>
                         <tbody id="tableData">
                             <!-- <% for(var i=0; i < courses.length; i++) { 
                                 %> -->
                             <tr>
-                                <td><%= courses[i].semester %></td>
-                                <td><%= courses[i].code %></td>
-                                <td><%= courses[i].name %></td>
-                                <td><%= courses[i].section %></td>
-                                <td><%= courses[i].teacher %></td>
-                                <td><%= courses[i].num_of_stu %></td>
-                                <td><%= courses[i].attendanceRate %></td>
-                                <!-- href="courses/<%= courses[i].id %>" -->
-                                <td><a href="############"><i class="bi bi-arrow-right-square fs-4"></i></a></td>
-                            </tr>
+                                <td>
+                                    <%= students[i].id %>
+                                </td>
+                                <td>
+                                    <%= students[i].name %>
+                                </td>
+                                <td>
+                                    <%= courses[i].name %>
+                                </td>
+                                <td>
+                                    <%= courses[i].section %>
+                                </td>
+                                <td>
+                                    <%= report[i].type %>
+                                </td>
+                                <td>
+                                    <%= report[i].date %>
+                                </td>
+                                <td>
+                                    <%= report[i].file %>
+                                </td>
+                                <td>
+                                    <%= report[i].status %>
+                                </td>
                             <tr>
                                 <td>2</td>
                                 <td>2</td>
@@ -166,58 +172,28 @@
                                 <td>2</td>
                                 <td>2</td>
                                 <td>2</td>
-                                <td><a href="############"><i class="bi bi-arrow-right-square fs-4"></i></a></td>
+                                <td>
+                                    <div class="dropdown">
+                                        <button class="btn bg-transparent border border-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                            <%= report[i].status %>
+                                        </button>
+                                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                          <li><a class="dropdown-item" href="#">Approved</a></li>
+                                          <li><a class="dropdown-item" href="#">Pending</a></li>
+                                          <li><a class="dropdown-item" href="#">Rejected</a></li>
+                                        </ul>
+                                      </div>
+                                </td>
                             </tr>
 
-
-                            <!-- <% 
-                            courses.forEach(element => {
-                                const posts = {
-                                    semester: courses[0],
-                                    code: courses[1],
-                                    name: courses[2],
-                                    section: courses[3],
-                                    teacher: courses[4]
-                                    num_of_stu: courses[5],
-                                    attendanceRate: courses[6]
-                                }
-                            });
-
-                            for(var i=0; i < courses.length; i++) { 
-                            %>
-                                <tr>
-                                    <td>
-                                        <%= posts[i].semester %>
-                                    </td>
-                                    <td>
-                                        <%= posts[i].code %>
-                                    </td>
-                                    <td>
-                                        <%= posts[i].course_name %>
-                                    </td>
-                                    <td>
-                                        <%= posts[i].section %>
-                                    </td>
-                                    <td>
-                                        <%= posts[i].teacher %>
-                                    </td>
-                                    <td>
-                                        <%= posts[i].num_of_stu %>
-                                    </td>
-                                    <td>
-                                        <%= posts[i].attendanceRate %>
-                                    </td>
-                                </tr>
-                                <% } %>
- -->
                         </tbody>
                     </table>
                 </div>
             </section>
             <!-- Table End-->
 
-            <!-- Search Filter -->
             <script>
+                //  <!-- Search Filter -->
                 $(document).ready(function () {
                     $('#myInput').on("keyup", function () {
                         var value = $(this).val().toLocaleLowerCase();
@@ -226,8 +202,14 @@
                         });
                     });
                 });
+
+                //for fropdown status
+                $(function () {
+                    $(".dropdown-menu").on('click', 'a', function () {
+                        $(this).parents('.dropdown').find('button').text($(this).text());
+                    });
+                });
             </script>
-            <!-- Search Filter -->
         </div>
         <!-- Course Details End -->
 

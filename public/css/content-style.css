@@ -1,5 +1,5 @@
 .container-custom {
-    background-color: #F0F3F8;
+  background-color: #f0f3f8;
 }
 
 /* Main Header */
@@ -22,7 +22,7 @@
   position: absolute;
   top: 20px;
   right: 16px;
-  color: #FFFFFF !important;
+  color: #ffffff !important;
 }
 
 .dropdown-nav__container {
@@ -47,5 +47,24 @@
 
 .point__nav-link:hover::after {
   width: 100%;
-  transition: width .3s;
+  transition: width 0.3s;
 }
+
+/* video {
+  width: 525px;
+  height: 400px;
+  display: block;
+  margin: 3rem auto;
+} */
+
+/* #screenshots {
+  display: flex;
+  justify-content: center;
+}
+
+#screenshots img {
+  max-width: 100%;
+  width: 17rem;
+  margin-right: 1.5rem;
+  border-radius: 4px;
+} */
