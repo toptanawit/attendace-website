@@ -569,6 +569,25 @@ router_db.route('/attendance')
     // upload page
     res.sendFile(path.join(__dirname, "/public/html/student/s_qrcode.html"));  
 })
+.post((req,res)=>{
+    const subject_name = req.body.subject_name;
+    const section = req.body.section;
+    const date = req.body.date;
+    const time = req.body.time;
+    const location = req.body.location;
+
+    const post = {
+        name: subject_name,
+        section: section,
+        time: time,
+        date: date,
+        location: location,
+    }
+
+    res.render('s_attendance.ejs', {
+        info: post
+    })
+})
 
 router_db.route('/attendance-create/:subject_code-:section')
 .get((req,res)=>{
@@ -596,9 +615,6 @@ router_db.route('/attendance-create/:subject_code-:section')
 })
 
 router_db.route('/attendance-check')
-.get((req,res)=>{
-    res.sendFile(path.join(__dirname, "/public/html/student/s_attendace.html")); 
-})
 .post((req,res)=>{
     const name = req.body.name;
     const section = req.body.section;
@@ -636,6 +652,8 @@ router_db.route('/attendance-check')
             })
         })
     })
+
+    res.redirect('/courses');
 })
 
 
