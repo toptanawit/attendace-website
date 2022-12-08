@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Leave | Student Attendance</title>
+    <title>Courses | Student Attendance</title>
     <link rel="icon" href="/public/img/title_icon.jpg" type="image/x-icon">
 
     <!-- css -->
@@ -33,7 +33,7 @@
         <header class="header p-3 position-absolute start-0 top-0 end-0">
             <div id="header" class="d-flex fixed-top justify-content-between align-items-center px-5 navbar-expand-md"
                 style="height: 100px; background-color: #007CB7; transition: 0.5s ease;">
-                <a href="################" class="text-decoration-none text-white fs-1 fw-bold">
+                <a href="/courses" class="text-decoration-none text-white fs-1 fw-bold">
                     <img src="/public/img/cosci_logo.png" alt="cosci logo" style="height: 4rem;">
                 </a>
 
@@ -49,24 +49,28 @@
                     </button>
 
                     <div class="collapse navbar-collapse" id="navbarNav">
-                        <ul class="navbar-nav justify-content-between fs-5" style="width: 450px; height: 100%">
+                        <ul class="navbar-nav justify-content-between fs-5" style="width: 500px; height: 100%">
                             <li class="nav-item">
-                                <a class="nav-link text-white point__nav-link" href="################"
+                                <a class="nav-link text-white point__nav-link fw-bold" href="/courses"
                                     style="--pointer-color: white">Courses</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-white point__nav-link fw-bold" href="################"
-                                    style="--pointer-color: white">Leave Application</a>
+                                <a class="nav-link text-white point__nav-link" href="/students"
+                                    style="--pointer-color: white">Students</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-white point__nav-link" href="/teachers"
+                                    style="--pointer-color: white">Teachers</a>
                             </li>
                             <li class="nav-item">
                                 <img src="/public/img/vertical_line.png" alt="" style="height: 45px; width: 45px;">
                             </li>
                             <li class="nav-item dropdown">
-                                <a class="nav-link text-white" href="################" id="navbarDarkDropdownMenuLink"
-                                    role="button" data-bs-toggle="dropdown" aria-expanded="false"><i
+                                <a class="nav-link text-white" id="navbarDarkDropdownMenuLink" role="button"
+                                    data-bs-toggle="dropdown" aria-expanded="false"><i
                                         class="bi bi-person-fill"></i></a>
                                 <ul class="dropdown-menu" aria-labelledby="navbarDarkDropdownMenuLink">
-                                    <li><a class="dropdown-item" href="################">Sign Out</a></li>
+                                    <li><a class="dropdown-item" href="/logout">Sign Out</a></li>
                                 </ul>
                             </li>
                         </ul>
@@ -81,17 +85,22 @@
             <div class="dropdown-nav__container container-xxl d-flex align-items-center">
                 <div class="row align-items-start">
                     <div class="col-12">
-                        <a href="################" class="row text-decoration-none">
+                        <a href="/courses" class="row text-decoration-none">
                             <h1 class="display-4 text-white">Courses</h1>
                         </a>
                     </div>
                     <div class="col-12 mt-4">
-                        <a href="################" class="row text-decoration-none">
-                            <h1 class="display-4 text-white">Leave Application</h1>
+                        <a href="/students" class="row text-decoration-none">
+                            <h1 class="display-4 text-white">Students</h1>
                         </a>
                     </div>
                     <div class="col-12 mt-4">
-                        <a href="################" class="row text-decoration-none">
+                        <a href="/teachers" class="row text-decoration-none">
+                            <h1 class="display-4 text-white">Teachers</h1>
+                        </a>
+                    </div>
+                    <div class="col-12 mt-4">
+                        <a href="/logout" class="row text-decoration-none">
                             <h1 class="display-4 text-white">Sign Out</h1>
                         </a>
                     </div>
@@ -112,20 +121,38 @@
 
         <!-- Course Details Start -->
         <div class="container-fluid" style="padding: 130px 3rem 0 3rem;">
-            <div class="my-4 d-flex justify-content-between align-items-center">
-                <h1>Leave Application</h1>
-                <button type="submit" class="btn text-white h-50"
-                    style="width: 100px; background-color: #007CB7;">Submit</button>
-            </div>
+            <form method="POST" action="/add-courses">
+                <div class="my-4 d-flex justify-content-between align-items-center">
+                    <h1>Courses > Add Course</h1>
+                    <button type="submit" class="btn text-white h-50"
+                        style="width: 100px; background-color: #007CB7;">Submit</button>
+                </div>
 
-            <!-- Text Field Start -->
-            <form method="post" action="##########" id="form">
+                <!-- Text Field Start -->
                 <div class="row">
                     <div class="col-12 col-sm-6 justify-content-md-ceneter">
                         <div class="mb-3">
-                            <label for="semester" class="form-label fw-bold">Course Name</label>
+                            <label for="semester" class="form-label fw-bold">Semester</label>
                             <input type="semester" class="form-control" id="semester" aria-describedby="semester"
-                                value="<%=courses.semester%>">
+                                placeholder="Semester">
+                        </div>
+                    </div>
+
+                    <div class="col-12 col-sm-6 justify-content-md-ceneter">
+                        <div class="mb-3">
+                            <label for="subject_code" class="form-label fw-bold">Course Code</label>
+                            <input type="subject_code" class="form-control" id="subject_code"
+                                aria-describedby="subject_code" placeholder="Course Code">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-12 col-sm-6 justify-content-md-ceneter">
+                        <div class="mb-3">
+                            <label for="name" class="form-label fw-bold">Course Name</label>
+                            <input type="name" class="form-control" id="name" aria-describedby="name"
+                                placeholder="Course Name">
                         </div>
                     </div>
 
@@ -133,25 +160,7 @@
                         <div class="mb-3">
                             <label for="section" class="form-label fw-bold">Course Section</label>
                             <input type="section" class="form-control" id="section" aria-describedby="section"
-                                value="<%=courses.section%>">
-                        </div>
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="col-12 col-sm-6 justify-content-md-ceneter">
-                        <div class="mb-3">
-                            <label for="leave_type" class="form-label fw-bold">Leave Type</label>
-                            <input type="leave_type" class="form-control" id="leave_type" aria-describedby="leave_type"
-                                value="<%=leave.type%>">
-                        </div>
-                    </div>
-
-                    <div class="col-12 col-sm-6 justify-content-md-ceneter">
-                        <div class="mb-3">
-                            <label for="leave_date" class="form-label fw-bold">Leave Date</label>
-                            <input type="leave_date" class="form-control" id="leave_date" aria-describedby="leave_date"
-                                value="<%=leave.date%>">
+                                placeholder="Course Section">
                         </div>
                     </div>
                 </div>
@@ -160,40 +169,81 @@
                     <div class="col-12 col-sm-6 justify-content-md-ceneter">
 
                         <div class="mb-3">
-                            <label for="leave_file" class="form-label fw-bold">Upload Leave Letter</label>
-                            <input class="form-control" type="file" id="formFile" accept=".pdf">
+                            <label for="teacher" class="form-label fw-bold">Teacher ID</label>
+                            <input type="teacher" class="form-control" id="teacher" aria-describedby="teacher"
+                                placeholder="Teacher ID">
                         </div>
 
                     </div>
                 </div>
-                <button type="submit" class="btn text-white h-50"
-                style="width: 100px; background-color: #007CB7;">Submit</button>
             </form>
             <!-- Text Field End -->
+
+            <!-- Add Student Start -->
+            <div class="mt-5 mb-3 d-flex justify-content-between align-items-center">
+                <h3>Add Students</h3>
+            </div>
+
+            <!-- Table -->
+            <section>
+                <div class="mb-3 d-flex">
+                    <input type="text" id="myInput" name="myInput" placeholder="Search for students"
+                        class="form-control">
+                </div>
+                <div class="table-responsive" id="no-more-tables">
+                    <table id="myTable" class="table bg-white table-striped">
+                        <thead class="text-dark">
+                            <tr>
+                                <th>Student ID</th>
+                                <th>Student Name</th>
+                                <th>Major</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tableData">
+                            <% for(var i=0; i < students.length; i++) { %> 
+                            <tr>
+                                <td>
+                                    <%= students[i].student_id %>
+                                </td>
+                                <td>
+                                    <%= students[i].name %>
+                                </td>
+                                <td>
+                                    <%= students[i].major %>
+                                </td>
+                                <td>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                                    </div>
+                                </td>
+                            </tr>
+                            <% } %>
+                
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+            <!-- Table End-->
+
+            <!-- Search Filter -->
+            <script>
+                $(document).ready(function () {
+                    $('#myInput').on("keyup", function () {
+                        var value = $(this).val().toLocaleLowerCase();
+                        $("#tableData tr").filter(function () {
+                            $(this).toggle($(this).text().toLocaleLowerCase().indexOf(value) > -1)
+                        });
+                    });
+                });
+            </script>
+            <!-- Search Filter -->
+
+            <!-- Add Student End -->
 
         </div>
         <!-- Course Details End -->
 
-        <script>
-            document.getElementById('form').addEventListener('submit', function(e) {
-                e.preventDefault();
 
-                const userFile = document.getElementById('formFile').files[0];
-                // const userComments = document.getElementById('comments').value;
-
-                const formData = new FormData();
-                formData.append('user-file', userFile, 'user-file.jpg');
-                // formData.append('user-comments', userComments);
-
-                fetch('https://httpbin.org/post', {
-                    method: "POST",
-                    body: formData,
-                })
-                .then(res => res.json())
-                .then(data => console.log(data))
-                .catch(err => console.log(err));
-            })
-        </script>
     </div>
 </body>
 

@@ -37,7 +37,7 @@
         <header class="header p-3 position-absolute start-0 top-0 end-0">
             <div id="header" class="d-flex fixed-top justify-content-between align-items-center px-5 navbar-expand-md"
                 style="height: 100px; background-color: #007CB7; transition: 0.5s ease;">
-                <a href="################" class="text-decoration-none text-white fs-1 fw-bold">
+                <a href="/courses" class="text-decoration-none text-white fs-1 fw-bold">
                     <img src="/public/img/cosci_logo.png" alt="cosci logo" style="height: 4rem;">
                 </a>
 
@@ -55,22 +55,22 @@
                     <div class="collapse navbar-collapse" id="navbarNav">
                         <ul class="navbar-nav justify-content-between fs-5" style="width: 450px; height: 100%">
                             <li class="nav-item">
-                                <a class="nav-link text-white point__nav-link" href="################"
+                                <a class="nav-link text-white point__nav-link fw-bold" href="/courses"
                                     style="--pointer-color: white">Courses</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-white point__nav-link" href="################"
+                                <a class="nav-link text-white point__nav-link" href="/report"
                                     style="--pointer-color: white">Leave Application</a>
                             </li>
                             <li class="nav-item">
                                 <img src="/public/img/vertical_line.png" alt="" style="height: 45px; width: 45px;">
                             </li>
                             <li class="nav-item dropdown">
-                                <a class="nav-link text-white" href="################" id="navbarDarkDropdownMenuLink"
-                                    role="button" data-bs-toggle="dropdown" aria-expanded="false"><i
+                                <a class="nav-link text-white" id="navbarDarkDropdownMenuLink" role="button"
+                                    data-bs-toggle="dropdown" aria-expanded="false"><i
                                         class="bi bi-person-fill"></i></a>
                                 <ul class="dropdown-menu" aria-labelledby="navbarDarkDropdownMenuLink">
-                                    <li><a class="dropdown-item" href="################">Sign Out</a></li>
+                                    <li><a class="dropdown-item" href="/logout">Sign Out</a></li>
                                 </ul>
                             </li>
                         </ul>
@@ -85,17 +85,17 @@
             <div class="dropdown-nav__container container-xxl d-flex align-items-center">
                 <div class="row align-items-start">
                     <div class="col-12">
-                        <a href="################" class="row text-decoration-none">
+                        <a href="/courses" class="row text-decoration-none">
                             <h1 class="display-4 text-white">Courses</h1>
                         </a>
                     </div>
                     <div class="col-12 mt-4">
-                        <a href="################" class="row text-decoration-none">
+                        <a href="/report" class="row text-decoration-none">
                             <h1 class="display-4 text-white">Leave Application</h1>
                         </a>
                     </div>
                     <div class="col-12 mt-4">
-                        <a href="################" class="row text-decoration-none">
+                        <a href="/logout" class="row text-decoration-none">
                             <h1 class="display-4 text-white">Sign Out</h1>
                         </a>
                     </div>
@@ -113,6 +113,7 @@
             </div>
         </nav>
         <!-- Flyout Navigation End -->
+
 
         <!-- Course Details Start -->
         <div class="container-fluid vh-100" style="padding: 130px 3rem 0 3rem;">
@@ -166,7 +167,6 @@
                 modalTitle = document.querySelector(".modal-title");
                 modalBody = document.querySelector(".modal-body")
 
-
             function fetchRequest(file, formData) {
                 infoText.innerText = "Scanning QR Code...";
 
@@ -193,7 +193,7 @@
             });
 
             form.addEventListener("click", () => fileInp.click());
-            
+
             closeBtn.addEventListener("click", () => {
                 wrapper.classList.remove("active")
                 fileInp.value = "";

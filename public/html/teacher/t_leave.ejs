@@ -33,7 +33,7 @@
         <header class="header p-3 position-absolute start-0 top-0 end-0">
             <div id="header" class="d-flex fixed-top justify-content-between align-items-center px-5 navbar-expand-md"
                 style="height: 100px; background-color: #007CB7; transition: 0.5s ease;">
-                <a href="################" class="text-decoration-none text-white fs-1 fw-bold">
+                <a href="/courses" class="text-decoration-none text-white fs-1 fw-bold">
                     <img src="/public/img/cosci_logo.png" alt="cosci logo" style="height: 4rem;">
                 </a>
 
@@ -51,22 +51,22 @@
                     <div class="collapse navbar-collapse" id="navbarNav">
                         <ul class="navbar-nav justify-content-between fs-5" style="width: 450px; height: 100%">
                             <li class="nav-item">
-                                <a class="nav-link text-white point__nav-link fw-bold" href="################"
+                                <a class="nav-link text-white point__nav-link" href="/courses"
                                     style="--pointer-color: white">Courses</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-white point__nav-link" href="################"
+                                <a class="nav-link text-white point__nav-link fw-bold" href="/edit-report"
                                     style="--pointer-color: white">Leave Requests</a>
                             </li>
                             <li class="nav-item">
                                 <img src="/public/img/vertical_line.png" alt="" style="height: 45px; width: 45px;">
                             </li>
                             <li class="nav-item dropdown">
-                                <a class="nav-link text-white" href="################" id="navbarDarkDropdownMenuLink"
-                                    role="button" data-bs-toggle="dropdown" aria-expanded="false"><i
+                                <a class="nav-link text-white" id="navbarDarkDropdownMenuLink" role="button"
+                                    data-bs-toggle="dropdown" aria-expanded="false"><i
                                         class="bi bi-person-fill"></i></a>
                                 <ul class="dropdown-menu" aria-labelledby="navbarDarkDropdownMenuLink">
-                                    <li><a class="dropdown-item" href="################">Sign Out</a></li>
+                                    <li><a class="dropdown-item" href="/logout">Sign Out</a></li>
                                 </ul>
                             </li>
                         </ul>
@@ -81,17 +81,17 @@
             <div class="dropdown-nav__container container-xxl d-flex align-items-center">
                 <div class="row align-items-start">
                     <div class="col-12">
-                        <a href="################" class="row text-decoration-none">
+                        <a href="/courses" class="row text-decoration-none">
                             <h1 class="display-4 text-white">Courses</h1>
                         </a>
                     </div>
                     <div class="col-12 mt-4">
-                        <a href="################" class="row text-decoration-none">
+                        <a href="/edit-report" class="row text-decoration-none">
                             <h1 class="display-4 text-white">Leave Requests</h1>
                         </a>
                     </div>
                     <div class="col-12 mt-4">
-                        <a href="################" class="row text-decoration-none">
+                        <a href="/logout" class="row text-decoration-none">
                             <h1 class="display-4 text-white">Sign Out</h1>
                         </a>
                     </div>
@@ -137,20 +137,19 @@
                             </tr>
                         </thead>
                         <tbody id="tableData">
-                            <!-- <% for(var i=0; i < courses.length; i++) { 
-                                %> -->
+                        <% for(var i=0; i < report.length; i++) { %> 
                             <tr>
                                 <td>
-                                    <%= students[i].id %>
+                                    <%= student[i].student_id %>
                                 </td>
                                 <td>
-                                    <%= students[i].name %>
+                                    <%= student[i].name student[i].lastname %>
                                 </td>
                                 <td>
-                                    <%= courses[i].name %>
+                                    <%= subject[i].name %>
                                 </td>
                                 <td>
-                                    <%= courses[i].section %>
+                                    <%= report[i].section %>
                                 </td>
                                 <td>
                                     <%= report[i].type %>
@@ -162,30 +161,21 @@
                                     <%= report[i].file %>
                                 </td>
                                 <td>
-                                    <%= report[i].status %>
-                                </td>
-                            <tr>
-                                <td>2</td>
-                                <td>2</td>
-                                <td>2</td>
-                                <td>2</td>
-                                <td>2</td>
-                                <td>2</td>
-                                <td>2</td>
-                                <td>
                                     <div class="dropdown">
-                                        <button class="btn bg-transparent border border-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                        <button class="btn bg-transparent border border-secondary dropdown-toggle"
+                                            type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown"
+                                            aria-expanded="false">
                                             <%= report[i].status %>
                                         </button>
                                         <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                                          <li><a class="dropdown-item" href="#">Approved</a></li>
-                                          <li><a class="dropdown-item" href="#">Pending</a></li>
-                                          <li><a class="dropdown-item" href="#">Rejected</a></li>
+                                            <li><a class="dropdown-item" href="#">Approved</a></li>
+                                            <li><a class="dropdown-item" href="#">Pending</a></li>
+                                            <li><a class="dropdown-item" href="#">Rejected</a></li>
                                         </ul>
-                                      </div>
+                                    </div>
                                 </td>
                             </tr>
-
+    
                         </tbody>
                     </table>
                 </div>

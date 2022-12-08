@@ -33,7 +33,7 @@
         <header class="header p-3 position-absolute start-0 top-0 end-0">
             <div id="header" class="d-flex fixed-top justify-content-between align-items-center px-5 navbar-expand-md"
                 style="height: 100px; background-color: #007CB7; transition: 0.5s ease;">
-                <a href="################" class="text-decoration-none text-white fs-1 fw-bold">
+                <a href="/courses" class="text-decoration-none text-white fs-1 fw-bold">
                     <img src="/public/img/cosci_logo.png" alt="cosci logo" style="height: 4rem;">
                 </a>
 
@@ -51,22 +51,22 @@
                     <div class="collapse navbar-collapse" id="navbarNav">
                         <ul class="navbar-nav justify-content-between fs-5" style="width: 450px; height: 100%">
                             <li class="nav-item">
-                                <a class="nav-link text-white point__nav-link fw-bold" href="################"
+                                <a class="nav-link text-white point__nav-link fw-bold" href="/courses"
                                     style="--pointer-color: white">Courses</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-white point__nav-link" href="################"
+                                <a class="nav-link text-white point__nav-link" href="/report"
                                     style="--pointer-color: white">Leave Application</a>
                             </li>
                             <li class="nav-item">
                                 <img src="/public/img/vertical_line.png" alt="" style="height: 45px; width: 45px;">
                             </li>
                             <li class="nav-item dropdown">
-                                <a class="nav-link text-white" href="################" id="navbarDarkDropdownMenuLink" role="button"
+                                <a class="nav-link text-white" id="navbarDarkDropdownMenuLink" role="button"
                                     data-bs-toggle="dropdown" aria-expanded="false"><i
                                         class="bi bi-person-fill"></i></a>
                                 <ul class="dropdown-menu" aria-labelledby="navbarDarkDropdownMenuLink">
-                                    <li><a class="dropdown-item" href="################">Sign Out</a></li>
+                                    <li><a class="dropdown-item" href="/logout">Sign Out</a></li>
                                 </ul>
                             </li>
                         </ul>
@@ -81,17 +81,17 @@
             <div class="dropdown-nav__container container-xxl d-flex align-items-center">
                 <div class="row align-items-start">
                     <div class="col-12">
-                        <a href="################" class="row text-decoration-none">
+                        <a href="/courses" class="row text-decoration-none">
                             <h1 class="display-4 text-white">Courses</h1>
                         </a>
                     </div>
                     <div class="col-12 mt-4">
-                        <a href="################" class="row text-decoration-none">
+                        <a href="/report" class="row text-decoration-none">
                             <h1 class="display-4 text-white">Leave Application</h1>
                         </a>
                     </div>
                     <div class="col-12 mt-4">
-                        <a href="################" class="row text-decoration-none">
+                        <a href="/logout" class="row text-decoration-none">
                             <h1 class="display-4 text-white">Sign Out</h1>
                         </a>
                     </div>
@@ -112,107 +112,115 @@
 
         <!-- Course Details Start -->
         <div class="container-fluid" style="padding: 130px 3rem 0 3rem;">
-            <div class="my-4 d-flex justify-content-between align-items-center">
-                <h1>Courses > Details</h1>
-            </div>
+            <form method="post" action="/attendance">
+                <div class="my-4 d-flex justify-content-between align-items-center">
+                    <h1>Attendance</h1>
+                    <a href="/attendance-check">
+                        <button type="submit" class="btn text-white"
+                            style="width: 100px; background-color: #007CB7;">Submit</button>
+                    </a>
 
-            <!-- Table -->
-            <section>
-                <div class="table-responsive" id="no-more-tables">
-                    <table id="myTable" class="table bg-white table-striped">
-                        <thead class="text-dark">
-                            <tr>
-                                <th>Semester</th>
-                                <th>Course Code</th>
-                                <th>Course Name</th>
-                                <th>Section</th>
-                                <th>Teacher</th>
-                                <th>Attendance Count</th>
-                                <th>Abscent Count</th>
-                                <th>Leave Count</th>
-                            </tr>
-                        </thead>
-                        <tbody id="tableData">
-                            <!-- <% for(var i=0; i < courses.length; i++) { 
-                                %> -->
-                            <tr>
-                                <td><%= courses[i].semester %></td>
-                                <td><%= courses[i].code %></td>
-                                <td><%= courses[i].name %></td>
-                                <td><%= courses[i].section %></td>
-                                <td><%= courses[i].teacher %></td>
-                                <td><%= students[i].attendanceCount %></td>
-                                <td><%= students[i].abscentCount %></td>
-                                <td><%= students[i].leaveCount %></td>
-                            </tr>
-                        </tbody>
-                    </table>
                 </div>
-            </section>
-            <!-- Table End-->
 
+                <!-- Text Field Start -->
+                <fieldset disabled>
+
+                    <% for(var i=0; i < info.length; i++) { %>
+                        <div class="row">
+                            <div class="col-12 col-sm-6 justify-content-md-ceneter">
+                                <div class="mb-3">
+                                    <label for="name" class="form-label fw-bold">Course Name</label>
+                                    <input type="text" class="form-control" id="name" aria-describedby="name"
+                                        value="<%=info[i].name%>">
+                                </div>
+                            </div>
+
+                            <div class="col-12 col-sm-6 justify-content-md-ceneter">
+                                <div class="mb-3">
+                                    <label for="section" class="form-label fw-bold">Course Section</label>
+                                    <input type="section" class="form-control" id="section" aria-describedby="section"
+                                        value="<%=info[i].section%>">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-12 col-sm-6 justify-content-md-ceneter">
+                                <div class="mb-3">
+                                    <label for="date" class="form-label fw-bold">Attendace Date</label>
+                                    <input type="date" class="form-control" id="date" aria-describedby="date"
+                                        value="<%=info[i].date%>">
+                                </div>
+                            </div>
+
+                            <div class="col-12 col-sm-6 justify-content-md-ceneter">
+                                <div class="mb-3">
+                                    <label for="time" class="form-label fw-bold">Attendance Time</label>
+                                    <input type="time" class="form-control" id="section" aria-describedby="time"
+                                        value="<%=info[i].time%>>">
+                                </div>
+                            </div>
+                        </div>
+                    <% { %> 
+                </fieldset>
+            </form>
+            <!-- Text Field End -->
+
+            <!-- Cemera Start -->
             <div class="mt-5 mb-3 d-flex justify-content-between align-items-center">
-                <h3>Attendance</h3>
+                <h3>Take a photo</h3>
             </div>
 
-            <!-- Table Start -->
-            <section>
-                <div class="mb-3 d-flex">
-                    <input type="text" id="myInput" name="myInput" placeholder="Search for students"
-                        class="form-control">
-                </div>
-                <div class="table-responsive" id="no-more-tables">
-                    <table id="myTable" class="table bg-white table-striped">
-                        <thead class="text-dark">
-                            <tr>
-                                <th>Attendance Date</th>
-                                <th>Attendance Time</th>
-                                <th>Leave File</th>
-                                <th>Attendance Image</th>
-                                <th>Attendance Status</th>
-                            </tr>
-                        </thead>
-                        <tbody id="tableData">
-                             <!-- <% for(var i=0; i < students.length; i++) { 
-                                %> -->
-                            <tr>
-                                <td><%= attendance[i].date %></td>
-                                <td><%= attendance[i].time %></td>
-                                <td><%= report[i].file %></td>
-                                <td><%= attendance[i].image %></td>
-                                <td><%= attendance[i].status %></td>
-                            </tr>
-                            <tr>
-                                <td><%= attendance[i].date %></td>
-                                <td><%= attendance[i].time %></td>
-                                <td><%= report[i].file %></td>
-                                <td><%= attendance[i].image %></td>
-                                <td><span class="badge text-bg-primary">Primary</span></td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </section>
-            <!-- Table End-->
-
-            <!-- Search Filter -->
-            <script>
-                $(document).ready(function () {
-                    $('#myInput').on("keyup", function () {
-                        var value = $(this).val().toLocaleLowerCase();
-                        $("#tableData tr").filter(function () {
-                            $(this).toggle($(this).text().toLocaleLowerCase().indexOf(value) > -1)
-                        });
-                    });
-                });
-            </script>
-            <!-- Search Filter -->
+            <div class="button">
+                <button onclick="startWebcam()" type="submit" class="btn text-white h-50 me-2"
+                    style="width: 200px; background-color: #007CB7;">Turn on webcam</button>
+                <button id="takeScreenBtn" onclick="takeScreenshot()" type="submit" class="btn text-white h-50"
+                    style="width: 200px; background-color: #007CB7;">Take Screenshot</button>
+            </div>
+            <div class="d-flex mt-5 mb-5 justify-content-between">
+                <video id="webcam-vid" autoplay="true"></video>
+                <div id="screenshots"></div>
+            </div>
+            <!-- Camera End -->
 
 
         </div>
         <!-- Course Details End -->
-
     </div>
+    <script>
+        const videoEl = document.getElementById('webcam-vid');
+        const screenshotsEl = document.getElementById('screenshots');
+        let imageCapture;
+
+        const startWebcam = () => {
+            if (navigator.mediaDevices.getUserMedia) {
+                navigator.mediaDevices
+                    .getUserMedia({ video: true })
+                    .then((stream) => {
+                        videoEl.srcObject = stream;
+                        imageCapture = new ImageCapture(stream.getVideoTracks()[0]);
+                    })
+                    .catch((err) => {
+                        console.log("Something went wrong", err);
+                    });
+            }
+        };
+
+        var countClick = 0;
+
+        const takeScreenshot = () => {
+            imageCapture.takePhoto().then((blob) => {
+                const img = document.createElement('img');
+                img.src = window.URL.createObjectURL(blob);
+                screenshotsEl.appendChild(img);
+            });
+            countClick += 1;
+
+            if (countClick != 0) {
+                $('#takeScreenBtn').prop('disabled', true);
+            }
+        };
+    </script>
 </body>
 
 </html>

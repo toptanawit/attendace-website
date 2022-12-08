@@ -61,7 +61,7 @@ app.get('/login', (req,res)=>{
         res.redirect('/courses')
     } else {
         // go to login page
-        res.sendFile(path.join(__dirname, "/public/html/login.html")); 
+        res.sendFile(path.join(__dirname, "/public/html/index.html")); 
     } 
 });
 
@@ -117,7 +117,7 @@ app.post('/authen', (req, res)=>{
 
 app.get('/forget', (req, res)=>{
     // forget password page
-    // res.sendFile(path.join(__dirname, "/public/html/register.html")); 
+    res.sendFile(path.join(__dirname, "/public/html/forget.html")); 
 })
 
 app.post("/forget", function(req, res) {

@@ -21,6 +21,9 @@
         crossorigin="anonymous"></script>
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.1/font/bootstrap-icons.css" />
+
+    <!-- jquery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
 
 <body>
@@ -30,7 +33,7 @@
         <header class="header p-3 position-absolute start-0 top-0 end-0">
             <div id="header" class="d-flex fixed-top justify-content-between align-items-center px-5 navbar-expand-md"
                 style="height: 100px; background-color: #007CB7; transition: 0.5s ease;">
-                <a href="################" class="text-decoration-none text-white fs-1 fw-bold">
+                <a href="/courses" class="text-decoration-none text-white fs-1 fw-bold">
                     <img src="/public/img/cosci_logo.png" alt="cosci logo" style="height: 4rem;">
                 </a>
 
@@ -46,28 +49,24 @@
                     </button>
 
                     <div class="collapse navbar-collapse" id="navbarNav">
-                        <ul class="navbar-nav justify-content-between fs-5" style="width: 500px; height: 100%">
+                        <ul class="navbar-nav justify-content-between fs-5" style="width: 450px; height: 100%">
                             <li class="nav-item">
-                                <a class="nav-link text-white point__nav-link fw-bold" href="################"
+                                <a class="nav-link text-white point__nav-link fw-bold" href="/courses"
                                     style="--pointer-color: white">Courses</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-white point__nav-link" href="################"
-                                    style="--pointer-color: white">Students</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-white point__nav-link" href="################"
-                                    style="--pointer-color: white">Teachers</a>
+                                <a class="nav-link text-white point__nav-link" href="/edit-report"
+                                    style="--pointer-color: white">Leave Requests</a>
                             </li>
                             <li class="nav-item">
                                 <img src="/public/img/vertical_line.png" alt="" style="height: 45px; width: 45px;">
                             </li>
                             <li class="nav-item dropdown">
-                                <a class="nav-link text-white" href="################" id="navbarDarkDropdownMenuLink" role="button"
+                                <a class="nav-link text-white" id="navbarDarkDropdownMenuLink" role="button"
                                     data-bs-toggle="dropdown" aria-expanded="false"><i
                                         class="bi bi-person-fill"></i></a>
                                 <ul class="dropdown-menu" aria-labelledby="navbarDarkDropdownMenuLink">
-                                    <li><a class="dropdown-item" href="################">Sign Out</a></li>
+                                    <li><a class="dropdown-item" href="/logout">Sign Out</a></li>
                                 </ul>
                             </li>
                         </ul>
@@ -82,22 +81,17 @@
             <div class="dropdown-nav__container container-xxl d-flex align-items-center">
                 <div class="row align-items-start">
                     <div class="col-12">
-                        <a href="################" class="row text-decoration-none">
+                        <a href="/courses" class="row text-decoration-none">
                             <h1 class="display-4 text-white">Courses</h1>
                         </a>
                     </div>
                     <div class="col-12 mt-4">
-                        <a href="################" class="row text-decoration-none">
-                            <h1 class="display-4 text-white">Students</h1>
+                        <a href="/edit-report" class="row text-decoration-none">
+                            <h1 class="display-4 text-white">Leave Requests</h1>
                         </a>
                     </div>
                     <div class="col-12 mt-4">
-                        <a href="################" class="row text-decoration-none">
-                            <h1 class="display-4 text-white">Teachers</h1>
-                        </a>
-                    </div>
-                    <div class="col-12 mt-4">
-                        <a href="################" class="row text-decoration-none">
+                        <a href="/logout" class="row text-decoration-none">
                             <h1 class="display-4 text-white">Sign Out</h1>
                         </a>
                     </div>
@@ -119,13 +113,12 @@
         <!-- Course Details Start -->
         <div class="container-fluid" style="padding: 130px 3rem 0 3rem;">
             <div class="my-4 d-flex justify-content-between align-items-center">
-                <h1>Teachers > Name</h1>
-                <button type="submit" class="btn text-white h-50"
-                    style="width: 100px; background-color: #007CB7;">Edit</button>
-            </div>
-            <div class=" d-flex justify-content-between align-items-center">
-                <h3>Details</h3>
-               
+                <h1>Courses > Details</h1>
+                <a href="/attendance-create/<%= course[i].subject_code %>-<%= courses[i].section %>">
+                    <button type="submit" class="btn text-white h-50"
+                        style="width: 220px; background-color: #007CB7;"><i class="bi bi-qr-code me-3"></i>Take
+                        Attendance</button>
+                </a>
             </div>
 
             <!-- Table -->
@@ -134,19 +127,35 @@
                     <table id="myTable" class="table bg-white table-striped">
                         <thead class="text-dark">
                             <tr>
-                                <th>Name</th>
-                                <th>Email</th>
-                                <th>Phone</th>
+                                <th>Semester</th>
+                                <th>Course Code</th>
+                                <th>Course Name</th>
+                                <th>Section</th>
+                                <th>Teacher</th>
+                                <th>Number of Students</th>
                             </tr>
                         </thead>
                         <tbody id="tableData">
-                            <!-- <% for(var i=0; i < courses.length; i++) { 
-                                %> -->
-                            <tr>
-                                <td><%= courses[i].semester %></td>
-                                <td><%= courses[i].code %></td>
-                                <td><%= courses[i].name %></td>
-                            
+                            <% for(var i=0; i < course.length; i++) { -->
+                                <tr>
+                                    <td>
+                                        <%= course[i].semester %>
+                                    </td>
+                                    <td>
+                                        <%= course[i].subject_code %>
+                                    </td>
+                                    <td>
+                                        <%= course[i].name %>
+                                    </td>
+                                    <td>
+                                        <%= course[i].section %>
+                                    </td>
+                                    <td>
+                                        <%= course[i].teacher %>
+                                    </td>
+                                    <td>
+                                        <%= course[i].student_count %>
+                                    </td>
                         </tbody>
                     </table>
                 </div>
@@ -154,73 +163,66 @@
             <!-- Table End-->
 
             <div class="mt-5 mb-3 d-flex justify-content-between align-items-center">
-                <h3>Course Enrollment</h3>
+                <h3>Students</h3>
             </div>
 
             <!-- Table Start -->
             <section>
-                <div class="mb-3 d-flex justify-content-between">
-                    <input type="text" id="myInput" name="myInput" placeholder="Search for course" class="form-control w-100">
-                    <!-- <button onclick="sortTable()" type="button" class="btn btn-light btn-outline-secondary me-3" style="width: 120px;"><i class="bi bi-funnel-fill me-1 table-sortable"></i>Sort</button> -->
+                <div class="mb-3 d-flex">
+                    <input type="text" id="myInput" name="myInput" placeholder="Search for students"
+                        class="form-control">
                 </div>
-
                 <div class="table-responsive" id="no-more-tables">
                     <table id="myTable" class="table bg-white table-striped">
                         <thead class="text-dark">
                             <tr>
-                                <th>Semester</th>
-                                <th>Code</th>
-                                <th>Name</th>
-                                <th>Section</th>
-                                <th>Teacher</th>
+                                <th>Student ID</th>
+                                <th>Student Name</th>
+                                <th>Major</th>
                                 <th>Attendance Count</th>
-                                <th>Abscent Count</th>
                             </tr>
                         </thead>
                         <tbody id="tableData">
-                             <!-- <% for(var i=0; i < students.length; i++) { 
-                                %> -->
+                        <% for(var i=0; i < student.length; i++) { %> 
                             <tr>
-                                <td><%= students[i].id %></td>
-                                <td><%= students[i].name %></td>
-                                <td><%= students[i].major %></td>
-                                <td><%= students[i].attendanceCount %></td>
-                                <td><%= students[i].abscentCount %></td>
-                                <td><%= students[i].leaveCount %></td>
-                                <!-- href="students/<%= stuedents[i].id %>" -->
-                                <td><a href="############"><i class="bi bi-chevron-right fs-4"></i></a></td>
+                                <td>
+                                    <%= student[i].id %>
+                                </td>
+                                <td>
+                                    <%= student[i].name %>
+                                </td>
+                                <td>
+                                    <%= student[i].major %>
+                                </td>
+                                <td>
+                                    <%= student[i].attendance_count %>
+                                </td>
                             </tr>
-                            <tr>
-                                <td>2</td>
-                                <td>2</td>
-                                <td>2</td>
-                                <td>2</td>
-                                <td>2</td>
-                                <td>2</td>
-                                <td><a href="############"><i class="bi bi-chevron-right fs-4"></i></a></td>
-                            </tr>
+                        <% } %>
                         </tbody>
                     </table>
                 </div>
             </section>
             <!-- Table End-->
 
-            <!-- Search Filter -->
-            <script>
-                $(document).ready(function () {
-                    $('#myInput').on("keyup", function () {
-                        var value = $(this).val().toLocaleLowerCase();
-                        $("#tableData tr").filter(function () {
-                            $(this).toggle($(this).text().toLocaleLowerCase().indexOf(value) > -1)
-                        });
+        </div>
+
+        <!-- Search Filter -->
+        <script>
+            $(document).ready(function () {
+                $('#myInput').on("keyup", function () {
+                    var value = $(this).val().toLocaleLowerCase();
+                    $("#tableData tr").filter(function () {
+                        $(this).toggle($(this).text().toLocaleLowerCase().indexOf(value) > -1)
                     });
                 });
-            </script>
-            <!-- Search Filter -->
+            });
+        </script>
+        <!-- Search Filter -->
 
 
-        </div>
-        <!-- Course Details End -->
+    </div>
+    <!-- Course Details End -->
 
     </div>
 </body>

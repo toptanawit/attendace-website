@@ -21,7 +21,7 @@
         crossorigin="anonymous"></script>
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.1/font/bootstrap-icons.css" />
-    
+
     <!-- jquery -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
@@ -33,7 +33,7 @@
         <header class="header p-3 position-absolute start-0 top-0 end-0">
             <div id="header" class="d-flex fixed-top justify-content-between align-items-center px-5 navbar-expand-md"
                 style="height: 100px; background-color: #007CB7; transition: 0.5s ease;">
-                <a href="################" class="text-decoration-none text-white fs-1 fw-bold">
+                <a href="/courses" class="text-decoration-none text-white fs-1 fw-bold">
                     <img src="/public/img/cosci_logo.png" alt="cosci logo" style="height: 4rem;">
                 </a>
 
@@ -51,22 +51,22 @@
                     <div class="collapse navbar-collapse" id="navbarNav">
                         <ul class="navbar-nav justify-content-between fs-5" style="width: 450px; height: 100%">
                             <li class="nav-item">
-                                <a class="nav-link text-white point__nav-link fw-bold" href="################"
+                                <a class="nav-link text-white point__nav-link fw-bold" href="/courses"
                                     style="--pointer-color: white">Courses</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-white point__nav-link" href="################"
+                                <a class="nav-link text-white point__nav-link" href="/edit-report"
                                     style="--pointer-color: white">Leave Requests</a>
                             </li>
                             <li class="nav-item">
                                 <img src="/public/img/vertical_line.png" alt="" style="height: 45px; width: 45px;">
                             </li>
                             <li class="nav-item dropdown">
-                                <a class="nav-link text-white" href="################" id="navbarDarkDropdownMenuLink" role="button"
+                                <a class="nav-link text-white" id="navbarDarkDropdownMenuLink" role="button"
                                     data-bs-toggle="dropdown" aria-expanded="false"><i
                                         class="bi bi-person-fill"></i></a>
                                 <ul class="dropdown-menu" aria-labelledby="navbarDarkDropdownMenuLink">
-                                    <li><a class="dropdown-item" href="################">Sign Out</a></li>
+                                    <li><a class="dropdown-item" href="/logout">Sign Out</a></li>
                                 </ul>
                             </li>
                         </ul>
@@ -81,17 +81,17 @@
             <div class="dropdown-nav__container container-xxl d-flex align-items-center">
                 <div class="row align-items-start">
                     <div class="col-12">
-                        <a href="################" class="row text-decoration-none">
+                        <a href="/courses" class="row text-decoration-none">
                             <h1 class="display-4 text-white">Courses</h1>
                         </a>
                     </div>
                     <div class="col-12 mt-4">
-                        <a href="################" class="row text-decoration-none">
+                        <a href="/edit-report" class="row text-decoration-none">
                             <h1 class="display-4 text-white">Leave Requests</h1>
                         </a>
                     </div>
                     <div class="col-12 mt-4">
-                        <a href="################" class="row text-decoration-none">
+                        <a href="/logout" class="row text-decoration-none">
                             <h1 class="display-4 text-white">Sign Out</h1>
                         </a>
                     </div>
@@ -119,7 +119,8 @@
             <!-- Table -->
             <section>
                 <div class="mb-3 d-flex justify-content-between">
-                    <input type="text" id="myInput" name="myInput" placeholder="Search for courses" class="form-control">
+                    <input type="text" id="myInput" name="myInput" placeholder="Search for courses"
+                        class="form-control">
                 </div>
                 <div class="table-responsive" id="no-more-tables">
                     <table id="myTable" class="table bg-white table-striped">
@@ -135,30 +136,34 @@
                             </tr>
                         </thead>
                         <tbody id="tableData">
-                            <!-- <% for(var i=0; i < courses.length; i++) { 
-                                %> -->
+                        <% for(var i=0; i < courses.length; i++) { %>
                             <tr>
-                                <td><%= courses[i].semester %></td>
-                                <td><%= courses[i].code %></td>
-                                <td><%= courses[i].name %></td>
-                                <td><%= courses[i].section %></td>
-                                <td><%= courses[i].num_of_stu %></td>
-                                <td><%= courses[i].attendanceRate %></td>
-                                <!-- link to qrcode page -->
-                                 <td><a href="############" type="button" class="btn d-flex align-items-center justify-content-center w-75" style="background-color: #007CB7; height: 38px;"><i class="bi bi-play fs-4 text-white"></i></a></td>
-                                <!-- href="courses/<%= courses[i].id %>" -->
-                                <td><a href="############"><i class="bi bi-chevron-right fs-4"></i></a></td>                            </tr>
-                            <tr>
-                                <td>2</td>
-                                <td>2</td>
-                                <td>2</td>
-                                <td>2</td>
-                                <td>2</td>
-                                <td>2</td>
-                                <td><a href="############" type="button" class="btn d-flex align-items-center justify-content-center w-75" style="background-color: #007CB7; height: 38px;"><i class="bi bi-play fs-4 text-white"></i></a></td>
-                                <td><a href="############"><i class="bi bi-chevron-right fs-4"></i></a></td>
+                                <td>
+                                    <%= courses[i].semester %>
+                                </td>
+                                <td>
+                                    <%= courses[i].subject_code %>
+                                </td>
+                                <td>
+                                    <%= courses[i].name %>
+                                </td>
+                                <td>
+                                    <%= courses[i].section %>
+                                </td>
+                                <td>
+                                    <%= courses[i].student_count %>
+                                </td>
+                                <td>
+                                    <%= rate[i] %>
+                                </td>
+                                <td><a href="/attendance-create/<%= courses[i].subject_code %>-<%= courses[i].section %>"
+                                        type="button" class="btn d-flex align-items-center justify-content-center w-75"
+                                        style="background-color: #007CB7; height: 38px;"><i
+                                            class="bi bi-play fs-4 text-white"></i></a></td>
+                                <td><a href="/courses/<%= courses[i].subject_code %>-<%= courses[i].section %>"><i
+                                            class="bi bi-chevron-right fs-4"></i></a></td>
                             </tr>
-
+                        <% } %>
                         </tbody>
                     </table>
                 </div>

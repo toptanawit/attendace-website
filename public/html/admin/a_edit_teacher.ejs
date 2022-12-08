@@ -30,7 +30,7 @@
         <header class="header p-3 position-absolute start-0 top-0 end-0">
             <div id="header" class="d-flex fixed-top justify-content-between align-items-center px-5 navbar-expand-md"
                 style="height: 100px; background-color: #007CB7; transition: 0.5s ease;">
-                <a href="################" class="text-decoration-none text-white fs-1 fw-bold">
+                <a href="/courses" class="text-decoration-none text-white fs-1 fw-bold">
                     <img src="/public/img/cosci_logo.png" alt="cosci logo" style="height: 4rem;">
                 </a>
 
@@ -48,26 +48,26 @@
                     <div class="collapse navbar-collapse" id="navbarNav">
                         <ul class="navbar-nav justify-content-between fs-5" style="width: 500px; height: 100%">
                             <li class="nav-item">
-                                <a class="nav-link text-white point__nav-link fw-bold" href="/"
+                                <a class="nav-link text-white point__nav-link fw-bold" href="/courses"
                                     style="--pointer-color: white">Courses</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-white point__nav-link" href="################"
+                                <a class="nav-link text-white point__nav-link" href="/students"
                                     style="--pointer-color: white">Students</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-white point__nav-link" href="################"
+                                <a class="nav-link text-white point__nav-link" href="/teachers"
                                     style="--pointer-color: white">Teachers</a>
                             </li>
                             <li class="nav-item">
                                 <img src="/public/img/vertical_line.png" alt="" style="height: 45px; width: 45px;">
                             </li>
                             <li class="nav-item dropdown">
-                                <a class="nav-link text-white" href="#################" id="navbarDarkDropdownMenuLink"
-                                    role="button" data-bs-toggle="dropdown" aria-expanded="false"><i
+                                <a class="nav-link text-white" id="navbarDarkDropdownMenuLink" role="button"
+                                    data-bs-toggle="dropdown" aria-expanded="false"><i
                                         class="bi bi-person-fill"></i></a>
                                 <ul class="dropdown-menu" aria-labelledby="navbarDarkDropdownMenuLink">
-                                    <li><a class="dropdown-item" href="################">Sign Out</a></li>
+                                    <li><a class="dropdown-item" href="/logout">Sign Out</a></li>
                                 </ul>
                             </li>
                         </ul>
@@ -82,22 +82,22 @@
             <div class="dropdown-nav__container container-xxl d-flex align-items-center">
                 <div class="row align-items-start">
                     <div class="col-12">
-                        <a href="################" class="row text-decoration-none">
+                        <a href="/courses" class="row text-decoration-none">
                             <h1 class="display-4 text-white">Courses</h1>
                         </a>
                     </div>
                     <div class="col-12 mt-4">
-                        <a href="################" class="row text-decoration-none">
+                        <a href="/students" class="row text-decoration-none">
                             <h1 class="display-4 text-white">Students</h1>
                         </a>
                     </div>
                     <div class="col-12 mt-4">
-                        <a href="################" class="row text-decoration-none">
+                        <a href="/teachers" class="row text-decoration-none">
                             <h1 class="display-4 text-white">Teachers</h1>
                         </a>
                     </div>
                     <div class="col-12 mt-4">
-                        <a href="################" class="row text-decoration-none">
+                        <a href="/logout" class="row text-decoration-none">
                             <h1 class="display-4 text-white">Sign Out</h1>
                         </a>
                     </div>
@@ -117,86 +117,63 @@
         <!-- Flyout Navigation End -->
 
         <!-- Detail Course Start -->
-        <form method="POST" action="###############3">
+        <form method="POST" action="/edit-teachers/<%= info[i].buasri_id %>">
             <div class="container-fluid" style="padding: 130px 3rem 0 3rem;">
                 <div class="my-4 d-flex justify-content-between align-items-center">
-                    <h1>Students > Name > Edit</h1>
+                    <h1>Teachers > Name > Edit</h1>
                     <div class="d-flex justify-content-between">
-                        <button type="submit" class="btn text-white h-50 me-3"
-                            style="width: 100px; background-color: #C5CED1;">Delete</button>
-                        <button type="submit" class="btn text-white h-50"
-                            style="width: 100px; background-color: #007CB7;">Submit</button>
+                        <a href="/delete-teachers/<%= info[i].buasri_id %>">
+                            <button type="submit" class="btn text-white me-3"
+                                style="width: 100px; background-color: #C5CED1;">Delete</button>
+                        </a>
+
+                        <a href="/edit-teachers/<%= info[i].buasri_id %>">
+                            <button type="submit" class="btn text-white h-50"
+                                style="width: 100px; background-color: #007CB7;">Submit</button>
+                        </a>
                     </div>
                 </div>
 
-                <div class="row">
-                    <div class="col-12 col-sm-6 justify-content-md-ceneter">
-                        <div class="mb-3">
-                            <label for="student_id" class="form-label fw-bold">Student ID</label>
-                            <input type="student_id" class="form-control" id="student_id" aria-describedby="student_id"
-                                value="<%= students[i].id %>">
+                <% for(var i=0; i < info.length; i++) { %>
+                    <div class="row">
+                        <div class="col-12 col-sm-6 justify-content-md-ceneter">
+                            <div class="mb-3">
+                                <label for="name" class="form-label fw-bold">First Name</label>
+                                <input type="name" class="form-control" id="name" aria-describedby="name"
+                                    value="<%= info[i].name %>">
+                            </div>
+                        </div>
+
+                        <div class="col-12 col-sm-6 justify-content-md-ceneter">
+                            <div class="mb-3">
+                                <label for="lastname" class="form-label fw-bold">Last Name</label>
+                                <input type="lastname" class="form-control" id="lastname" aria-describedby="lastname"
+                                    value="<%= info[i].lastname %>">
+                            </div>
                         </div>
                     </div>
 
-                    <div class="col-12 col-sm-6 justify-content-md-ceneter">
-                        <div class="mb-3">
-                            <label for="student_major" class="form-label fw-bold">Major</label>
-                            <input type="student_major" class="form-control" id="student_major"
-                                aria-describedby="student_major" value="<%= students[i].major %>">
-                        </div>
-                    </div>
-                </div>
+                    <div class="row">
+                        <div class="col-12 col-sm-6 justify-content-md-ceneter">
 
-                <div class="row">
-                    <div class="col-12 col-sm-6 justify-content-md-ceneter">
-                        <div class="mb-3">
-                            <label for="student_firstname" class="form-label fw-bold">First Name</label>
-                            <input type="student_firstname" class="form-control" id="student_firstname"
-                                aria-describedby="student_firstname" value="<%= students[i].firstname %>">
-                        </div>
-                    </div>
+                            <div class="mb-3">
+                                <label for="email" class="form-label fw-bold">Email</label>
+                                <input type="email" class="form-control" id="email" aria-describedby="email"
+                                    value="<%= info[i].email %>">
+                            </div>
 
-                    <div class="col-12 col-sm-6 justify-content-md-ceneter">
-                        <div class="mb-3">
-                            <label for="student_lastname" class="form-label fw-bold">Last Name</label>
-                            <input type="student_lastname" class="form-control" id="student_lastname"
-                                aria-describedby="student_lastname" value="<%= students[i].lastname %>">
-                        </div>
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="col-12 col-sm-6 justify-content-md-ceneter">
-
-                        <div class="mb-3">
-                            <label for="student_email" class="form-label fw-bold">Email</label>
-                            <input type="student_email" class="form-control" id="student_email"
-                                aria-describedby="student_email" value="<%= students[i].email %>">
                         </div>
 
-                    </div>
-
-                    <div class="col-12 col-sm-6 justify-content-md-ceneter">
-                        <div class="mb-3">
-                            <label for="student_phone" class="form-label fw-bold">Phone</label>
-                            <input type="student_phone" class="form-control" id="student_phone"
-                                aria-describedby="student_phone" value="<%= students[i].phone %>">
+                        <div class="col-12 col-sm-6 justify-content-md-ceneter">
+                            <div class="mb-3">
+                                <label for="phone" class="form-label fw-bold">Phone</label>
+                                <input type="phone" class="form-control" id="phone" aria-describedby="phone"
+                                    value="<%= info[i].phone %>">
+                            </div>
                         </div>
                     </div>
-                </div>
 
-                <div class="row">
-                    <div class="col-12 col-sm-6 justify-content-md-ceneter">
-
-                        <div class="mb-3">
-                            <label for="student_buasriID" class="form-label fw-bold">Buasri ID</label>
-                            <input type="student_buasriID" class="form-control" id="student_buasriID"
-                                aria-describedby="student_buasriID" value="<%= students[i].buasriID %>">
-                        </div>
-
-                    </div>
-
-                </div>
+                <% } %>
         </form>
         <!-- Detail Course End -->
 
