@@ -117,9 +117,10 @@
         <!-- Flyout Navigation End -->
 
         <!-- Detail Course Start -->
+        <form method="POST" action="############3">
         <div class="container-fluid" style="padding: 130px 3rem 0 3rem;">
             <div class="my-4 d-flex justify-content-between align-items-center">
-                <h1>Students > Name > Edit</h1>
+                <h1>Teachers > Name > Edit</h1>
                 <div class="d-flex justify-content-between">
                     <button type="submit" class="btn text-white h-50 me-3"
                         style="width: 100px; background-color: #C5CED1;">Delete</button>
@@ -128,75 +129,56 @@
                 </div>
             </div>
 
-            <form method="post">
                 <div class="row">
                     <div class="col-12 col-sm-6 justify-content-md-ceneter">
                         <div class="mb-3">
-                            <label for="semester" class="form-label fw-bold">Student</label>
-                            <input type="semester" class="form-control" id="semester" aria-describedby="semester"
-                                value="<%=courses.semester%>">
+                            <label for="teacher_firstname" class="form-label fw-bold">First Name</label>
+                            <input type="teacher_firstname" class="form-control" id="teacher_firstname"
+                                aria-describedby="teacher_firstname" value="<%= teacher[i].firstname %>">
                         </div>
                     </div>
-
+    
                     <div class="col-12 col-sm-6 justify-content-md-ceneter">
                         <div class="mb-3">
-                            <label for="coursecode" class="form-label fw-bold">Major</label>
-                            <input type="coursecode" class="form-control" id="coursecode" aria-describedby="coursecode"
-                                value="<%=courses.code%>">
+                            <label for="teacher_lastname" class="form-label fw-bold">Last Name</label>
+                            <input type="teacher_lastname" class="form-control" id="teacher_lastname"
+                                aria-describedby="teacher_lastname" value="<%= teacher[i].lastname %>">
                         </div>
                     </div>
                 </div>
-
-            <div class="row">
-                    <div class="col-12 col-sm-6 justify-content-md-ceneter">
-                        <div class="mb-3">
-                            <label for="coursename" class="form-label fw-bold">First Name</label>
-                            <input type="coursename" class="form-control" id="coursename" aria-describedby="coursename"
-                                value="<%=courses.name%>">
-                        </div>
-                    </div>
-
-                    <div class="col-12 col-sm-6 justify-content-md-ceneter">
-                        <div class="mb-3">
-                            <label for="section" class="form-label fw-bold">Last Name</label>
-                            <input type="section" class="form-control" id="section" aria-describedby="section"
-                                value="<%=courses.section%>">
-                        </div>
-                    </div>
-                </div>
-
+    
                 <div class="row">
                     <div class="col-12 col-sm-6 justify-content-md-ceneter">
-
+    
                         <div class="mb-3">
-                            <label for="teacher_id" class="form-label fw-bold">Email</label>
-                            <input type="teacher_id" class="form-control" id="teacher_id" aria-describedby="teacher_id"
-                                value="<%=courses.teacher%>">
+                            <label for="teacher_email" class="form-label fw-bold">Email</label>
+                            <input type="teacher_email" class="form-control" id="teacher_email"
+                                aria-describedby="teacher_email" value="<%= teacher[i].email %>">
                         </div>
-
+    
                     </div>
-
+    
                     <div class="col-12 col-sm-6 justify-content-md-ceneter">
                         <div class="mb-3">
-                            <label for="section" class="form-label fw-bold">Phone</label>
-                            <input type="section" class="form-control" id="section" aria-describedby="section"
-                                value="<%=courses.section%>">
+                            <label for="teacher_phone" class="form-label fw-bold">Phone</label>
+                            <input type="teacher_phone" class="form-control" id="teacher_phone"
+                                aria-describedby="teacher_phone" value="<%= teacher[i].phone %>">
                         </div>
                     </div>
                 </div>
-
-                <div class="row">
-                    <div class="col-12 col-sm-6 justify-content-md-ceneter">
-
-                        <div class="mb-3">
-                            <label for="teacher_id" class="form-label fw-bold">Buasri ID</label>
-                            <input type="teacher_id" class="form-control" id="teacher_id" aria-describedby="teacher_id"
-                                value="<%=courses.teacher%>">
+    
+                    <div class="row">
+                        <div class="col-12 col-sm-6 justify-content-md-ceneter">
+    
+                            <div class="mb-3">
+                                <label for="teacher_id" class="form-label fw-bold">Buasri ID</label>
+                                <input type="teacher_id" class="form-control" id="teacher_id" aria-describedby="teacher_id"
+                                value="<%= teacher[i].id %>">
+                            </div>
+    
                         </div>
-
+    
                     </div>
-
-                </div>
             </form>
             <!-- Detail Course End -->
 

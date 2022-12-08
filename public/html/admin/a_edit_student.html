@@ -48,7 +48,7 @@
                     <div class="collapse navbar-collapse" id="navbarNav">
                         <ul class="navbar-nav justify-content-between fs-5" style="width: 500px; height: 100%">
                             <li class="nav-item">
-                                <a class="nav-link text-white point__nav-link fw-bold" href="################"
+                                <a class="nav-link text-white point__nav-link fw-bold" href="/"
                                     style="--pointer-color: white">Courses</a>
                             </li>
                             <li class="nav-item">
@@ -63,8 +63,8 @@
                                 <img src="/public/img/vertical_line.png" alt="" style="height: 45px; width: 45px;">
                             </li>
                             <li class="nav-item dropdown">
-                                <a class="nav-link text-white" href="################" id="navbarDarkDropdownMenuLink" role="button"
-                                    data-bs-toggle="dropdown" aria-expanded="false"><i
+                                <a class="nav-link text-white" href="#################" id="navbarDarkDropdownMenuLink"
+                                    role="button" data-bs-toggle="dropdown" aria-expanded="false"><i
                                         class="bi bi-person-fill"></i></a>
                                 <ul class="dropdown-menu" aria-labelledby="navbarDarkDropdownMenuLink">
                                     <li><a class="dropdown-item" href="################">Sign Out</a></li>
@@ -116,117 +116,108 @@
         </nav>
         <!-- Flyout Navigation End -->
 
-        <!-- Course Details Start -->
-        <div class="container-fluid" style="padding: 130px 3rem 0 3rem;">
-            <div class="my-4 d-flex justify-content-between align-items-center">
-                <h1>Teachers > Name</h1>
-                <button type="submit" class="btn text-white h-50"
-                    style="width: 100px; background-color: #007CB7;">Edit</button>
-            </div>
-            <div class=" d-flex justify-content-between align-items-center">
-                <h3>Details</h3>
-               
-            </div>
-
-            <!-- Table -->
-            <section>
-                <div class="table-responsive" id="no-more-tables">
-                    <table id="myTable" class="table bg-white table-striped">
-                        <thead class="text-dark">
-                            <tr>
-                                <th>Name</th>
-                                <th>Email</th>
-                                <th>Phone</th>
-                            </tr>
-                        </thead>
-                        <tbody id="tableData">
-                            <!-- <% for(var i=0; i < courses.length; i++) { 
-                                %> -->
-                            <tr>
-                                <td><%= courses[i].semester %></td>
-                                <td><%= courses[i].code %></td>
-                                <td><%= courses[i].name %></td>
-                            
-                        </tbody>
-                    </table>
-                </div>
-            </section>
-            <!-- Table End-->
-
-            <div class="mt-5 mb-3 d-flex justify-content-between align-items-center">
-                <h3>Course Enrollment</h3>
-            </div>
-
-            <!-- Table Start -->
-            <section>
-                <div class="mb-3 d-flex justify-content-between">
-                    <input type="text" id="myInput" name="myInput" placeholder="Search for course" class="form-control"
-                        style="width: 87%;">
-                    <!-- <button onclick="sortTable()" type="button" class="btn btn-light btn-outline-secondary me-3" style="width: 120px;"><i class="bi bi-funnel-fill me-1 table-sortable"></i>Sort</button> -->
-                    <a href="################"><button type="button" class="btn text-white"
-                        style="width: 160px; background-color: #868686;">Sort</button></a>
-                        <a href="################"><button type="button" class="btn text-white"
-                            style="width: 160px; background-color: #868686;">Export</button></a>
-                    
+        <!-- Detail Course Start -->
+        <form method="POST" action="###############3">
+            <div class="container-fluid" style="padding: 130px 3rem 0 3rem;">
+                <div class="my-4 d-flex justify-content-between align-items-center">
+                    <h1>Students > Name > Edit</h1>
+                    <div class="d-flex justify-content-between">
+                        <button type="submit" class="btn text-white h-50 me-3"
+                            style="width: 100px; background-color: #C5CED1;">Delete</button>
+                        <button type="submit" class="btn text-white h-50"
+                            style="width: 100px; background-color: #007CB7;">Submit</button>
+                    </div>
                 </div>
 
-                <div class="table-responsive" id="no-more-tables">
-                    <table id="myTable" class="table bg-white table-striped">
-                        <thead class="text-dark">
-                            <tr>
-                                <th>Semester</th>
-                                <th>Code</th>
-                                <th>Name</th>
-                                <th>Section</th>
-                                <th>Teacher</th>
-                                <th>Attendance Count</th>
-                                <th>Abscent Count</th>
-                            </tr>
-                        </thead>
-                        <tbody id="tableData">
-                             <!-- <% for(var i=0; i < students.length; i++) { 
-                                %> -->
-                            <tr>
-                                <td><%= students[i].id %></td>
-                                <td><%= students[i].name %></td>
-                                <td><%= students[i].major %></td>
-                                <td><%= students[i].attendanceCount %></td>
-                                <td><%= students[i].abscentCount %></td>
-                                <td><%= students[i].leaveCount %></td>
-                                <!-- href="students/<%= stuedents[i].id %>" -->
-                                <td><a href="################"><i class="bi bi-arrow-right-square fs-4"></i></a></td>
-                            </tr>
-                            <tr>
-                                <td>2</td>
-                                <td>2</td>
-                                <td>2</td>
-                                <td>2</td>
-                                <td>2</td>
-                                <td>2</td>
-                                <td><a href="################"><i class="bi bi-arrow-right-square fs-4"></i></a></td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </section>
-            <!-- Table End-->
+                <div class="row">
+                    <div class="col-12 col-sm-6 justify-content-md-ceneter">
+                        <div class="mb-3">
+                            <label for="student_id" class="form-label fw-bold">Student ID</label>
+                            <input type="student_id" class="form-control" id="student_id" aria-describedby="student_id"
+                                value="<%= students[i].id %>">
+                        </div>
+                    </div>
 
-            <!-- Search Filter -->
-            <script>
-                $(document).ready(function () {
-                    $('#myInput').on("keyup", function () {
-                        var value = $(this).val().toLocaleLowerCase();
-                        $("#tableData tr").filter(function () {
-                            $(this).toggle($(this).text().toLocaleLowerCase().indexOf(value) > -1)
-                        });
+                    <div class="col-12 col-sm-6 justify-content-md-ceneter">
+                        <div class="mb-3">
+                            <label for="student_major" class="form-label fw-bold">Major</label>
+                            <input type="student_major" class="form-control" id="student_major"
+                                aria-describedby="student_major" value="<%= students[i].major %>">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-12 col-sm-6 justify-content-md-ceneter">
+                        <div class="mb-3">
+                            <label for="student_firstname" class="form-label fw-bold">First Name</label>
+                            <input type="student_firstname" class="form-control" id="student_firstname"
+                                aria-describedby="student_firstname" value="<%= students[i].firstname %>">
+                        </div>
+                    </div>
+
+                    <div class="col-12 col-sm-6 justify-content-md-ceneter">
+                        <div class="mb-3">
+                            <label for="student_lastname" class="form-label fw-bold">Last Name</label>
+                            <input type="student_lastname" class="form-control" id="student_lastname"
+                                aria-describedby="student_lastname" value="<%= students[i].lastname %>">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-12 col-sm-6 justify-content-md-ceneter">
+
+                        <div class="mb-3">
+                            <label for="student_email" class="form-label fw-bold">Email</label>
+                            <input type="student_email" class="form-control" id="student_email"
+                                aria-describedby="student_email" value="<%= students[i].email %>">
+                        </div>
+
+                    </div>
+
+                    <div class="col-12 col-sm-6 justify-content-md-ceneter">
+                        <div class="mb-3">
+                            <label for="student_phone" class="form-label fw-bold">Phone</label>
+                            <input type="student_phone" class="form-control" id="student_phone"
+                                aria-describedby="student_phone" value="<%= students[i].phone %>">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-12 col-sm-6 justify-content-md-ceneter">
+
+                        <div class="mb-3">
+                            <label for="student_buasriID" class="form-label fw-bold">Buasri ID</label>
+                            <input type="student_buasriID" class="form-control" id="student_buasriID"
+                                aria-describedby="student_buasriID" value="<%= students[i].buasriID %>">
+                        </div>
+
+                    </div>
+
+                </div>
+        </form>
+        <!-- Detail Course End -->
+
+
+
+
+
+        <!-- Search Filter -->
+        <script>
+            $(document).ready(function () {
+                $('#myInput').on("keyup", function () {
+                    var value = $(this).val().toLocaleLowerCase();
+                    $("#tableData tr").filter(function () {
+                        $(this).toggle($(this).text().toLocaleLowerCase().indexOf(value) > -1)
                     });
                 });
-            </script>
-            <!-- Search Filter -->
+            });
+        </script>
+        <!-- Search Filter -->
 
-
-        </div>
-        <!-- Course Details End -->
+        <!-- Student Table End-->
 
     </div>
 </body>

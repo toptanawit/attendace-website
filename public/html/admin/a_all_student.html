@@ -119,7 +119,7 @@
         <!-- Course Details Start -->
         <div class="container-fluid" style="padding: 130px 3rem 0 3rem;">
             <div class="my-4 d-flex justify-content-between align-items-center">
-                <h1>Teacher</h1>
+                <h1>Students</h1>
                 <!-- <button type="submit" class="btn text-white h-50"
                     style="width: 100px; background-color: #007CB7;">Edit</button> -->
             </div>
@@ -127,21 +127,19 @@
             <!-- Table -->
             <section>
                 <div class="mb-3 d-flex justify-content-between">
-                    <input type="text" id="myInput" name="myInput" placeholder="Search for students" class="form-control"
-                        style="width: 87%;">
+                    <input type="text" id="myInput" name="myInput" placeholder="Search for students" class="form-control w-100 me-4">
                     <!-- <button onclick="sortTable()" type="button" class="btn btn-light btn-outline-secondary me-3" style="width: 120px;"><i class="bi bi-funnel-fill me-1 table-sortable"></i>Sort</button> -->
                     <a href="################"><button type="button" class="btn text-white"
-                        style="width: 160px; background-color: #868686;">Filter</button></a>
-                        <a href="################"><button type="button" class="btn text-white"
-                            style="width: 160px; background-color: #868686;">Export</button></a>
-                    <a href="################"><button type="button" class="btn text-white"
-                            style="width: 160px; background-color: #007CB7;">+ Add teacher</button></a>
+                            style="width: 160px; background-color: #007CB7;">+ Add student</button></a>
                 </div>
                 <div class="table-responsive" id="no-more-tables">
                     <table id="myTable" class="table bg-white table-striped">
                         <thead class="text-dark">
                             <tr>
+                                <th>Student ID</th>
                                 <th>Name</th>
+                                <th>Major</th>
+                                <th>Section</th>
                                 <th>Email</th>
                                 <th>Phone</th>
                             </tr>
@@ -153,9 +151,10 @@
                                 <td><%= courses[i].semester %></td>
                                 <td><%= courses[i].code %></td>
                                 <td><%= courses[i].name %></td>
-                            
-                                <td><a href="################"><i class="bi bi-arrow-right-square fs-4"></i></a></td>
-
+                                <td><%= courses[i].section %></td>
+                                <td><%= courses[i].teacher %></td>
+                                <td><%= courses[i].num_of_stu %></td>
+                                <td><a href="############"><i class="bi bi-chevron-right fs-4"></i></a></td>
                         </tbody>
                     </table>
                 </div>

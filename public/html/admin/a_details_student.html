@@ -119,24 +119,17 @@
         <!-- Course Details Start -->
         <div class="container-fluid" style="padding: 130px 3rem 0 3rem;">
             <div class="my-4 d-flex justify-content-between align-items-center">
-                <h1>Students</h1>
-                <!-- <button type="submit" class="btn text-white h-50"
-                    style="width: 100px; background-color: #007CB7;">Edit</button> -->
+                <h1>Students > Name</h1>
+                <button type="submit" class="btn text-white h-50"
+                    style="width: 100px; background-color: #007CB7;">Edit</button>
+            </div>
+            <div class=" d-flex justify-content-between align-items-center">
+                <h3>Details</h3>
+               
             </div>
 
             <!-- Table -->
             <section>
-                <div class="mb-3 d-flex justify-content-between">
-                    <input type="text" id="myInput" name="myInput" placeholder="Search for students" class="form-control"
-                        style="width: 87%;">
-                    <!-- <button onclick="sortTable()" type="button" class="btn btn-light btn-outline-secondary me-3" style="width: 120px;"><i class="bi bi-funnel-fill me-1 table-sortable"></i>Sort</button> -->
-                    <a href="################"><button type="button" class="btn text-white"
-                        style="width: 160px; background-color: #868686;">Filter</button></a>
-                        <a href="################"><button type="button" class="btn text-white"
-                            style="width: 160px; background-color: #868686;">Export</button></a>
-                    <a href="################"><button type="button" class="btn text-white"
-                            style="width: 160px; background-color: #007CB7;">+ Add student</button></a>
-                </div>
                 <div class="table-responsive" id="no-more-tables">
                     <table id="myTable" class="table bg-white table-striped">
                         <thead class="text-dark">
@@ -159,15 +152,64 @@
                                 <td><%= courses[i].section %></td>
                                 <td><%= courses[i].teacher %></td>
                                 <td><%= courses[i].num_of_stu %></td>
-                                <td><a href="################"><i class="bi bi-arrow-right-square fs-4"></i></a></td>
-
                         </tbody>
                     </table>
                 </div>
             </section>
             <!-- Table End-->
 
-          
+            <div class="mt-5 mb-3 d-flex justify-content-between align-items-center">
+                <h3>Course Enrollment</h3>
+            </div>
+
+            <!-- Table Start -->
+            <section>
+                <div class="mb-3 d-flex justify-content-between">
+                    <input type="text" id="myInput" name="myInput" placeholder="Search for course" class="form-control w-100">
+                    <!-- <button onclick="sortTable()" type="button" class="btn btn-light btn-outline-secondary me-3" style="width: 120px;"><i class="bi bi-funnel-fill me-1 table-sortable"></i>Sort</button> -->
+                    
+                </div>
+
+                <div class="table-responsive" id="no-more-tables">
+                    <table id="myTable" class="table bg-white table-striped">
+                        <thead class="text-dark">
+                            <tr>
+                                <th>Semester</th>
+                                <th>Code</th>
+                                <th>Name</th>
+                                <th>Section</th>
+                                <th>Teacher</th>
+                                <th>Attendance Count</th>
+                                <th>Abscent Count</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tableData">
+                             <!-- <% for(var i=0; i < students.length; i++) { 
+                                %> -->
+                            <tr>
+                                <td><%= students[i].id %></td>
+                                <td><%= students[i].name %></td>
+                                <td><%= students[i].major %></td>
+                                <td><%= students[i].attendanceCount %></td>
+                                <td><%= students[i].abscentCount %></td>
+                                <td><%= students[i].leaveCount %></td>
+                                <!-- href="students/<%= stuedents[i].id %>" -->
+                                <td><a href="############"><i class="bi bi-chevron-right fs-4"></i></a></td>
+                            </tr>
+                            <tr>
+                                <td>2</td>
+                                <td>2</td>
+                                <td>2</td>
+                                <td>2</td>
+                                <td>2</td>
+                                <td>2</td>
+                                <td><a href="############"><i class="bi bi-chevron-right fs-4"></i></a></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+            <!-- Table End-->
 
             <!-- Search Filter -->
             <script>
