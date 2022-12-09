@@ -10,10 +10,10 @@ router_db.use(express.urlencoded({ extended: true }));
 router_db.use(express.json());
 
 var connection = mysql.createConnection({
-    host: 'localhost',
-    user: 'root',
-    password: '',
-    database: 'final',
+    host: 'us-cdbr-east-06.cleardb.net',
+    user: 'b8ce35d29636d2',
+    password: 'fcfc941c',
+    database: 'heroku_614e537ca365244',
     multipleStatements: true
 });
 
