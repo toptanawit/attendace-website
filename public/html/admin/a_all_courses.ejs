@@ -144,7 +144,6 @@
                                 <th>Section</th>
                                 <th>Teacher</th>
                                 <th>Number of Students</th>
-                                <th>Attendance Rate</th>
                             </tr>
                         </thead>
                         <tbody id="tableData">
@@ -168,10 +167,7 @@
                                 <td>
                                     <%= courses[i].student_count %>
                                 </td>
-                                <td>
-                                    <%= rate[i] %>
-                                </td>
-                                <td><a href="/courses/<%= courses[i].subject_code-<%= courses[i].section"><i class="bi bi-chevron-right fs-4"></i></a>
+                                <td><a href="/courses/<%= courses[i].subject_code %>-<%= courses[i].section %>"><i class="bi bi-chevron-right fs-4"></i></a>
                                 </td>
                             </tr>
                         <% } %>

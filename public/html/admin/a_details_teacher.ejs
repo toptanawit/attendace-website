@@ -120,7 +120,7 @@
         <div class="container-fluid" style="padding: 130px 3rem 0 3rem;">
             <div class="my-4 d-flex justify-content-between align-items-center">
                 <h1>Teachers > Details</h1>
-                <a href="/edit-teachers/<%= teacher[i].buasri_id %>">
+                <a href="/edit-teachers/<%= teacher[0].buasri_id %>">
                     <button type="submit" class="btn text-white"
                     style="width: 100px; background-color: #007CB7;">Edit</button>
                 </a>
@@ -144,7 +144,7 @@
                         <tbody id="tableData">
                         <% for(var i=0; i < teacher.length; i++) {  %>
                             <tr>
-                                <td><%= teacher[i].name teacher[i].lastname%></td>
+                                <td><%= teacher[i].name %> <%= teacher[i].lastname %></td>
                                 <td><%= teacher[i].email %></td>
                                 <td><%= teacher[i].phone %></td>  
                             </tr>
@@ -180,16 +180,13 @@
                             </tr>
                         </thead>
                         <tbody id="tableData">
-                        <% for(var i=0; i < courses.length; i++) { %> 
+                        <% for(var i=0; i < course.length; i++) { %> 
                             <tr>
-                                <td><%= courses[i].semester %></td>
-                                <td><%= courses[i].subject_code %></td>
-                                <td><%= courses[i].name %></td>
-                                <td><%= courses[i].section %></td>
-                                <td><%= courses[i].teacher %></td>
-                                <!-- <td><%= students[i].attendanceCount %></td>
-                                <td><%= students[i].abscentCount %></td>
-                                <td><%= students[i].leaveCount %></td> -->
+                                <td><%= course[i].semester %></td>
+                                <td><%= course[i].subject_code %></td>
+                                <td><%= course[i].name %></td>
+                                <td><%= course[i].section %></td>
+                                <td><%= course[i].teacher %></td>
                             </tr>
                             <% } %>  
                         </tbody>

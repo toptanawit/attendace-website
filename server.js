@@ -10,7 +10,7 @@ var bcrypt = require('bcryptjs');
 const nodemailer = require('nodemailer');
 var smtpTransport = require('nodemailer-smtp-transport');
 
-app.set('views', path.join(__dirname+'/public', 'views'));
+app.set('views', path.join(__dirname+'/public', 'html'));
 app.set('view engine', 'ejs');
 
 var connection = mysql.createConnection({
@@ -28,33 +28,6 @@ app.use(session({
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-
-// app.get('/dashboard', (req, res)=>{
-//     connection.query('select status from users where buasri_id = ?', req.session.userID, (err,result)=>{
-//         const status = result[0].status;
-//         if (status == 'Student') {
-//             res.redirect('/courses') 
-//         } else if (status == 'Teacher') {
-//             connection.query(
-//                 'select a.*, b.* from subject a, report b, users c where a.teacher = c.buasri_id and b.subject_code = a.subject_code and c.buasri_id = ?',
-//                 req.session.userID,
-//                 (err,results)=>{
-//                     res.render('dashboard.ejs',{
-//                         courses: result[0],
-//                         report: results[1]
-//                     })
-//                 })
-//         } else if (status == 'admin') {
-//             connection.query('select a.*, b.*, c.* from subject a, report b, users c',(err,results)=>{
-//                 res.render('dashboard.ejs',{
-//                     courses: results[0],
-//                     report: results[1],
-//                     users: results[2]
-//                 })
-//             })
-//         }
-//     })
-// })
 
 app.get('/login', (req,res)=>{
     if (req.session.loggedin == true) {
@@ -78,7 +51,7 @@ app.post('/signup', (req, res)=>{
             bcrypt.hash(user_password, salt, (err, hash)=>{
                 connection.query(
                     'update users set password = ? where buasri_id = ?',
-                    [user_mail, hash, user_buasri],
+                    [hash, user_buasri],
                     (err)=>{
                         if (err) {console.error();}
                         res.redirect('/login');
@@ -105,7 +78,7 @@ app.post('/authen', (req, res)=>{
                     bcrypt.compare(user_password, results[0].password, (err, result)=>{
                         if (result == true) {
                             req.session.loggedin = true;
-                            req.session.userID = results[0].buasri_id;
+                            req.session.userID = user_buasri;
                             res.redirect('/courses');
                         } 
                     })

@@ -120,7 +120,7 @@
         <div class="container-fluid" style="padding: 130px 3rem 0 3rem;">
             <div class="my-4 d-flex justify-content-between align-items-center">
                 <h1>Students > Details</h1>
-                <a href="/edit-students/<%= student[i].buasri_id %>">
+                <a href="/edit-students/<%= student[0].buasri_id %>">
                     <button type="submit" class="btn text-white h-50"
                     style="width: 100px; background-color: #007CB7;">Edit</button>
                 </a>
@@ -146,7 +146,7 @@
                         <% for(var i=0; i < student.length; i++) { %> 
                             <tr>
                                 <td><%= student[i].student_id %></td>
-                                <td><%= student[i].name student[i].lastname%></td>
+                                <td><%= student[i].name %> <%= student[i].lastname %></td>
                                 <td><%= student[i].email %></td>
                                 <td><%= student[i].phone %></td>
                         <% } %>
@@ -182,11 +182,11 @@
                         <tbody id="tableData">
                             <% for(var i=0; i < student.length; i++) { %> 
                             <tr>
-                                <td><%= students[i].subject_semester %></td>
-                                <td><%= students[i].subject_code %></td>
-                                <td><%= students[i].subject_name %></td>
-                                <td><%= students[i].subject_section %></td>
-                                <td><%= students[i].subject_teacher %></td>
+                                <td><%= course[i].semester %></td>
+                                <td><%= course[i].subject_code %></td>
+                                <td><%= course[i].name %></td>
+                                <td><%= course[i].section %></td>
+                                <td><%= course[i].teacher %></td>
                             </tr>
                             <% } %>
                         </tbody>

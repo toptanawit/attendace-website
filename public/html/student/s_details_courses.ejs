@@ -134,16 +134,14 @@
                             </tr>
                         </thead>
                         <tbody id="tableData">
-                        <% for(var i=0; i < courses.length; i++) { %> 
+                        <% for(var i=0; i < course.length; i++) { %> 
                             <tr>
                                 <td><%= course[i].semester %></td>
-                                <td><%= course[i].code %></td>
+                                <td><%= course[i].subject_code %></td>
                                 <td><%= course[i].name %></td>
                                 <td><%= course[i].section %></td>
                                 <td><%= course[i].teacher %></td>
-                                <td><%= course[i].attendance_count %></td>
-                                <!-- <td><%= students[i].abscentCount %></td>
-                                <td><%= students[i].leaveCount %></td> -->
+                                <td><%= attendance.length %></td>
                             </tr>
                         <% } %>
                         </tbody>
@@ -168,28 +166,21 @@
                             <tr>
                                 <th>Attendance Date</th>
                                 <th>Attendance Time</th>
-                                <th>Leave File</th>
                                 <th>Attendance Image</th>
-                                <th>Attendance Status</th>
+                                <!-- <th>Attendance Status</th> -->
                             </tr>
                         </thead>
                         <tbody id="tableData">
-                             <!-- <% for(var i=0; i < students.length; i++) { 
-                                %> -->
+                             <% for(var i=0; i < attendance.length; i++) { 
+                                %>
                             <tr>
                                 <td><%= attendance[i].date %></td>
                                 <td><%= attendance[i].time %></td>
-                                <td><%= report[i].file %></td>
-                                <td><%= attendance[i].image %></td>
-                                <td><%= attendance[i].status %></td>
+                                <!-- <td><%= attendance[i].image %></td> -->
+                                <td><a href="/download/<%= attendance[i].attendance_id %>">Download</a></td>
+                                <!-- <td><%= attendance[i].status %></td> -->
                             </tr>
-                            <tr>
-                                <td><%= attendance[i].date %></td>
-                                <td><%= attendance[i].time %></td>
-                                <td><%= report[i].file %></td>
-                                <td><%= attendance[i].image %></td>
-                                <td><span class="badge text-bg-primary">Primary</span></td>
-                            </tr>
+                            <% } %>
                         </tbody>
                     </table>
                 </div>

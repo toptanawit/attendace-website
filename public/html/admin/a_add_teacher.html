@@ -117,7 +117,7 @@
 
         <!-- Detail Course Start -->
             <div class="container-fluid" style="padding: 130px 3rem 0 3rem;">
-                <form method="POST" action="/add-teachers"></form>
+                <form method="POST" action="/add-teachers">
                 <div class="my-4 d-flex justify-content-between align-items-center">
                     <h1>Teachers > Add teacher</h1>
                     <div class="d-flex justify-content-between">
@@ -131,7 +131,7 @@
                     <div class="col-12 col-sm-6 justify-content-md-ceneter">
                         <div class="mb-3">
                             <label for="name" class="form-label fw-bold">First Name</label>
-                            <input type="name" class="form-control" id="name"
+                            <input type="name" class="form-control" name="name" id="name"
                                 aria-describedby="name" placeholder="First Name">
                         </div>
                     </div>
@@ -139,7 +139,7 @@
                     <div class="col-12 col-sm-6 justify-content-md-ceneter">
                         <div class="mb-3">
                             <label for="lastname" class="form-label fw-bold">Last Name</label>
-                            <input type="lastname" class="form-control" id="lastname"
+                            <input type="lastname" class="form-control" name="lastname" id="lastname"
                                 aria-describedby="lastname" placeholder="Last Name">
                         </div>
                     </div>
@@ -150,7 +150,7 @@
 
                         <div class="mb-3">
                             <label for="email" class="form-label fw-bold">Email</label>
-                            <input type="email" class="form-control" id="email"
+                            <input type="email" class="form-control" name="email" id="email"
                                 aria-describedby="email" placeholder="Email">
                         </div>
 
@@ -159,7 +159,7 @@
                     <div class="col-12 col-sm-6 justify-content-md-ceneter">
                         <div class="mb-3">
                             <label for="phone" class="form-label fw-bold">Phone</label>
-                            <input type="phone" class="form-control" id="phone"
+                            <input type="phone" class="form-control" name="phone" id="phone"
                                 aria-describedby="phone" placeholder="Phone">
                         </div>
                     </div>
@@ -170,7 +170,7 @@
 
                         <div class="mb-3">
                             <label for="buasri_id" class="form-label fw-bold">Buasri ID</label>
-                            <input type="t" class="form-control" id="t" aria-describedby="teacher_id"
+                            <input type="t" class="form-control" name="buasri_id" id="t" aria-describedby="teacher_id"
                                 placeholder="Buasri ID">
                         </div>
 

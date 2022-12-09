@@ -112,7 +112,7 @@
 
         <!-- Course Details Start -->
         <div class="container-fluid" style="padding: 130px 3rem 0 3rem;">
-            <form method="post" action="/report" id="form">
+            <form method="POST" action="/report" >
             <div class="my-4 d-flex justify-content-between align-items-center">
                 <h1>Leave Application</h1>
                 <button type="submit" class="btn text-white h-50"
@@ -124,14 +124,14 @@
                     <div class="col-12 col-sm-6 justify-content-md-ceneter">
                         <div class="mb-3">
                             <label for="subject_code" class="form-label fw-bold">Course ID</label>
-                            <input type="subject_code" class="form-control" id="subject_code" aria-describedby="subject_code">
+                            <input type="subject_code" class="form-control" name="subject_code" id="subject_code" aria-describedby="subject_code">
                         </div>
                     </div>
 
                     <div class="col-12 col-sm-6 justify-content-md-ceneter">
                         <div class="mb-3">
                             <label for="section" class="form-label fw-bold">Course Section</label>
-                            <select class="form-select" aria-label="section" id="section">
+                            <select class="form-select" aria-label="section" name="section" id="section">
                                 <option selected>Open this select section</option>
                                 <option value="B01">B01</option>
                                 <option value="B02">B02</option>
@@ -144,7 +144,7 @@
                     <div class="col-12 col-sm-6 justify-content-md-ceneter">
                         <div class="mb-3">
                             <label for="type" class="form-label fw-bold">Leave Type</label>
-                            <select class="form-select" aria-label="type" id="type">
+                            <select class="form-select" aria-label="type" name="type" id="type">
                                     <option selected>Open this select leave type</option>
                                     <option value="Sick Leave">Sick Leave</option>
                                     <option value="Personal Leave">Personal Leave</option>
@@ -155,7 +155,7 @@
                     <div class="col-12 col-sm-6 justify-content-md-ceneter">
                         <div class="mb-3">
                             <label for="date" class="form-label fw-bold">Leave Date</label>
-                            <input type="date" class="form-control" id="date" aria-describedby="leave_date">
+                            <input type="date" class="form-control" name="date" id="date" aria-describedby="leave_date">
                         </div>
                     </div>
                 </div>
@@ -165,7 +165,7 @@
 
                         <div class="mb-3">
                             <label for="file" class="form-label fw-bold">Upload Leave Letter</label>
-                            <input class="form-control" type="file" id="formFile" accept=".pdf">
+                            <input class="form-control" type="file" name="file" id="formFile" accept=".pdf">
                         </div>
 
                     </div>
@@ -175,7 +175,7 @@
 
         </div>
         <!-- Course Details End -->
-ๆ
+
         <script>
             document.getElementById('form').addEventListener('submit', function(e) {
                 e.preventDefault();

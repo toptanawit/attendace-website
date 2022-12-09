@@ -17,6 +17,11 @@ var connection = mysql.createConnection({
     multipleStatements: true
 });
 
+router_db.use(session({
+    secret: 'COSCI', cookie: { maxAge: 60000000 },
+    resave: true, saveUninitialized: false
+}));
+
 // read
 router_db.route('/courses')
 .get( function(req, res){
@@ -25,67 +30,54 @@ router_db.route('/courses')
             const status = result[0].status;
             if (status == 'admin') {
                 connection.query('select * from subject',(err, result)=>{
-
-                    var attendance_rate = [];
-
-                    for (const index in result) {
-                        const subject_code = result[index].subject_code;
-                        const section = result[index].section;
-                        const student_enroll = result[index].student_count;
-                        console.log(subject_code,section,student_enroll);
-                        connection.query(
-                            'select count(c.class_id) as no_of_class , count(a.attendance_id) as no_of_attendance from class c , attendance a where a.subject_code = c.subject_code and c.subject_code = ? and c.`section` = ?',
-                            [subject_code,section],
-                            (err,results)=>{
-                                const no_of_class = results[0].no_of_class;
-                                const no_of_attendance = results[0].no_of_attendance;
-                                console.log(no_of_class,no_of_attendance);
-                                var rate = (no_of_attendance/(no_of_class*student_enroll))*100;
-                                attendance_rate.push(rate);
-                                console.log(rate,attendance_rate);
-                            }
-                        )
-                    }
-
-                    res.render('a_all_courses.ejs', {
-                        courses: result,
-                        rate: attendance_rate
-                    })
-
+                    // for (const index in result) {
+                    //     const subject_code = result[index].subject_code;
+                    //     const section = result[index].section;
+                    //     const student_enroll = result[index].student_count;
+                    //     console.log(subject_code,section,student_enroll);
+                        // connection.query(
+                        //     'select count(c.class_id) as no_of_class , count(a.attendance_id) as no_of_attendance from class c , attendance a where a.subject_code = c.subject_code and c.subject_code = ? and c.`section` = ?',
+                        //     [subject_code,section],
+                        //     (err,results)=>{
+                                res.render('admin/a_all_courses.ejs', {
+                                    courses: result,                               
+                                })
+                            // }
+                        // )
+                    // }
                 });
             } else if (status == 'Teacher') {
                 connection.query('select s.* from subject s , users u where s.teacher = u.buasri_id and u.buasri_id = ?',req.session.userID,(err, result)=>{
                     
-                    var attendance_rate = [];
+                    // var attendance_rate = [];
 
-                    for (const index in result) {
-                        const subject_code = result[index].subject_code;
-                        const section = result[index].section;
-                        const student_enroll = result[index].student_count;
-                        console.log(subject_code,section,student_enroll);
-                        connection.query(
-                            'select count(c.class_id) as no_of_class , count(a.attendance_id) as no_of_attendance from class c , attendance a where a.subject_code = c.subject_code and c.subject_code = ? and c.`section` = ?',
-                            [subject_code,section],
-                            (err,results)=>{
-                                const no_of_class = results[0].no_of_class;
-                                const no_of_attendance = results[0].no_of_attendance;
-                                console.log(no_of_class,no_of_attendance);
-                                var rate = (no_of_attendance/(no_of_class*student_enroll))*100;
-                                attendance_rate.push(rate);
-                                console.log(rate,attendance_rate);
-                            }
-                        )
-                    }
+                    // for (const index in result) {
+                    //     const subject_code = result[index].subject_code;
+                    //     const section = result[index].section;
+                    //     const student_enroll = result[index].student_count;
+                        // console.log(subject_code,section,student_enroll);
+                        // connection.query(
+                        //     'select count(c.class_id) as no_of_class , count(a.attendance_id) as no_of_attendance from class c , attendance a where a.subject_code = c.subject_code and c.subject_code = ? and c.`section` = ?',
+                        //     [subject_code,section],
+                        //     (err,results)=>{
+                        //         const no_of_class = results[0].no_of_class;
+                        //         const no_of_attendance = results[0].no_of_attendance;
+                                // console.log(no_of_class,no_of_attendance);
+                                // var rate = (no_of_attendance/(no_of_class*student_enroll))*100;
+                                // attendance_rate.push({percent: rate});
+                                // console.log(attendance_rate[0]);
 
-                    res.render('t_all_courses.ejs', {
-                        courses: result,
-                        rate: attendance_rate
-                    })
-
+                                res.render('teacher/t_all_courses.ejs', {
+                                    courses: result,
+                                    // attendance_rate: attendance_rate
+                                })
+                            // }
+                        // )
+                    // }
                 });
             } else if (status == "Student") {
                 connection.query('select s.* from subject s , enrollment e where s.subject_code = e.subject_code and e.buasri_id = ?',req.session.userID,(err, result)=>{
-                    res.render('s_all_courses.ejs', {
+                    res.render('student/s_all_courses.ejs', {
                         courses: result
                     })
                 });
@@ -97,7 +89,7 @@ router_db.route('/courses')
 router_db.route('/students')
 .get((req,res)=>{
     connection.query('select * from users where status = "Student"',(err,result)=>{
-        res.render('a_all_students.ejs', {
+        res.render('admin/a_all_student.ejs', {
             students: result
         })
     }) 
@@ -106,7 +98,7 @@ router_db.route('/students')
 router_db.route('/teachers')
 .get((req,res)=>{
     connection.query('select * from users where status = "Teacher"',(err,result)=>{
-        res.render('a_all_teacher.ejs', {
+        res.render('admin/a_all_teacher.ejs', {
             teachers: result
         })
     })
@@ -114,48 +106,55 @@ router_db.route('/teachers')
 
 router_db.route('/students/:buasri_id')
 .get((req,res)=>{
-    connection.query('select * from users where buasri_id = ?', req.params.buasri_id,(err,result)=>{
-        res.render('a_details_student.ejs', {
-            student: result[0]
+    connection.query('select * from users where buasri_id = ?; select a.*, b.* from enrollment a , subject b where a.subject_code = b.subject_code and buasri_id = ?',[req.params.buasri_id,req.params.buasri_id],(err,result)=>{
+        res.render('admin/a_details_student.ejs', {
+            student: result[0],
+            course: result[1]
         })
     }) 
 });
 
 router_db.route('/teachers/:buasri_id')
 .get((req,res)=>{
-    connection.query('select * from users where buasri_id = ?', req.params.buasri_id,(err,result)=>{
-        res.render('a_details_teacher.ejs', {
-            teacher: result[0]
+    connection.query('select * from users where buasri_id = ?; select * from subject where teacher = ?',[req.params.buasri_id,req.params.buasri_id],(err,result)=>{
+        res.render('admin/a_details_teacher.ejs', {
+            teacher: result[0],
+            course: result[1]
         })
     }) 
 });
 
 router_db.route('/courses/:subject_code-:section')
 .get((req,res)=>{
-    connection.query('select * from subject where subject_code = ? and section = ?; select status from users where buasri_id = ?', [req.params.subject_code,req.params.section,req.query.userID],(err,result)=>{
-        const subject = result[0];
-        const status = result[1].status;
-        if (status == 'admin') {
-            connection.query('select * from enrollment where subject_code = ? and section = ?',[req.params.subject_code,req.params.section],(err,result)=>{
-                const student = result[0];
-                res.render('a_details_course.ejs', {
-                    course: subject,
-                    student: student
+    connection.query('select * from subject where subject_code = ? and section = ?', [req.params.subject_code,req.params.section],(err,result)=>{
+        const subject = result;
+        connection.query('select status from users where buasri_id = ?',req.session.userID,(err,result)=>{
+            const status = result[0].status;
+            if (status == 'admin') {
+                connection.query('select a.*, b.student_id, b.name as firstname, b.lastname, b.major from enrollment a , users b where a.buasri_id = b.buasri_id and a.subject_code = ? and a.section = ?',[req.params.subject_code,req.params.section],(err,result)=>{
+                    const student = result;
+                    res.render('admin/a_details_course.ejs', {
+                        course: subject,
+                        student: student
+                    })
                 })
-            })
-        } else if (status == 'Teacher') {
-            connection.query('select * from enrollment where subject_code = ? and section = ?',[req.params.subject_code,req.params.section],(err,result)=>{
-                const student = result[0];
-                res.render('t_details_course.ejs', {
-                    course: subject,
-                    student: student
+            } else if (status == 'Teacher') {
+                connection.query('select a.*, b.student_id, b.name as firstname, b.lastname, b.major from enrollment a , users b where a.buasri_id = b.buasri_id and a.subject_code = ? and a.section = ?',[req.params.subject_code,req.params.section],(err,result)=>{
+                    const student = result;
+                    res.render('teacher/t_details_courses.ejs', {
+                        course: subject,
+                        student: student
+                    })
                 })
-            })
-        } else if (status == 'Student') {
-            res.render('s_details_course.ejs', {
-                course: result[0]
-            })
-        }
+            } else if (status == 'Student') {
+                connection.query('select * from attendance where buasri_id = ? and subject_code = ?',[req.session.userID,req.params.subject_code],(err,result)=>{
+                    res.render('student/s_details_courses.ejs', {
+                        course: subject,
+                        attendance: result
+                    })
+                })
+            }
+        })
     }) 
 });
 
@@ -227,7 +226,11 @@ router_db.route('/add-teachers')
 
 router_db.route('/add-courses')
 .get((req,res)=>{
-    res.sendFile(path.join(__dirname, "/public/html/admin/a_add_course.html"));
+    connection.query('select * from users where status = "Student"',(err,result)=>{
+        res.render('admin/a_add_course.ejs',{
+            student: result
+        })
+    })
 })
 .post((req, res)=>{
     const semester = req.body.semester;
@@ -244,12 +247,15 @@ router_db.route('/add-courses')
         teacher: teacher,
     };
 
+    console.log(course)
+
     connection.query('insert into subject set ?', course, (err)=>{
         console.log('Add Course Successfully');
     });
 
     const students = req.body.students // array of student
 
+    console.log(students)
     for (const stu in students) {
         const enroll = {
             subject_code: subject_code,
@@ -281,7 +287,7 @@ router_db.route('/report')
     connection.query('select status from users where buasri_id = ?', req.session.userID, (err,result)=>{
         const status = result[0].status;
         if (status == 'Student') {
-            res.sendFile(path.join(__dirname, "/public/html/student/s_leave.html"));
+            res.render('student/s_leave.ejs');
         } else if (status == 'Teacher') {
             res.redirect('/edit-report');
         }
@@ -292,8 +298,11 @@ router_db.route('/report')
     const section = req.body.section;
     const type = req.body.type;
 
-    const base64data = req.body.file;
-    var blob = Buffer.from(base64data,"base64");
+    // const pdf = req.files.user-file;
+    const pdf = req.body.file;
+    // const base64data = req.body.file;
+    // var blob = Buffer.from(base64data,"base64");
+    // var blob = Buffer.from(pdf,"base64");
 
     connection.query('select curtime() as time, curdate() as date',(err,results)=>{
         const time = results[0].time;
@@ -305,7 +314,7 @@ router_db.route('/report')
             subject_code: subject_code,
             section: section,
             type: type,
-            file: blob,
+            file: pdf,
             time: time,
             date: date,
             status: 'Pending'
@@ -323,7 +332,7 @@ router_db.route('/report')
 router_db.route('/edit-students/:buasri_id')
 .get((req,res)=>{
     connection.query('select * from users where buasri_id = ?', req.params.buasri_id, (err, result)=>{
-        res.render('a_edit_student.ejs', {
+        res.render('admin/a_edit_student.ejs', {
             info: result
         })
     }) 
@@ -360,7 +369,7 @@ router_db.route('/edit-students/:buasri_id')
 router_db.route('/edit-teachers/:buasri_id')
 .get((req,res)=>{
     connection.query('select * from users where buasri_id = ?', req.params.buasri_id, (err, result)=>{
-        res.render('a_edit_teacher.ejs', {
+        res.render('admin/a_edit_teacher.ejs', {
             info: result
         })
     })  
@@ -392,10 +401,10 @@ router_db.route('/edit-teachers/:buasri_id')
 
 router_db.route('/edit-courses/:subject_code-:section')
 .get((req,res)=>{
-    connection.query('select * from subject where subject_code = ? and section = ?; select * from enrollment where subject_code = ? and section = ?; select count(class_id) as class_count from class where subject_code = ? and section = ?',
-    [req.params.subject_code, req.params.section, req.params.subject_code, req.params.section, req.params.subject_code, req.params.section],
+    connection.query('select * from subject where subject_code = ? and section = ?; select * from users where status = "Student" ; select count(class_id) as class_count from class where subject_code = ? and section = ?',
+    [req.params.subject_code, req.params.section, req.params.subject_code, req.params.section],
     (err, results)=>{
-        res.render('a_edit_course.ejs', {
+        res.render('admin/a_edit_course.ejs', {
             courseinfo: results[0],
             students: results[1],
             class: results[2].class_count
@@ -485,19 +494,21 @@ router_db.route('/edit-report')
         const status = result[0].status;
         if (status == 'Teacher') {
             connection.query(
-                'select a.* from report a, subject b, users c where a.subject_code = b.subject_code and b.teacher = c.buasri_id and c.buasri_id = ?',
+                'select a.*, b.*, c.name as firstname , c.lastname from report a, subject b, users c where a.subject_code = b.subject_code and b.teacher = c.buasri_id and c.buasri_id = ?',
                 req.session.userID,
                 (err,result)=>{
-                    res.render('t_leave.ejs',{
+                    res.render('teacher/t_leave.ejs',{   
                         report: result
                     })
                 })
         }
     })
 })
-.post((req,res)=>{
-    const report_id = req.body.report_id;
-    const status = req.body.status;
+
+router_db.route('/edit-report-status/:report_id-:status')
+.get((req,res)=>{
+    const report_id = req.params.report_id;
+    const status = req.params.status;
     
     connection.query('update report set status = ? where report_id = ?',[status, report_id],(err,result)=>{
         console.log('Update report status successfully')
@@ -557,10 +568,10 @@ router_db.route('/delete-courses/:subject_code-:section')
     connection.query('delete from enrollment where subject_code = ? and section = ?',[req.params.subject_code, req.params.section],(err)=>{
         connection.query('delete from subject where subject_code = ? and section = ?',[req.params.subject_code, req.params.section],(err)=>{
             console.log('Delete Successfully');
+
+            res.redirect('/courses')
         })
     })
-
-    res.redirect('/courses')
 })
 
 // attendance check
@@ -584,7 +595,7 @@ router_db.route('/attendance')
         location: location,
     }
 
-    res.render('s_attendance.ejs', {
+    res.render('student/s_attendance.ejs', {
         info: post
     })
 })
@@ -608,10 +619,15 @@ router_db.route('/attendance-create/:subject_code-:section')
 
         connection.query('insert into class set ?',post,(err,result)=>{
             console.log('Class created successfully')
+            connection.query('select class_id from class where subject_code = ? and section = ? and date = ?',[subject_code,section,date],(err,result)=>{
+                connection.query('select a.*, b.student_count as student_enroll, b.name as subject_name from class a , subject b , attendance c where a.subject_code = b.subject_code and a.class_id = c.class_id and a.class_id = ?',result[0].class_id,(err,result)=>{
+                    res.render('teacher/t_qrcode.ejs',{
+                        course: result
+                    })
+                })
+            })
         })
     })
-
-    res.sendFile(path.join(__dirname, "/public/html/teacher/t_qrcode.html")); 
 })
 
 router_db.route('/attendance-check')
@@ -656,5 +672,12 @@ router_db.route('/attendance-check')
     res.redirect('/courses');
 })
 
+router_db.route('/download/:attendance_id')
+.get((req,res)=>{
+    connection.query('select image from attendance where attendance_id = ?',req.params.attendance_id,(err,result)=>{
+        const imagecontent = result[0].image;
+        
+    })
+})
 
 module.exports = router_db;

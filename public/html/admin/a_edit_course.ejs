@@ -121,18 +121,18 @@
 
         <!-- Detail Course Start -->
         <div class="container-fluid" style="padding: 130px 3rem 0 3rem;">
-            <form method="POST" action="#######">
+            <a href="/delete-courses/<%= courseinfo[0].subject_code %>-<%= courseinfo[0].section %>">
+                <button type="submit" class="btn text-white me-3"
+                style="width: 100px; background-color: #C5CED1;">Delete</button>
+            </a>
+            <form method="POST" action="/edit-courses/<%= courseinfo[0].subject_code %>-<%= courseinfo[0].section %>">
             <div class="my-4 d-flex justify-content-between align-items-center">
                 <h1>Courses > Details > Edit</h1>
                 <div class="d-flex justify-content-between">
-                <a href="/delete-courses/<%= courseinfo[i].subject_code %>-<%= courseinfo[i].section %>">
-                    <button type="submit" class="btn text-white me-3"
-                    style="width: 100px; background-color: #C5CED1;">Delete</button>
-                </a>
-                <a href="/edit-courses/<%= courseinfo[i].subject_code %>-<%= courseinfo[i].section %>">
+                
                     <button type="submit" class="btn text-white"
                     style="width: 100px; background-color: #007CB7;">Submit</button>
-                </a>
+                
                 </div>
             </div>
             <% for(var i=0; i < courseinfo.length; i++) { %> 
@@ -140,7 +140,7 @@
                     <div class="col-12 col-sm-6 justify-content-md-ceneter">
                         <div class="mb-3">
                             <label for="semester" class="form-label fw-bold">Semester</label>
-                            <input type="semester" class="form-control" id="semester" aria-describedby="semester"
+                            <input type="semester" class="form-control" name="semester" id="semester" aria-describedby="semester"
                                 value="<%= courseinfo[i].semester %>">
                         </div>
                     </div>
@@ -148,7 +148,7 @@
                     <div class="col-12 col-sm-6 justify-content-md-ceneter">
                         <div class="mb-3">
                             <label for="subject_code" class="form-label fw-bold">Course Code</label>
-                            <input type="subject_code" class="form-control" id="subject_code" aria-describedby="subject_code"
+                            <input type="subject_code" class="form-control" name="subject_code" id="subject_code" aria-describedby="subject_code"
                                 value="<%= courseinfo[i].subject_code %>">
                         </div>
                     </div>
@@ -158,7 +158,7 @@
                     <div class="col-12 col-sm-6 justify-content-md-ceneter">
                         <div class="mb-3">
                             <label for="name" class="form-label fw-bold">Course Name</label>
-                            <input type="name" class="form-control" id="name" aria-describedby="name"
+                            <input type="name" class="form-control" name="name" id="name" aria-describedby="name"
                                 value="<%= courseinfo[i].name %>">
                         </div>
                     </div>
@@ -166,7 +166,7 @@
                     <div class="col-12 col-sm-6 justify-content-md-ceneter">
                         <div class="mb-3">
                             <label for="section" class="form-label fw-bold">Section</label>
-                            <input type="section" class="form-control" id="section" aria-describedby="section"
+                            <input type="section" class="form-control" name="section" id="section" aria-describedby="section"
                                 value="<%= courseinfo[i].section %>">
                         </div>
                     </div>
@@ -177,12 +177,13 @@
 
                         <div class="mb-3">
                             <label for="teacher" class="form-label fw-bold">Teacher ID</label>
-                            <input type="teacher" class="form-control" id="teacher" aria-describedby="teacher"
+                            <input type="teacher" class="form-control" name="teacher" id="teacher" aria-describedby="teacher"
                                 value="<%= courseinfo[i].teacher %>">
                         </div>
 
                     </div>
                 </div>
+                <% } %>
             </form>
             <!-- Detail Course End -->
 
@@ -206,9 +207,7 @@
                                 <th>Student ID</th>
                                 <th>Student Name</th>
                                 <th>Major</th>
-                                <!-- <th>Attendance Count</th>
-                                <th>Abscent Count</th>
-                                <th>Leave Count</th> -->
+
                             </tr>
                         </thead>
                         <tbody id="tableData">
@@ -217,15 +216,10 @@
                                 <td><%= students[i].student_id %></td>
                                 <td><%= students[i].name %></td>
                                 <td><%= students[i].major %></td>
-                                <!-- <td><%= students[i].attendanceCount %></td>
-                                <td><%= students[i].abscentCount %></td>
-                                <td><%= students[i].leaveCount %></td> -->
-                                 <!-- href='delete-student/<%= students[i].id %>' -->
                                 <td><a type="submit"><i class="bi bi-x-square fs-4" style="color: #007CB7;"></i></a>
                                 </td>
+                            </tr>
                             <% } %>
-                            </tr>
-                            </tr>
                         </tbody>
                     </table>
                 </div>

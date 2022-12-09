@@ -123,7 +123,7 @@
         <div class="container-fluid" style="padding: 130px 3rem 0 3rem;">
             <div class="my-4 d-flex justify-content-between align-items-center">
                 <h1>Courses > Details</h1>
-                <a href="/edit-courses/<%= course[i].subject_code %>-<%= course[i].section %>">
+                <a href="/edit-courses/<%= course[0].subject_code %>-<%= course[0].section %>">
                     <button type="submit" class="btn text-white"
                     style="width: 100px; background-color: #007CB7;">Edit</button>
                 </a>
@@ -148,12 +148,11 @@
                         <% for(var i=0; i < course.length; i++) {  %> 
                             <tr>
                                 <td><%= course[i].semester %></td>
-                                <td><%= course[i].suubject_code %></td>
+                                <td><%= course[i].subject_code %></td>
                                 <td><%= course[i].name %></td>
                                 <td><%= course[i].section %></td>
                                 <td><%= course[i].teacher %></td>
                                 <td><%= course[i].student_count %></td>
-                                <!-- <td><%= courses[i].attendanceRate %></td> -->
                         <% } %>
                         </tbody>
                     </table>
@@ -187,12 +186,8 @@
                             <% for(var i=0; i < student.length; i++) { %> 
                             <tr>
                                 <td><%= student[i].student_id %></td>
-                                <td><%= student[i].name %></td>
+                                <td><%= student[i].firstname %> <%= student[i].lastname %></td>
                                 <td><%= student[i].major %></td>
-                                <!-- <td><%= students[i].attendanceCount %></td>
-                                <td><%= students[i].abscentCount %></td>
-                                <td><%= students[i].leaveCount %></td> -->
-                                <!-- href="students/<%= stuedents[i].id %>" -->
                                 <td><a href="/students/<%= student[i].buasri_id %>"><i class="bi bi-chevron-right fs-4"></i></a></td>
                             </tr>
                             <% } %>

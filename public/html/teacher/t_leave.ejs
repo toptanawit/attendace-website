@@ -137,16 +137,16 @@
                             </tr>
                         </thead>
                         <tbody id="tableData">
-                        <% for(var i=0; i < report.length; i++) { %> 
+                        <% for (var i=0; i < report.length; i++) { %> 
                             <tr>
                                 <td>
-                                    <%= student[i].student_id %>
+                                    <%= report[i].buasri_id %>
                                 </td>
                                 <td>
-                                    <%= student[i].name student[i].lastname %>
+                                    <%= report[i].firstname %> <%= report[i].lastname %>
                                 </td>
                                 <td>
-                                    <%= subject[i].name %>
+                                    <%= report[i].name %>
                                 </td>
                                 <td>
                                     <%= report[i].section %>
@@ -168,14 +168,14 @@
                                             <%= report[i].status %>
                                         </button>
                                         <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                                            <li><a class="dropdown-item" href="#">Approved</a></li>
-                                            <li><a class="dropdown-item" href="#">Pending</a></li>
-                                            <li><a class="dropdown-item" href="#">Rejected</a></li>
+                                            <li><a class="dropdown-item" href="/edit-report-status/<%= report[i].report_id %>-Approved">Approved</a></li>
+                                            <li><a class="dropdown-item" href="/edit-report-status/<%= report[i].report_id %>-Pending">Pending</a></li>
+                                            <li><a class="dropdown-item" href="/edit-report-status/<%= report[i].report_id %>-Rejected">Rejected</a></li>
                                         </ul>
                                     </div>
                                 </td>
                             </tr>
-    
+                        <% } %>
                         </tbody>
                     </table>
                 </div>

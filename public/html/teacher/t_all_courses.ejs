@@ -131,8 +131,8 @@
                                 <th>Course Name</th>
                                 <th>Section</th>
                                 <th>Number of Students</th>
-                                <th>Attendance Rate</th>
-                                <th>Take Attendance</th>
+                                <!-- <th>Attendance Rate</th> -->
+                                <!-- <th>Take Attendance</th> -->
                             </tr>
                         </thead>
                         <tbody id="tableData">
@@ -152,9 +152,6 @@
                                 </td>
                                 <td>
                                     <%= courses[i].student_count %>
-                                </td>
-                                <td>
-                                    <%= rate[i] %>
                                 </td>
                                 <td><a href="/attendance-create/<%= courses[i].subject_code %>-<%= courses[i].section %>"
                                         type="button" class="btn d-flex align-items-center justify-content-center w-75"
@@ -180,6 +177,7 @@
                         });
                     });
                 });
+
             </script>
             <!-- Search Filter -->
         </div>

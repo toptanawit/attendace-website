@@ -145,10 +145,8 @@
                                 <td><%= courses[i].name %></td>
                                 <td><%= courses[i].section %></td>
                                 <td><%= courses[i].teacher %></td>
-                                <!-- <td><%= courses[i].attendance_count %></td>
-                                <td><%= students[i].abscentCount %></td>
-                                <td><%= students[i].leaveCount %></td> -->
-                                <td><a href="/courses/:<%= courses[i].subject_code %>-<%= courses[i].section %>"><i class="bi bi-chevron-right fs-4"></i></a></td>
+                                <td><%= courses[i].attendance_count %></td>
+                                <td><a href="/courses/<%= courses[i].subject_code %>-<%= courses[i].section %>"><i class="bi bi-chevron-right fs-4"></i></a></td>
                             </tr>
                         <% } %>
 

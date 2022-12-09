@@ -117,20 +117,18 @@
         <!-- Flyout Navigation End -->
 
         <!-- Detail Course Start -->
-        <form method="POST" action="/edit-teachers/<%= info[i].buasri_id %>">
+        
+        <form method="POST" action="/edit-teachers/<%= info[0].buasri_id %>">
             <div class="container-fluid" style="padding: 130px 3rem 0 3rem;">
                 <div class="my-4 d-flex justify-content-between align-items-center">
                     <h1>Teachers > Name > Edit</h1>
                     <div class="d-flex justify-content-between">
-                        <a href="/delete-teachers/<%= info[i].buasri_id %>">
-                            <button type="submit" class="btn text-white me-3"
-                                style="width: 100px; background-color: #C5CED1;">Delete</button>
-                        </a>
+                        
 
-                        <a href="/edit-teachers/<%= info[i].buasri_id %>">
+                        
                             <button type="submit" class="btn text-white h-50"
                                 style="width: 100px; background-color: #007CB7;">Submit</button>
-                        </a>
+                        
                     </div>
                 </div>
 
@@ -139,7 +137,7 @@
                         <div class="col-12 col-sm-6 justify-content-md-ceneter">
                             <div class="mb-3">
                                 <label for="name" class="form-label fw-bold">First Name</label>
-                                <input type="name" class="form-control" id="name" aria-describedby="name"
+                                <input type="name" class="form-control" name="name" id="name" aria-describedby="name"
                                     value="<%= info[i].name %>">
                             </div>
                         </div>
@@ -147,7 +145,7 @@
                         <div class="col-12 col-sm-6 justify-content-md-ceneter">
                             <div class="mb-3">
                                 <label for="lastname" class="form-label fw-bold">Last Name</label>
-                                <input type="lastname" class="form-control" id="lastname" aria-describedby="lastname"
+                                <input type="lastname" class="form-control" name="lastname" id="lastname" aria-describedby="lastname"
                                     value="<%= info[i].lastname %>">
                             </div>
                         </div>
@@ -158,7 +156,7 @@
 
                             <div class="mb-3">
                                 <label for="email" class="form-label fw-bold">Email</label>
-                                <input type="email" class="form-control" id="email" aria-describedby="email"
+                                <input type="email" class="form-control" name="email" id="email" aria-describedby="email"
                                     value="<%= info[i].email %>">
                             </div>
 
@@ -167,7 +165,7 @@
                         <div class="col-12 col-sm-6 justify-content-md-ceneter">
                             <div class="mb-3">
                                 <label for="phone" class="form-label fw-bold">Phone</label>
-                                <input type="phone" class="form-control" id="phone" aria-describedby="phone"
+                                <input type="phone" class="form-control" name="phone" id="phone" aria-describedby="phone"
                                     value="<%= info[i].phone %>">
                             </div>
                         </div>
@@ -176,7 +174,10 @@
                 <% } %>
         </form>
         <!-- Detail Course End -->
-
+        <a href="/delete-teachers/<%= info[0].buasri_id %>">
+            <button type="submit" class="btn text-white me-3"
+                style="width: 100px; background-color: #C5CED1;">Delete</button>
+        </a>
 
 
 
