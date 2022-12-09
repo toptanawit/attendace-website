@@ -600,11 +600,6 @@ router_db.route('/attendance')
     })
 })
 
-router_db.route('/attendance-test')
-.get((req,res)=>{
-    res.sendFile(path.join(__dirname, "/public/html/student/s_attendance.html"));
-})
-
 router_db.route('/attendance-create/:subject_code-:section')
 .get((req,res)=>{
     const subject_code = req.params.subject_code;
