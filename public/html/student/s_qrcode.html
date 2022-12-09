@@ -131,8 +131,10 @@
                         <textarea spellcheck="false" disabled></textarea>
                         <div class="buttons">
                             <button class="close">Close</button>
-                            <button type="submit" class="submit" data-bs-toggle="modal"
-                                data-bs-target="#exampleModal">Submit</button>
+                            <a class="d-flex" href="/attendance">
+                            <button type="submit" class="submit"
+                                >Submit</button>
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -184,6 +186,18 @@
                 });
             }
 
+            const data = {
+                subject_name: 'vvvv',
+                subject_code: 'cos127',
+
+            }
+
+            function nextpage() {
+                fetch('/attendance'), {
+                    method: POST, body: data
+                }
+            }
+
             fileInp.addEventListener("change", async e => {
                 let file = e.target.files[0];
                 if (!file) return;
@@ -207,6 +221,7 @@
             }
 
             const checklocation = (student_latitude, student_longitude) => {
+                console.log(student_latitude,student_longitude)
                 if (cosci_location.latitude == student_latitude && cosci_location.longitude == student_longitude) {
                     console.log('complete');
                 }
@@ -218,6 +233,7 @@
                     modalTitle.innerText = "Don't cheat"
                     modalBody.innerText = "You are not allowed to check attendance";
                 }
+                
             }
 
             const getlocation = () => {
@@ -227,6 +243,7 @@
                         checklocation(data.latitude, data.longitude);
                     })
             }
+            // console.log(student_latitude,student_longitude)
 
             submitBtn.addEventListener("click", () => getlocation());
             // ------- Check Address End ---------

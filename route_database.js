@@ -10,20 +10,12 @@ router_db.use(express.urlencoded({ extended: true }));
 router_db.use(express.json());
 
 var connection = mysql.createConnection({
-    host: 'us-cdbr-east-06.cleardb.net',
-    user: 'b8ce35d29636d2',
-    password: 'fcfc941c',
-    database: 'heroku_614e537ca365244',
+    host: 'localhost',
+    user: 'root',
+    password: '',
+    database: 'final',
     multipleStatements: true
 });
-
-// var connection = mysql.createConnection({
-//     host: 'localhost',
-//     user: 'root',
-//     password: '',
-//     database: 'final',
-//     multipleStatements: true
-// });
 
 router_db.use(session({
     secret: 'COSCI', cookie: { maxAge: 60000000 },
@@ -608,6 +600,11 @@ router_db.route('/attendance')
     })
 })
 
+router_db.route('/attendance-test')
+.get((req,res)=>{
+    res.sendFile(path.join(__dirname, "/public/html/student/s_attendance.html"));
+})
+
 router_db.route('/attendance-create/:subject_code-:section')
 .get((req,res)=>{
     const subject_code = req.params.subject_code;
@@ -680,12 +677,12 @@ router_db.route('/attendance-check')
     res.redirect('/courses');
 })
 
-router_db.route('/download/:attendance_id')
-.get((req,res)=>{
-    connection.query('select image from attendance where attendance_id = ?',req.params.attendance_id,(err,result)=>{
-        const imagecontent = result[0].image;
+// router_db.route('/download/:attendance_id')
+// .get((req,res)=>{
+//     connection.query('select image from attendance where attendance_id = ?',req.params.attendance_id,(err,result)=>{
+//         const imagecontent = result[0].image;
         
-    })
-})
+//     })
+// })
 
 module.exports = router_db;
