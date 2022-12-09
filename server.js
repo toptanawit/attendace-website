@@ -21,6 +21,14 @@ var connection = mysql.createConnection({
     multipleStatements: true
 });
 
+// var connection = mysql.createConnection({
+//     host: 'localhost',
+//     user: 'root',
+//     password: '',
+//     database: 'final',
+//     multipleStatements: true
+// });
+
 app.use(session({
     secret: 'COSCI', cookie: { maxAge: 60000000 },
     resave: true, saveUninitialized: false

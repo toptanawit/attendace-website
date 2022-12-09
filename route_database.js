@@ -17,6 +17,14 @@ var connection = mysql.createConnection({
     multipleStatements: true
 });
 
+// var connection = mysql.createConnection({
+//     host: 'localhost',
+//     user: 'root',
+//     password: '',
+//     database: 'final',
+//     multipleStatements: true
+// });
+
 router_db.use(session({
     secret: 'COSCI', cookie: { maxAge: 60000000 },
     resave: true, saveUninitialized: false
