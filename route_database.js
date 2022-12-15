@@ -5,6 +5,7 @@ var mysql = require('mysql');
 const session = require('express-session');
 var router_db = express.Router();
 var bcrypt = require('bcryptjs');
+const fs = require('fs');
 
 router_db.use(express.urlencoded({ extended: true }));
 router_db.use(express.json());
@@ -302,19 +303,19 @@ router_db.route('/report')
     const pdf = req.body.file;
     // const base64data = req.body.file;
     // var blob = Buffer.from(base64data,"base64");
-    // var blob = Buffer.from(pdf,"base64");
+    var blob = Buffer.from(pdf,"base64");
 
     connection.query('select curtime() as time, curdate() as date',(err,results)=>{
         const time = results[0].time;
         const date = results[0].date;
 
         const post = {
-            buasri_id: req.session.userID,
-            // buasri_id: req.body.buasri_id,
+            // buasri_id: req.session.userID,
+            buasri_id: req.body.buasri_id,
             subject_code: subject_code,
             section: section,
             type: type,
-            file: pdf,
+            file: blob,
             time: time,
             date: date,
             status: 'Pending'
@@ -638,8 +639,8 @@ router_db.route('/attendance-check')
     const time = req.body.time;
     const location = req.body.location;
 
-    const base64data = req.body.image;
-    var blob = Buffer.from(base64data,"base64");
+    const image = req.body.image;
+    var blob = Buffer.from(image,"base64");
 
     connection.query('select subject_code from subject where name = ?',name,(err,result)=>{
         const subject_code = result[0].subject_code;
@@ -649,7 +650,8 @@ router_db.route('/attendance-check')
 
             const post = {
                 subject_code: subject_code,
-                buasri_id: req.session.userID,
+                // buasri_id: req.session.userID,
+                buasri_id: req.body.buasri_id,
                 class_id: class_id,
                 section: section,
                 time: time,
@@ -672,12 +674,22 @@ router_db.route('/attendance-check')
     res.redirect('/courses');
 })
 
-// router_db.route('/download/:attendance_id')
-// .get((req,res)=>{
-//     connection.query('select image from attendance where attendance_id = ?',req.params.attendance_id,(err,result)=>{
-//         const imagecontent = result[0].image;
-        
-//     })
-// })
+router_db.route('/download/attendance-:attendance_id')
+.get((req,res)=>{
+    connection.query('select image from attendance where attendance_id = ?',req.params.attendance_id,(err,result)=>{
+        const imagebuffer = result[0].image;
+        fs.writeFileSync("attendance-image.jpg", imagebuffer);
+        res.download('attendance-image.jpg');
+    })
+})
+
+router_db.route('/download/report-:report_id')
+.get((req,res)=>{
+    connection.query('select file from report where report_id = ?',req.params.report_id,(err,result)=>{
+        const filebuffer = result[0].file;
+        fs.writeFileSync("report.pdf", filebuffer);
+        res.download('report.pdf');
+    })
+})
 
 module.exports = router_db;
