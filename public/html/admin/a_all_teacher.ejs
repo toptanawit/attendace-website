@@ -136,6 +136,7 @@
                     <table id="myTable" class="table bg-white table-striped">
                         <thead class="text-dark">
                             <tr>
+                                <th>Buasri ID</th>
                                 <th>Name</th>
                                 <th>Email</th>
                                 <th>Phone</th>
@@ -144,7 +145,8 @@
                         <tbody id="tableData">
                         <% for(var i=0; i < teachers.length; i++) { %> 
                             <tr>
-                                <td><%= teachers[i].name %></td>
+                                <td><%= teachers[i].buasri_id %></td>
+                                <td><%= teachers[i].name %> <%= teachers[i].lastname %></td>
                                 <td><%= teachers[i].email %></td>
                                 <td><%= teachers[i].phone %></td>
                             

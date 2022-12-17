@@ -1,0 +1,34 @@
+{
+  "name": "lodash-contrib",
+  "description": "The brass buckles on lodash's utility belt",
+  "version": "4.1200.1",
+  "main": "dist/lodash-contrib.commonjs.js",
+  "dependencies": {
+    "lodash": "4.12.x"
+  },
+  "devDependencies": {
+    "chai": "",
+    "grunt": "",
+    "grunt-browserify": "",
+    "grunt-cli": "",
+    "grunt-contrib-concat": "",
+    "grunt-contrib-copy": "",
+    "grunt-contrib-jshint": "",
+    "grunt-contrib-qunit": "",
+    "grunt-contrib-uglify": "",
+    "grunt-mocha-test": "",
+    "mocha": ""
+  },
+  "repository": "node4good/lodash-contrib",
+  "license": "MIT",
+  "author": "Refael Ackermann <me@refack.com> (http://refack.com)",
+  "contributors": [
+    "Fogus <me@fogus.me> (http://www.fogus.me)",
+    "John-David Dalton <john.david.dalton@gmail.com> (http://allyoucanleet.com/)"
+  ],
+  "scripts": {
+    "dist": "grunt gen",
+    "mypublish": "npm run dist && npm version patch && git push --follow-tags",
+    "test": "grunt default"
+  }
+}

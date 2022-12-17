@@ -8,7 +8,7 @@ var bcrypt = require('bcryptjs');
 const fs = require('fs');
 const fileUpload = require("express-fileupload"); 
 
-router_db.use(express.urlencoded({ extended: true }));
+router_db.use(bodyParser.urlencoded({ extended: true }));
 router_db.use(express.json());
 router_db.use( fileUpload({
     createParentPath: true,
@@ -263,9 +263,12 @@ router_db.route('/add-courses')
         console.log('Add Course Successfully');
     });
 
+
     const students = req.body.students // array of student
 
+
     console.log(students)
+
     for (const stu in students) {
         const enroll = {
             subject_code: subject_code,
@@ -430,17 +433,22 @@ router_db.route('/edit-courses/:subject_code-:section')
     connection.query('select * from subject where subject_code = ? and section = ?; select * from users where status = "Student" ; select count(class_id) as class_count from class where subject_code = ? and section = ?',
     [req.params.subject_code, req.params.section, req.params.subject_code, req.params.section],
     (err, results)=>{
-        res.render('admin/a_edit_course.ejs', {
-            courseinfo: results[0],
-            students: results[1],
-            class: results[2].class_count
+        const courseinfo = results;
+        connection.query('select * from users where status = "Teacher"',(err,result)=>{
+            const teacher = result;
+            res.render('admin/a_edit_course.ejs', {
+                courseinfo: courseinfo[0],
+                students: courseinfo[1],
+                class: courseinfo[2].class_count,
+                teacher: teacher
+            })
         })
     })
 })
 .post((req,res)=>{
     const semester = req.body.semester;
     const name = req.body.name;
-    const subject_code = req.body.subject_code;
+    const subject_code = req.params.subject_code;
     const section = req.body.section;
     const teacher = req.body.teacher;
 

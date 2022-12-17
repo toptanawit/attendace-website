@@ -120,10 +120,16 @@
         <div class="container-fluid" style="padding: 130px 3rem 0 3rem;">
             <div class="my-4 d-flex justify-content-between align-items-center">
                 <h1>Students > Details</h1>
-                <a href="/edit-students/<%= student[0].buasri_id %>">
-                    <button type="submit" class="btn text-white h-50"
-                    style="width: 100px; background-color: #007CB7;">Edit</button>
-                </a>
+                <div class="d-flex justify-content-between">
+                    <a href="/delete-students/<%= student[0].buasri_id %>">
+                        <button type="submit" class="btn text-white me-3"
+                        style="width: 100px; background-color: #C5CED1;">Delete</button>
+                    </a>
+                    <a href="/edit-students/<%= student[0].buasri_id %>">
+                        <button type="submit" class="btn text-white"
+                        style="width: 100px; background-color: #007CB7;">Edit</button>
+                    </a>
+                </div>
             
             </div>
                

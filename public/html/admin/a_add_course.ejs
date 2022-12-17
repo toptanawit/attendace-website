@@ -24,6 +24,7 @@
 
     <!-- jquery -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 </head>
 
 <body>
@@ -182,70 +183,74 @@
 
                         <div class="mb-3">
                             <label for="teacher" class="form-label fw-bold">Teacher</label>
-                            <!-- <input type="text" class="form-control" name="teacher" id="teacher" aria-describedby="teacher"
-                                placeholder="Teacher ID" required> -->
                             <select class="form-select" name="teacher" id="teacher" required>
                                 <option disabled selected>Open this select teacher</option>
-                                <% for(var i=0; i < teacher.length; i++) { %> 
-                                <option value="<%= teacher[i].buasri_id %>"><%= teacher[i].buasri_id %> - <%= teacher[i].name %> <%= teacher[i].lastname %></option>
-                                <% } %>
+                                <% for(var i=0; i < teacher.length; i++) { %>
+                                    <option value="<%= teacher[i].buasri_id %>">
+                                        <%= teacher[i].buasri_id %> - <%= teacher[i].name %>
+                                                <%= teacher[i].lastname %>
+                                    </option>
+                                    <% } %>
                             </select>
                         </div>
 
                     </div>
                 </div>
+                <!-- Text Field End -->
+
+                <!-- Add Student Start -->
+                <div class="mt-5 mb-3 d-flex justify-content-between align-items-center">
+                    <h3>Add Students</h3>
+                </div>
+
+                <!-- Table -->
+                <section>
+                    <div class="mb-3 d-flex">
+                        <input type="text" id="myInput" name="myInput" placeholder="Search for students"
+                            class="form-control">
+                    </div>
+                    <div class="table-responsive" id="no-more-tables">
+                        <table id="myTable" class="table bg-white table-striped">
+                            <thead class="text-dark">
+                                <tr>
+                                    <th>Student ID</th>
+                                    <th>Student Name</th>
+                                    <th>Major</th>
+                                    <th>Select Students</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tableData">
+                                <% for(var i=0; i < student.length; i++) { %>
+                                    <tr>
+                                        <td>
+                                            <%= student[i].student_id %>
+                                        </td>
+                                        <td>
+                                            <%= student[i].name %>
+                                                <%= student[i].lastname %>
+                                        </td>
+                                        <td>
+                                            <%= student[i].major %>
+                                        </td>
+                                        <td>
+                                            <!-- <div class="form-check">
+                                        <input class="form-check-input" name="students[]" type="checkbox" id="defaultCheck1">
+                                    </div> -->
+                                            <input class="checkbox" type="checkbox" name="students[]"
+                                                value="<%= student[i].buasri_id %>">
+
+                                        </td>
+                                    </tr>
+                                    <% } %>
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
             </form>
-            <!-- Text Field End -->
-
-            <!-- Add Student Start -->
-            <div class="mt-5 mb-3 d-flex justify-content-between align-items-center">
-                <h3>Add Students</h3>
-            </div>
-
-            <!-- Table -->
-            <section>
-                <div class="mb-3 d-flex">
-                    <input type="text" id="myInput" name="myInput" placeholder="Search for students"
-                        class="form-control">
-                </div>
-                <div class="table-responsive" id="no-more-tables">
-                    <table id="myTable" class="table bg-white table-striped">
-                        <thead class="text-dark">
-                            <tr>
-                                <th>Student ID</th>
-                                <th>Student Name</th>
-                                <th>Major</th>
-                                <th>Select Students</th>
-                            </tr>
-                        </thead>
-                        <tbody id="tableData">
-                            <% for(var i=0; i < student.length; i++) { %> 
-                            <tr>
-                                <td>
-                                    <%= student[i].student_id %>
-                                </td>
-                                <td>
-                                    <%= student[i].name %> <%= student[i].lastname %>
-                                </td>
-                                <td>
-                                    <%= student[i].major %>
-                                </td>
-                                <td>
-                                    <div class="form-check">
-                                        <input class="form-check-input" name="students[]" type="checkbox" value="<%= student[i].buasri_id %>" id="defaultCheck1">
-                                    </div>
-                                </td>
-                            </tr>
-                            <% } %>
-                
-                        </tbody>
-                    </table>
-                </div>
-            </section>
             <!-- Table End-->
 
-            <!-- Search Filter -->
             <script>
+                //  <!-- Search Filter -->
                 $(document).ready(function () {
                     $('#myInput').on("keyup", function () {
                         var value = $(this).val().toLocaleLowerCase();
@@ -254,14 +259,13 @@
                         });
                     });
                 });
+
             </script>
-            <!-- Search Filter -->
 
             <!-- Add Student End -->
 
         </div>
         <!-- Course Details End -->
-
 
     </div>
 </body>
