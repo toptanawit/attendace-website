@@ -357,6 +357,56 @@ router_db.route('/report')
     })
 });
 
+router_db.route('/add-students-to-course/:subject_code-:section')
+.get((req,res)=>{
+    connection.query(
+        'select * from users where status = "Student" except select b.* from enrollment a, users b where a.buasri_id = b.buasri_id and a.subject_code = ? and a.section = ?',
+        [req.params.subject_code,req.params.section],
+        (err,result)=>{
+            res.render('a_add_student_to_course.ejs',{
+                students: result
+            })
+        }
+        )
+})
+.post((req,res)=>{
+    const students = req.body.students // array of buasri_id
+
+    for (const stu in students) {
+        connection.query(
+            'select * from enrollment where subject_code = ? and section = ? and buasri_id = ?',
+            [req.body.subject_code, req.body.section, students[stu]],
+            (err, result)=>{
+                if (result.length == 0) {
+                    const enroll = {
+                        subject_code: subject_code,
+                        section: section,
+                        buasri_id: students[stu],
+                        attendance_count: 0
+                    }
+                    connection.query('insert into enrollment set ?', enroll, (err)=>{
+                        console.log('Add Enrollment for',students[stu],'Successfully');
+                    })
+                }
+            }
+        )
+    }
+
+    connection.query(
+        'select count(enroll_id) as student_enroll from enrollment where subject_code = ? and section = ?',
+        [subject_code, section],
+        (err, result)=>{
+            console.log(result[0].student_enroll,'enroll')
+            connection.query('update subject set student_count = ? where subject_code = ? and section = ?',
+            [result[0].student_enroll,subject_code,section],
+            (err)=>{
+                console.log('Update No. of Student To Course Successfully');
+            });
+        })
+    
+    res.redirect(`/edit-courses/${req.params.subject_code}:${req.params.section}`)
+})
+
 // edit
 router_db.route('/edit-students/:buasri_id')
 .get((req,res)=>{
@@ -430,8 +480,8 @@ router_db.route('/edit-teachers/:buasri_id')
 
 router_db.route('/edit-courses/:subject_code-:section')
 .get((req,res)=>{
-    connection.query('select * from subject where subject_code = ? and section = ?; select * from users where status = "Student" ; select count(class_id) as class_count from class where subject_code = ? and section = ?',
-    [req.params.subject_code, req.params.section, req.params.subject_code, req.params.section],
+    connection.query('select * from subject where subject_code = ? and section = ?; select a.* from users a, enrollment b where a.buasri_id = b.buasri_id and a.status = "Student" and b.subject_code = ? and b.section = ? ; select count(class_id) as class_count from class where subject_code = ? and section = ?',
+    [req.params.subject_code, req.params.section, req.params.subject_code, req.params.section, req.params.subject_code, req.params.section],
     (err, results)=>{
         const courseinfo = results;
         connection.query('select * from users where status = "Teacher"',(err,result)=>{
@@ -463,61 +513,27 @@ router_db.route('/edit-courses/:subject_code-:section')
         console.log('Update Course Successfully');
     });
 
-    const students = req.body.students // array of buasri_id
+    // connection.query(
+    //     'select * from enrollment where subject_code = ? and section = ?',
+    //     [req.body.subject_code, req.body.section],
+    //     (err, results)=>{
+    //         for (const index in results) {
+    //             var flag = false;
+    //             var delete_id = '';
+    //             for (const stu in students) {
+    //                 if (results[index].buasri_id == students[stu]) {
+    //                     flag = true;
+    //                 }
+    //                 delete_id = results[index].buasri_id;
+    //             }
 
-    for (const stu in students) {
-        connection.query(
-            'select * from enrollment where subject_code = ? and section = ? and buasri_id = ?',
-            [req.body.subject_code, req.body.section, students[stu]],
-            (err, result)=>{
-                if (result.length == 0) {
-                    const enroll = {
-                        subject_code: subject_code,
-                        section: section,
-                        buasri_id: students[stu],
-                        attendance_count: 0
-                    }
-                    connection.query('insert into enrollment set ?', enroll, (err)=>{
-                        console.log('Add Enrollment for',students[stu],'Successfully');
-                    })
-                }
-            }
-        )
-    }
-
-    connection.query(
-        'select * from enrollment where subject_code = ? and section = ?',
-        [req.body.subject_code, req.body.section],
-        (err, results)=>{
-            for (const index in results) {
-                var flag = false;
-                var delete_id = '';
-                for (const stu in students) {
-                    if (results[index].buasri_id == students[stu]) {
-                        flag = true;
-                    }
-                    delete_id = results[index].buasri_id;
-                }
-
-                if (!flag) {
-                    connection.query('delete from enrollment where buasri_id = ? and subject_code = ? and section = ?',[delete_id, req.body.subject_code, req.body.section],(err)=>{
-                        console.log('Delete excess students successfully')
-                    })
-                }
-            }
-
-            connection.query(
-                'select count(enroll_id) as student_enroll from enrollment where subject_code = ? and section = ?',
-                [subject_code, section],
-                (err, result)=>{
-                    console.log(result[0].student_enroll,'enroll')
-                    connection.query('update subject set student_count = ? where subject_code = ? and section = ?',
-                    [result[0].student_enroll,subject_code,section],
-                    (err)=>{
-                        console.log('Update No. of Student To Course Successfully');
-                    });
-                })
-        })
+    //             if (!flag) {
+    //                 connection.query('delete from enrollment where buasri_id = ? and subject_code = ? and section = ?',[delete_id, req.body.subject_code, req.body.section],(err)=>{
+    //                     console.log('Delete excess students successfully')
+    //                 })
+    //             }
+    //         }
+    //     })
     
     res.redirect('/courses')
 })
@@ -606,6 +622,18 @@ router_db.route('/delete-courses/:subject_code-:section')
             res.redirect('/courses')
         })
     })
+})
+
+router_db.route('/delete-students-from-course/:subject_code-:section/:buasri_id')
+.get((req,res)=>{
+    connection.query(
+        'delete from enrollment where buasri_id = ? and subject_code = ? and section = ?',
+        [req.params.buasri_id,req.params.subject_code,req.params.subject_code],
+        (err,result)=>{
+            console.log('Delete student from course successfully')
+        })
+    
+    res.redirect(`/edit-courses/${req.params.subject_code}:${req.params.section}`)
 })
 
 // attendance check
