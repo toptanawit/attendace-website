@@ -292,7 +292,12 @@ router_db.route('/report')
     connection.query('select status from users where buasri_id = ?', req.session.userID, (err,result)=>{
         const status = result[0].status;
         if (status == 'Student') {
-            res.render('student/s_leave.ejs');
+            connection.query('select subject_code from enrollment where buasri_id = ?',req.session.userID, (err,result)=>{
+                console.log(result)
+                res.render('student/s_leave.ejs',{
+                    course_id: result
+                });
+            })
         } else if (status == 'Teacher') {
             res.redirect('/edit-report');
         }
