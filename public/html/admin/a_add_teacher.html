@@ -121,7 +121,10 @@
                 <div class="my-4 d-flex justify-content-between align-items-center">
                     <h1>Teachers > Add teacher</h1>
                     <div class="d-flex justify-content-between">
-
+                        <a href="/teachers" class="h-50">
+                            <button type="button" class="btn text-white me-3"
+                                style="width: 100px; background-color: #C5CED1;">Cancel</button>
+                        </a>
                         <button type="submit" class="btn text-white h-50"
                             style="width: 100px; background-color: #007CB7;">Submit</button>
                     </div>
@@ -132,7 +135,7 @@
                         <div class="mb-3">
                             <label for="name" class="form-label fw-bold">First Name</label>
                             <input type="name" class="form-control" name="name" id="name"
-                                aria-describedby="name" placeholder="First Name">
+                                aria-describedby="name" placeholder="First Name" required>
                         </div>
                     </div>
 
@@ -140,7 +143,7 @@
                         <div class="mb-3">
                             <label for="lastname" class="form-label fw-bold">Last Name</label>
                             <input type="lastname" class="form-control" name="lastname" id="lastname"
-                                aria-describedby="lastname" placeholder="Last Name">
+                                aria-describedby="lastname" placeholder="Last Name" required>
                         </div>
                     </div>
                 </div>
@@ -151,7 +154,7 @@
                         <div class="mb-3">
                             <label for="email" class="form-label fw-bold">Email</label>
                             <input type="email" class="form-control" name="email" id="email"
-                                aria-describedby="email" placeholder="Email">
+                                aria-describedby="email" placeholder="Email" required>
                         </div>
 
                     </div>
@@ -160,18 +163,17 @@
                         <div class="mb-3">
                             <label for="phone" class="form-label fw-bold">Phone</label>
                             <input type="phone" class="form-control" name="phone" id="phone"
-                                aria-describedby="phone" placeholder="Phone">
+                                aria-describedby="phone" placeholder="Phone" required>
                         </div>
                     </div>
                 </div>
 
                 <div class="row">
                     <div class="col-12 col-sm-6 justify-content-md-ceneter">
-
                         <div class="mb-3">
                             <label for="buasri_id" class="form-label fw-bold">Buasri ID</label>
                             <input type="t" class="form-control" name="buasri_id" id="t" aria-describedby="teacher_id"
-                                placeholder="Buasri ID">
+                                placeholder="Buasri ID" required>
                         </div>
 
                     </div>

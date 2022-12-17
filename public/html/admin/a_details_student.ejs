@@ -147,6 +147,7 @@
                             <tr>
                                 <td><%= student[i].student_id %></td>
                                 <td><%= student[i].name %> <%= student[i].lastname %></td>
+                                <td><%= student[i].major %></td>
                                 <td><%= student[i].email %></td>
                                 <td><%= student[i].phone %></td>
                         <% } %>
@@ -173,7 +174,7 @@
                         <thead class="text-dark">
                             <tr>
                                 <th>Semester</th>
-                                <th>Course Code</th>
+                                <th>Course ID</th>
                                 <th>Course Name</th>
                                 <th>Course Section</th>
                                 <th>Teacher</th>
@@ -181,7 +182,7 @@
                             </tr>
                         </thead>
                         <tbody id="tableData">
-                            <% for(var i=0; i < student.length; i++) { %> 
+                            <% for(var i=0; i < course.length; i++) { %> 
                             <tr>
                                 <td><%= course[i].semester %></td>
                                 <td><%= course[i].subject_code %></td>

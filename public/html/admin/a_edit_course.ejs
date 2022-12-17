@@ -121,18 +121,16 @@
 
         <!-- Detail Course Start -->
         <div class="container-fluid" style="padding: 130px 3rem 0 3rem;">
-            <a href="/delete-courses/<%= courseinfo[0].subject_code %>-<%= courseinfo[0].section %>">
-                <button type="submit" class="btn text-white me-3"
-                style="width: 100px; background-color: #C5CED1;">Delete</button>
-            </a>
             <form method="POST" action="/edit-courses/<%= courseinfo[0].subject_code %>-<%= courseinfo[0].section %>">
             <div class="my-4 d-flex justify-content-between align-items-center">
                 <h1>Courses > Details > Edit</h1>
                 <div class="d-flex justify-content-between">
-                
+                    <!-- <a href="/delete-courses/<%= courseinfo[0].subject_code %>-<%= courseinfo[0].section %>">
+                        <button type="button" class="btn text-white me-3"
+                        style="width: 100px; background-color: #C5CED1;">Delete</button>
+                    </a> -->
                     <button type="submit" class="btn text-white"
                     style="width: 100px; background-color: #007CB7;">Submit</button>
-                
                 </div>
             </div>
             <% for(var i=0; i < courseinfo.length; i++) { %> 
@@ -141,15 +139,15 @@
                         <div class="mb-3">
                             <label for="semester" class="form-label fw-bold">Semester</label>
                             <input type="semester" class="form-control" name="semester" id="semester" aria-describedby="semester"
-                                value="<%= courseinfo[i].semester %>">
+                                value="<%= courseinfo[i].semester %>" placeholder="Semester">
                         </div>
                     </div>
 
                     <div class="col-12 col-sm-6 justify-content-md-ceneter">
                         <div class="mb-3">
-                            <label for="subject_code" class="form-label fw-bold">Course Code</label>
+                            <label for="subject_code" class="form-label fw-bold">Course ID</label>
                             <input type="subject_code" class="form-control" name="subject_code" id="subject_code" aria-describedby="subject_code"
-                                value="<%= courseinfo[i].subject_code %>">
+                                value="<%= courseinfo[i].subject_code %>" placeholder="Course ID">
                         </div>
                     </div>
                 </div>
@@ -159,7 +157,7 @@
                         <div class="mb-3">
                             <label for="name" class="form-label fw-bold">Course Name</label>
                             <input type="name" class="form-control" name="name" id="name" aria-describedby="name"
-                                value="<%= courseinfo[i].name %>">
+                                value="<%= courseinfo[i].name %>" placeholder="Course Name">
                         </div>
                     </div>
 
@@ -167,7 +165,7 @@
                         <div class="mb-3">
                             <label for="section" class="form-label fw-bold">Section</label>
                             <input type="section" class="form-control" name="section" id="section" aria-describedby="section"
-                                value="<%= courseinfo[i].section %>">
+                                value="<%= courseinfo[i].section %>" placeholder="Course Section">
                         </div>
                     </div>
                 </div>
@@ -176,9 +174,9 @@
                     <div class="col-12 col-sm-6 justify-content-md-ceneter">
 
                         <div class="mb-3">
-                            <label for="teacher" class="form-label fw-bold">Teacher ID</label>
+                            <label for="teacher" class="form-label fw-bold">Teacher</label>
                             <input type="teacher" class="form-control" name="teacher" id="teacher" aria-describedby="teacher"
-                                value="<%= courseinfo[i].teacher %>">
+                                value="<%= courseinfo[i].teacher %>" placeholder="Teacher">
                         </div>
 
                     </div>

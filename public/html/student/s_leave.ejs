@@ -124,7 +124,12 @@
                     <div class="col-12 col-sm-6 justify-content-md-ceneter">
                         <div class="mb-3">
                             <label for="subject_code" class="form-label fw-bold">Course ID</label>
-                            <input type="subject_code" class="form-control" name="subject_code" id="subject_code" aria-describedby="subject_code">
+                            <% for(var i=0; i < course_id.length; i++) { %> 
+                            <select class="form-select" name="subject_code" id="subject_code" >
+                                <option disabled selected>Open this select course</option>
+                                <option value="<%= courses_id[i] %>"><%= courses_id[i] %></option>
+                            </select>
+                            <% } %>
                         </div>
                     </div>
 
@@ -132,10 +137,10 @@
                         <div class="mb-3">
                             <label for="section" class="form-label fw-bold">Course Section</label>
                             <select class="form-select" aria-label="section" name="section" id="section">
-                                <option selected>Open this select section</option>
+                                <option disabled selected>Open this select section</option>
                                 <option value="B01">B01</option>
                                 <option value="B02">B02</option>
-                        </select>
+                            </select>
                         </div>
                     </div>
                 </div>

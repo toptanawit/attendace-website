@@ -232,8 +232,13 @@ router_db.route('/add-teachers')
 router_db.route('/add-courses')
 .get((req,res)=>{
     connection.query('select * from users where status = "Student"',(err,result)=>{
-        res.render('admin/a_add_course.ejs',{
-            student: result
+        const student = result;
+        connection.query('select * from users where status = "Teacher"',(err,result)=>{
+            const teacher = result;
+            res.render('admin/a_add_course.ejs',{
+                student: student,
+                teacher: teacher
+            })
         })
     })
 })

@@ -122,7 +122,10 @@
             <div class="my-4 d-flex justify-content-between align-items-center">
                 <h1>Students > Add student</h1>
                 <div class="d-flex justify-content-between">
-
+                    <a href="/students" class="h-50">
+                        <button type="button" class="btn text-white me-3"
+                            style="width: 100px; background-color: #C5CED1;">Cancel</button>
+                    </a>
                     <button type="submit" class="btn text-white h-50"
                         style="width: 100px; background-color: #007CB7;">Submit</button>
                 </div>
@@ -133,15 +136,28 @@
                     <div class="mb-3">
                         <label for="student_id" class="form-label fw-bold">Student ID</label>
                         <input type="student_id" class="form-control" name="student_id" id="student_id" aria-describedby="student_id"
-                            placeholder="Student ID">
+                            placeholder="Student ID" required>
                     </div>
                 </div>
 
                 <div class="col-12 col-sm-6 justify-content-md-ceneter">
                     <div class="mb-3">
                         <label for="major" class="form-label fw-bold">Major</label>
-                        <input type="major" class="form-control" name="major" id="major" aria-describedby="major"
-                            placeholder="Major">
+                        <select type="major" class="form-select" name="major" id="major" required>
+                            <option disabled selected>Open this select your major</option>
+                            <option value="Interactive and Multimedia Design">Interactive and Multimedia Design</option>
+                            <option value="Cyber Business Management">Cyber Business Management</option>
+                            <option value="Computer Innovation for Communication">Computer Innovation for Communication</option>
+                            <option value="Cyber Business Management">Cyber Business Management</option>
+                            <option value="Cinema and Digital Media Production">Cinema and Digital Media Production</option>
+                            <option value="Acting and Directing for Cinema">Acting and Directing for Cinema</option>
+                            <option value="Production Design">Production Design</option>
+                            <option value="Cinema and Digital Media Management">Cinema and Digital Media Management</option>
+                            <option value="Tourism Communication">Tourism Communication</option>
+                            <option value="Health Communication">Health Communication</option>
+                            <option value="Innovation Management Communication">Innovation Management Communication</option>
+                            <option value="Economics Communication">Economics Communication</option>
+                        </select>
                     </div>
                 </div>
             </div>
@@ -151,7 +167,7 @@
                     <div class="mb-3">
                         <label for="firstname" class="form-label fw-bold">First Name</label>
                         <input type="firstname" class="form-control" name="name" id="firstname" aria-describedby="firstname"
-                            placeholder="First Name">
+                            placeholder="First Name" required>
                     </div>
                 </div>
 
@@ -159,7 +175,7 @@
                     <div class="mb-3">
                         <label for="lastname" class="form-label fw-bold">Last Name</label>
                         <input type="student_" class="form-control" name="lastname" id="lastname" aria-describedby="student_"
-                            placeholder="Last Name">
+                            placeholder="Last Name" required>
                     </div>
                 </div>
             </div>
@@ -170,7 +186,7 @@
                     <div class="mb-3">
                         <label for="email" class="form-label fw-bold">Email</label>
                         <input type="email" class="form-control" name="email" id="email" aria-describedby="email"
-                            placeholder="Email">
+                            placeholder="Email" required>
                     </div>
 
                 </div>
@@ -179,7 +195,7 @@
                     <div class="mb-3">
                         <label for="phone" class="form-label fw-bold">Phone</label>
                         <input type="phone" class="form-control" name="phone" id="phone" aria-describedby="phone"
-                            placeholder="Phone">
+                            placeholder="Phone" required>
                     </div>
                 </div>
             </div>
@@ -190,7 +206,7 @@
                     <div class="mb-3">
                         <label for="buasri_id" class="form-label fw-bold">Buasri ID</label>
                         <input type="buasri_id" class="form-control" name="buasri_id" id="buasri_id" aria-describedby="buasri_id"
-                            placeholder="Buasri ID">
+                            placeholder="Buasri ID" required>
                     </div>
 
                 </div>
