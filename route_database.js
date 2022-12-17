@@ -6,9 +6,13 @@ const session = require('express-session');
 var router_db = express.Router();
 var bcrypt = require('bcryptjs');
 const fs = require('fs');
+const fileUpload = require("express-fileupload"); 
 
 router_db.use(express.urlencoded({ extended: true }));
 router_db.use(express.json());
+router_db.use( fileUpload({
+    createParentPath: true,
+}));
 
 var connection = mysql.createConnection({
     host: 'localhost',
@@ -298,16 +302,29 @@ router_db.route('/report')
     const subject_code = req.body.subject_code;
     const section = req.body.section;
     const type = req.body.type;
+    const date = req.body.date;
+
+    if (!req.files) {
+        return res.redirect('/error')
+    }
+    const file = req.files.file;
+    const path = __dirname + "/files/" + file.name;
+
+    file.mv(path, (err) => {
+        if (err) {
+            return res.status(500).send(err);
+        }
+        return res.redirect('/courses');
+    });
 
     // const pdf = req.files.user-file;
-    const pdf = req.body.file;
+    // const pdf = req.body.file;
     // const base64data = req.body.file;
     // var blob = Buffer.from(base64data,"base64");
-    var blob = Buffer.from(pdf,"base64");
+    // var blob = Buffer.from(pdf,"base64");
 
     connection.query('select curtime() as time, curdate() as date',(err,results)=>{
         const time = results[0].time;
-        const date = results[0].date;
 
         const post = {
             // buasri_id: req.session.userID,
@@ -315,7 +332,7 @@ router_db.route('/report')
             subject_code: subject_code,
             section: section,
             type: type,
-            file: blob,
+            file: file.name,
             time: time,
             date: date,
             status: 'Pending'
@@ -325,8 +342,6 @@ router_db.route('/report')
             console.log('Add report successfully');
         })
     })
-
-    res.redirect('/courses')
 });
 
 // edit
@@ -686,9 +701,12 @@ router_db.route('/download/attendance-:attendance_id')
 router_db.route('/download/report-:report_id')
 .get((req,res)=>{
     connection.query('select file from report where report_id = ?',req.params.report_id,(err,result)=>{
-        const filebuffer = result[0].file;
-        fs.writeFileSync("report.pdf", filebuffer);
-        res.download('report.pdf');
+        // const filebuffer = result[0].file;
+        // fs.writeFileSync("report.pdf", filebuffer);
+        // res.download('report.pdf');
+
+        const file = `${__dirname}/files/${result[0].file}`;
+        res.download(file); 
     })
 })
 

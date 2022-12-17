@@ -112,7 +112,7 @@
 
         <!-- Course Details Start -->
         <div class="container-fluid" style="padding: 130px 3rem 0 3rem;">
-            <form method="POST" action="/report" >
+            <form method="POST" action="/report" enctype="multipart/form-data">
             <div class="my-4 d-flex justify-content-between align-items-center">
                 <h1>Leave Application</h1>
                 <button type="submit" class="btn text-white h-50"
@@ -165,7 +165,7 @@
 
                         <div class="mb-3">
                             <label for="file" class="form-label fw-bold">Upload Leave Letter</label>
-                            <input class="form-control" type="file" name="file" id="formFile" accept=".pdf">
+                            <input class="form-control" type="file" name="file" id="formFile">
                         </div>
 
                     </div>
@@ -177,24 +177,24 @@
         <!-- Course Details End -->
 
         <script>
-            document.getElementById('form').addEventListener('submit', function(e) {
-                e.preventDefault();
+            // document.getElementById('form').addEventListener('submit', function(e) {
+            //     e.preventDefault();
 
-                const userFile = document.getElementById('formFile').files[0];
-                // const userComments = document.getElementById('comments').value;
+            //     const userFile = document.getElementById('formFile').files[0];
+            //     // const userComments = document.getElementById('comments').value;
 
-                const formData = new FormData();
-                formData.append('user-file', userFile, 'user-file.jpg');
-                // formData.append('user-comments', userComments);
+            //     const formData = new FormData();
+            //     formData.append('user-file', userFile);
+            //     // formData.append('user-comments', userComments);
 
-                fetch('https://httpbin.org/post', {
-                    method: "POST",
-                    body: formData,
-                })
-                .then(res => res.json())
-                .then(data => console.log(data))
-                .catch(err => console.log(err));
-            })
+            //     fetch('/report', {
+            //         method: "POST",
+            //         body: formData,
+            //     })
+            //     .then(res => res.json())
+            //     .then(data => console.log(data))
+            //     .catch(err => console.log(err));
+            // })
         </script>
     </div>
 </body>
