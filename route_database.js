@@ -365,7 +365,9 @@ router_db.route('/add-students-to-course/:subject_code-:section')
         [req.params.subject_code,req.params.section],
         (err,result)=>{
             res.render('admin/a_add_student_to_course.ejs',{
-                student: result
+                student: result,
+                subject_code: req.params.subject_code,
+                section: section
             })
         })
 })
@@ -654,25 +656,25 @@ router_db.route('/attendance')
     // upload page
     res.sendFile(path.join(__dirname, "/public/html/student/s_qrcode.html"));  
 })
-.post((req,res)=>{
-    const subject_name = req.body.subject_name;
-    const section = req.body.section;
-    const date = req.body.date;
-    const time = req.body.time;
-    const location = req.body.location;
+// .post((req,res)=>{
+//     const subject_name = req.body.subject_name;
+//     const section = req.body.section;
+//     const date = req.body.date;
+//     const time = req.body.time;
+//     const location = req.body.location;
 
-    const post = {
-        name: subject_name,
-        section: section,
-        time: time,
-        date: date,
-        location: location,
-    }
+//     const post = {
+//         name: subject_name,
+//         section: section,
+//         time: time,
+//         date: date,
+//         location: location,
+//     }
 
-    res.render('student/s_attendance.ejs', {
-        info: post
-    })
-})
+//     res.render('student/s_attendance.ejs', {
+//         info: post
+//     })
+// })
 
 router_db.route('/attendance-create/:subject_code-:section')
 .get((req,res)=>{
@@ -696,7 +698,9 @@ router_db.route('/attendance-create/:subject_code-:section')
             connection.query('select class_id from class where subject_code = ? and section = ? and date = ?',[subject_code,section,date],(err,result)=>{
                 connection.query('select a.*, b.student_count as student_enroll, b.name as subject_name from class a , subject b , attendance c where a.subject_code = b.subject_code and a.class_id = c.class_id and a.class_id = ?',result[0].class_id,(err,result)=>{
                     res.render('teacher/t_qrcode.ejs',{
-                        course: result
+                        course: result,
+                        subject_code: subject_code,
+                        section: section
                     })
                 })
             })
@@ -707,21 +711,22 @@ router_db.route('/attendance-create/:subject_code-:section')
 //---------!!!!! TEST POST FROM QRCODE T. PAGE  START !!!! -------- 
 
 //หน้าคิวอาโค้ด teacher
- router_db.route('/attendance-create/test')
- .post((req, res) => {
+router_db.route('/attendance-create/localstorage')
+.post((req, res) => {
     let path_id = req.body.path_id
     localStorage.setItem('path_id', path_id)
     console.log(localStorage.getItem('path_id'))
-    
+
     // setInterval(() => {
     //     console.log("Clear Storage")
     //     localStorage.clear() //เคลียร์เวลา่อาจารย์กลับหน้าหลัก คือกด submit หน้า qrcode เสร็จปุ๊บเคลียเลย
     // }, 200000);
- })
+})
 
 function routeCheck(path_id) {
     //data for testing
     localStorage.setItem('temp', 'temp');
+    console.log(path_id)
 
     //validation
     let id_exists = false;
@@ -744,7 +749,7 @@ function routeCheck(path_id) {
 }
 
 //ลิ้งค์ไปหน้า attendance ของนักเรียน
-router_db.route('/attendance-check/:subject_code-:section/:date-:time/:path_id')
+router_db.route('/attendance-check/:subject_code-:section-:date-:time-:path_id')
 .get((req, res) => {
     const subject_code = req.params.subject_code;
     const section = req.params.section;
@@ -786,30 +791,30 @@ router_db.route('/attendance-check/:subject_code-:section/:date-:time/:path_id')
 
 router_db.route('/attendance-check')
 .post((req,res)=>{
-    const name = req.body.name;
+    const subject_code = req.body.subject_code;
     const section = req.body.section;
     const date = req.body.date;
     const time = req.body.time;
-    const location = req.body.location;
+    // const location = req.body.location;
 
     const image = req.body.image;
     var blob = Buffer.from(image,"base64");
 
-    connection.query('select subject_code from subject where name = ?',name,(err,result)=>{
-        const subject_code = result[0].subject_code;
+    // connection.query('select subject_code from subject where name = ?',name,(err,result)=>{
+    //     const subject_code = result[0].subject_code;
 
         connection.query('select class_id from class where subject_code = ? and section = ? and date = ?',[subject_code,section,date],(err,result)=>{
             const class_id = result[0].class_id;
 
             const post = {
                 subject_code: subject_code,
-                // buasri_id: req.session.userID,
-                buasri_id: req.body.buasri_id,
+                buasri_id: req.session.userID,
+                // buasri_id: req.body.buasri_id,
                 class_id: class_id,
                 section: section,
                 time: time,
                 date: date,
-                location: location,
+                // location: location,
                 image: blob
             }
 
@@ -822,7 +827,7 @@ router_db.route('/attendance-check')
                 })
             })
         })
-    })
+    // })
 
     res.redirect('/courses');
 })

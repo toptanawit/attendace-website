@@ -124,12 +124,14 @@
                     <div class="col-12 col-sm-6 justify-content-md-ceneter">
                         <div class="mb-3">
                             <label for="subject_code" class="form-label fw-bold">Course ID</label>
-                            <% for(var i=0; i < course_id.length; i++) { %> 
+                            
                             <select class="form-select" name="subject_code" id="subject_code" >
                                 <option disabled selected>Open this select course</option>
-                                <option value="<%= course_id[i] %>"><%= course_id[i] %></option>
+                                <% for(var i=0; i < course_id.length; i++) { %> 
+                                <option value="<%= course_id[i].subject_code %>"><%= course_id[i].subject_code %></option>
+                                <% } %>
                             </select>
-                            <% } %>
+                            
                         </div>
                     </div>
 
