@@ -7,6 +7,8 @@ var router_db = express.Router();
 var bcrypt = require('bcryptjs');
 const fs = require('fs');
 const fileUpload = require("express-fileupload"); 
+const e = require('express');
+const localStorage = require("localStorage");
 
 router_db.use(bodyParser.urlencoded({ extended: true }));
 router_db.use(express.json());
@@ -53,7 +55,6 @@ router_db.route('/courses')
                 });
             } else if (status == 'Teacher') {
                 connection.query('select s.* from subject s , users u where s.teacher = u.buasri_id and u.buasri_id = ?',req.session.userID,(err, result)=>{
-                    
                     // var attendance_rate = [];
 
                     // for (const index in result) {
@@ -363,11 +364,10 @@ router_db.route('/add-students-to-course/:subject_code-:section')
         'select * from users where status = "Student" except select b.* from enrollment a, users b where a.buasri_id = b.buasri_id and a.subject_code = ? and a.section = ?',
         [req.params.subject_code,req.params.section],
         (err,result)=>{
-            res.render('a_add_student_to_course.ejs',{
-                students: result
+            res.render('admin/a_add_student_to_course.ejs',{
+                student: result
             })
-        }
-        )
+        })
 })
 .post((req,res)=>{
     const students = req.body.students // array of buasri_id
@@ -404,7 +404,7 @@ router_db.route('/add-students-to-course/:subject_code-:section')
             });
         })
     
-    res.redirect(`/edit-courses/${req.params.subject_code}:${req.params.section}`)
+    res.redirect(`/edit-courses/${req.params.subject_code}-${req.params.section}`)
 })
 
 // edit
@@ -628,12 +628,24 @@ router_db.route('/delete-students-from-course/:subject_code-:section/:buasri_id'
 .get((req,res)=>{
     connection.query(
         'delete from enrollment where buasri_id = ? and subject_code = ? and section = ?',
-        [req.params.buasri_id,req.params.subject_code,req.params.subject_code],
+        [req.params.buasri_id,req.params.subject_code,req.params.section],
         (err,result)=>{
             console.log('Delete student from course successfully')
         })
-    
-    res.redirect(`/edit-courses/${req.params.subject_code}:${req.params.section}`)
+
+    connection.query(
+        'select count(enroll_id) as student_enroll from enrollment where subject_code = ? and section = ?',
+        [req.params.subject_code, req.params.section],
+        (err, result)=>{
+            console.log(result[0].student_enroll,'enroll')
+            connection.query('update subject set student_count = ? where subject_code = ? and section = ?',
+            [result[0].student_enroll,req.params.subject_code,req.params.section],
+            (err)=>{
+                console.log('Update No. of Student To Course Successfully');
+            });
+        })
+
+    res.redirect(`/edit-courses/${req.params.subject_code}-${req.params.section}`);
 })
 
 // attendance check
@@ -691,6 +703,86 @@ router_db.route('/attendance-create/:subject_code-:section')
         })
     })
 })
+
+//---------!!!!! TEST POST FROM QRCODE T. PAGE  START !!!! -------- 
+
+//หน้าคิวอาโค้ด teacher
+ router_db.route('/attendance-create/test')
+ .post((req, res) => {
+    let path_id = req.body.path_id
+    localStorage.setItem('path_id', path_id)
+    console.log(localStorage.getItem('path_id'))
+    
+    // setInterval(() => {
+    //     console.log("Clear Storage")
+    //     localStorage.clear() //เคลียร์เวลา่อาจารย์กลับหน้าหลัก คือกด submit หน้า qrcode เสร็จปุ๊บเคลียเลย
+    // }, 200000);
+ })
+
+function routeCheck(path_id) {
+    //data for testing
+    localStorage.setItem('temp', 'temp');
+
+    //validation
+    let id_exists = false;
+
+    //check id is exists or not
+    for (const key in localStorage) {
+        let value = localStorage.getItem(key);
+        if (value != null) {
+            console.log(value)
+        }
+
+        if (path_id == value) {
+            id_exists = true;
+        }
+    }
+
+    console.log("ID Exists", id_exists);
+
+    return id_exists;
+}
+
+//ลิ้งค์ไปหน้า attendance ของนักเรียน
+router_db.route('/attendance-check/:subject_code-:section/:date-:time/:path_id')
+.get((req, res) => {
+    const subject_code = req.params.subject_code;
+    const section = req.params.section;
+    const date = req.params.date;
+    const time = req.params.time;
+    const path_id = req.params.path_id;
+
+
+    // ID สำหรับทดสอบ 
+    // ID ที่ไม่ได้เก็บ >>>    /attendance-check/SOS101-B01/20221218-09:08:55/YGX123
+    // ID ที่เก็บ >>>>   /attendance-check/SOS101-B01/20221218-09:08:55/temp
+
+    // console.log(subject_code);
+    // console.log(section);
+    // console.log(date);
+    // console.log(time);
+    // console.log(path_id);
+
+    const post = {
+        subject_code: subject_code,
+        section: section,
+        date: date,
+        time: time
+    }
+
+    if (routeCheck(path_id) == true) {
+        console.log("Path is valid");
+        res.render('student/s_attendance.ejs', {
+            info: post
+        })
+    } else {
+        console.log("Path is not valid");
+        res.redirect('/error');
+    }
+})
+
+//---------!!!!! TEST POST FROM QRCODE T. PAGE END !!!! -------- 
+
 
 router_db.route('/attendance-check')
 .post((req,res)=>{

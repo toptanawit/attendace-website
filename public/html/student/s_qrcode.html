@@ -120,24 +120,21 @@
             <div class="d-flex justify-content-center align-items-center" style="height: 100%;">
                 <div class="wrapper">
                     <form action="#">
-                        <input type="file" hidden>
-                        <img src="#" alt="qr-code">
-                        <div class="content">
-                            <i class="fas fa-cloud-upload"></i>
-                            <p>Upload QR Code to Read</p>
-                        </div>
+                      <input type="file" hidden>
+                      <img src="#" alt="qr-code">
+                      <div class="content">
+                        <i class="fas fa-cloud-upload"></i>
+                        <p>Upload QR Code to Read</p>
+                      </div>
                     </form>
                     <div class="details">
-                        <textarea spellcheck="false" disabled></textarea>
-                        <div class="buttons">
-                            <button class="close">Close</button>
-                            <a class="d-flex" href="/attendance">
-                            <button type="submit" class="submit"
-                                >Submit</button>
-                            </a>
-                        </div>
+                      <textarea spellcheck="false" disabled></textarea>
+                      <div class="d-flex justify-content-end mt-5">
+                        <a href="#" class="close btn btn-light me-3" role="button" aria-pressed="true" style="color: #007CB7;">Close</a>
+                        <a href="#" class="submit btn btn-light" role="button" aria-pressed="true" style="color: #007CB7;">Submit</a>
+                      </div>
                     </div>
-                </div>
+                  </div>
             </div>
         </div>
         <!-- Course Details End -->
@@ -181,6 +178,7 @@
                     document.querySelector("textarea").innerText = result;
                     form.querySelector("img").src = URL.createObjectURL(file);
                     wrapper.classList.add("active");
+                    submitBtn.href = result;
                 }).catch(() => {
                     infoText.innerText = "Couldn't scan QR Code";
                 });

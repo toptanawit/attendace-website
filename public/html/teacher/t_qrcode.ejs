@@ -110,7 +110,7 @@
             </div>
         </nav>
         <!-- Flyout Navigation End -->
-        
+
         <!-- QR Code Start -->
         <div class="container-fluid" style="padding: 130px 3rem 0 3rem;">
             <div class="my-4 d-flex justify-content-between align-items-center">
@@ -120,8 +120,8 @@
                         <button type="button" class="btn text-white me-3"
                             style="width: 100px; background-color: #C5CED1;">Cancel</button>
                     </a>
-                    <a href="/courses"><button type="submit"  class="btn text-white"
-                        style="width: 100px; background-color: #007CB7;">Finish</button></a>
+                    <a href="/courses"><button type="submit" class="btn text-white"
+                            style="width: 100px; background-color: #007CB7;">Finish</button></a>
                 </div>
             </div>
 
@@ -173,7 +173,8 @@
             if (day.length < 2)
                 day = '0' + day;
 
-            return [year, month, day].join('-');
+            // return [year, month, day].join('-');
+            return `${year}:${month}:${day}`
         }
 
         //set up time
@@ -195,7 +196,7 @@
                 sec = '0' + sec;
             }
 
-            var time = `${hrs} : ${min} : ${sec}`
+            var time = `${hrs}-${min}-${sec}`
 
             return time;
         }
@@ -207,16 +208,34 @@
         }
         setInterval(displayTime, 1000);
 
-        //create json data
-        function json() {
-            let data = {
+        //generate for making unique path
+        function generateID() {
+            var string = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+            let id = '';
+
+            // Find the length of string
+            var len = string.length;
+            for (let i = 0; i < 6; i++) {
+                id += string[Math.floor(Math.random() * len)];
+            }
+            console.log("id generation:", id);
+            return id;
+        }
+
+        //create path that links to student attendance page
+        function generatePath(path_id) {
+            let dateTime = {
                 date: formatDate(),
                 time: formatTime()
             }
 
-            setInterval(data, 1000);
+            let subject_code = "";
+            let section = "";
 
-            return stringdata = JSON.stringify(data)
+            // let api = 'http://localhost:5005/attendance-check/:subject_code-:section/:date-:time/:path_id'
+            let path = `http://localhost:5005/attendance-check/${subject_code}-${section}/${dateTime.date}-${dateTime.time}/${path_id}`
+
+            return path
         }
 
         //encode qrcode into base64
@@ -227,18 +246,25 @@
 
         //set base64 as img
         function updateQRCode() {
+            let path_id = generateID();
             let finalURL =
                 'https://chart.googleapis.com/chart?cht=qr&chl=' +
-                htmlEncode(json()) +
+                htmlEncode(generatePath(path_id)) +
                 '&chs=160x160&chld=L|0'
 
-            $('.qr-code').attr('src', finalURL);
+            $('.qr-code').attr('src', finalURL)
+            $.post("/attendance-create/test",
+                {
+                    path_id: path_id
+                },
+                function (data, status) {
+                    console.log(data);
+                });
 
             // attendance_rate = httpGet(`/get-live-rate/${class_id}`)
         }
 
-        setInterval(updateQRCode, 3000);
-
+        setInterval(updateQRCode, 15000);
 
     </script>
     <!-- QR Code Generator End -->

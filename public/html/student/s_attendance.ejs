@@ -217,7 +217,14 @@
             countClick += 1;
 
             if (countClick != 0) {
-                $('#takeScreenBtn').prop('disabled', true);
+                $('#takeScreenBtn').prop('disabled', true)
+                // $.post("/attendance-check",
+                // {
+                //     image: blob
+                // },
+                // function (data, status) {
+                //     console.log(data);
+                // });
             }
         };
     </script>
