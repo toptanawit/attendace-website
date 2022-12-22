@@ -132,14 +132,14 @@
                 <div class="d-flex flex-column w-50">
                     <label id="time_label" class="form-label display-1" style="font-weight: 500;">00:00:00</label>
 
-                    <label class="form-label display-5 text-secondary" style="font-weight: 500;">Live Attendance
+                    <!-- <label class="form-label display-5 text-secondary" style="font-weight: 500;">Live Attendance
                         Rate</label>
                     <div class="progress border w-100" style="height: 20%;">
                         <div id="myprogressBar" class="progress-bar progress-bar-striped active fs-5" role="progressbar"
                             style="width: 1%;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
                             0
                         </div>
-                    </div>
+                    </div> -->
 
                 </div>
             </div>
@@ -266,31 +266,31 @@
             updateQRCode();
         })
 
-        function updateProgressBar() {
-            var element = document.getElementById("myprogressBar");
-            var width = 1;
-            var identity = setInterval(scene, 10);
-            function scene() {
-                if (width >= 100) {
-                    clearInterval(identity);
-                } else {
-                    width++;
-                    element.style.width = width + '%';
-                    element.innerHTML = width * 1 + '%';
-                }
-            }
+        // function updateProgressBar() {
+        //     var element = document.getElementById("myprogressBar");
+        //     var width = 1;
+        //     var identity = setInterval(scene, 10);
+        //     function scene() {
+        //         if (width >= 100) {
+        //             clearInterval(identity);
+        //         } else {
+        //             width++;
+        //             element.style.width = width + '%';
+        //             element.innerHTML = width * 1 + '%';
+        //         }
+        //     }
 
-            // $.get("/attendance-create/<%= subject_code %>-<%= section %>",
-            //     {
-            //         path_id: path_id
-            //     },
-            //     function (data, status) {
-            //         console.log(data);
-            //     });
+        //     // $.get("/attendance-create/<%= subject_code %>-<%= section %>",
+        //     //     {
+        //     //         path_id: path_id
+        //     //     },
+        //     //     function (data, status) {
+        //     //         console.log(data);
+        //     //     });
 
-        }
+        // }
 
-        setInterval(updateProgressBar, 20000);
+        // setInterval(updateProgressBar, 20000);
 
     </script>
     <!-- QR Code Generator End -->

@@ -760,7 +760,7 @@ function formatDate() {
     if (day.length < 2)
         day = '0' + day;
 
-    return [day, month, year].join('-');
+    return [year, month, day].join('-');
 }
 
 router_db.route('/attendance-check/:subject_code-:section/:time-:path_id')
@@ -807,20 +807,8 @@ router_db.route('/attendance-check')
 
 
 
-    // --------- TEST IMG ---------
     //from input form
     const image = req.body.image;
-    console.log("IMG BASE64 :", image);
-
-    //from .post in js
-    const imageURL = req.body.imageURL;
-    console.log("IMG URL :", imageURL);
-
-    // --------- TEST IMG ---------
-
-
-
-
     var blob = Buffer.from(image,"base64");
 
     // connection.query('select subject_code from subject where name = ?',name,(err,result)=>{

@@ -237,14 +237,6 @@
                 img.src = window.URL.createObjectURL(blob);
                 screenshotsEl.appendChild(img);
 
-                $.post("/attendance-check",
-                    {
-                        imageURL: window.URL.createObjectURL(blob)
-                    },
-                    function (data, status) {
-                        console.log(data);
-                    });
-
                 const base64String = convertBlobToBase64(blob);
                 document.getElementById('imagebase64').value = base64String;
             });
@@ -271,9 +263,6 @@
             //     function (data, status) {
             //         console.log(data);
             //     });
-
-
-
 
 
             // // Set the Width and Height you want your resized image to be
