@@ -341,8 +341,8 @@ router_db.route('/report')
         const time = results[0].time;
 
         const post = {
-            // buasri_id: req.session.userID,
-            buasri_id: req.body.buasri_id,
+            buasri_id: req.session.userID,
+            // buasri_id: req.body.buasri_id,
             subject_code: subject_code,
             section: section,
             type: type,
@@ -367,7 +367,7 @@ router_db.route('/add-students-to-course/:subject_code-:section')
             res.render('admin/a_add_student_to_course.ejs',{
                 student: result,
                 subject_code: req.params.subject_code,
-                section: section
+                section: req.params.section
             })
         })
 })
@@ -829,18 +829,25 @@ router_db.route('/attendance-check')
                 image: blob
             }
 
-            connection.query('insert into attendance set ?',post,(err,result)=>{
-                connection.query('select count(class_id) as student from attendance where class_id = ?',class_id,(err,result)=>{
-                    const studentno = result[0].student;
-                    connection.query('update class set student_count = ? where class_id = ?',[studentno,class_id],(err,result)=>{
-                        console.log('Add attendance successfully')
+            connection.query('select * from attendance where buasri_id = ? and subject_code = ? and section = ? and date = ?',[req.session.userID,subject_code,section,date],(err,result)=>{
+                if (result.length == 0) {
+                    connection.query('insert into attendance set ?',post,(err,result)=>{
+                        connection.query('select count(class_id) as student from attendance where class_id = ?',class_id,(err,result)=>{
+                            const studentno = result[0].student;
+                            connection.query('update class set student_count = ? where class_id = ?',[studentno,class_id],(err,result)=>{
+                                console.log('Add attendance successfully')
+                                res.redirect('/courses');
+                            })
+                        })
                     })
-                })
+                } else {
+                    res.redirect('/error')
+                }
             })
         })
     // })
 
-    res.redirect('/courses');
+    
 })
 
 router_db.route('/download/attendance-:attendance_id')
