@@ -683,7 +683,7 @@ router_db.route('/attendance-create/:subject_code-:section')
     
     connection.query('select curtime() as time , curdate() as date',(err,results)=>{
         const time = results[0].time;
-        const date = results[0].date;
+        const date = formatDate();
 
         const post = {
             subject_code: subject_code,
@@ -737,7 +737,7 @@ function routeCheck(path_id) {
         if (value != null) {
             console.log(value)
         }
-
+  e                        
         if (path_id == value) {
             id_exists = true;
         }
@@ -748,25 +748,34 @@ function routeCheck(path_id) {
     return id_exists;
 }
 
-//ลิ้งค์ไปหน้า attendance ของนักเรียน
-router_db.route('/attendance-check/:subject_code-:section-:date-:time-:path_id')
+//set up date
+function formatDate() {
+    var d = new Date(),
+        month = '' + (d.getMonth() + 1),
+        day = '' + d.getDate(),
+        year = d.getFullYear();
+
+    if (month.length < 2)
+        month = '0' + month;
+    if (day.length < 2)
+        day = '0' + day;
+
+    return [day, month, year].join('-');
+}
+
+router_db.route('/attendance-check/:subject_code-:section/:time-:path_id')
 .get((req, res) => {
     const subject_code = req.params.subject_code;
     const section = req.params.section;
-    const date = req.params.date;
+    const date = formatDate();
     const time = req.params.time;
     const path_id = req.params.path_id;
 
 
     // ID สำหรับทดสอบ 
-    // ID ที่ไม่ได้เก็บ >>>    /attendance-check/SOS101-B01/20221218-09:08:55/YGX123
-    // ID ที่เก็บ >>>>   /attendance-check/SOS101-B01/20221218-09:08:55/temp
+    // ID ที่ไม่ได้เก็บ >>>    /attendance-check/SOS101-B01/09:08:55-YGX123
+    // ID ที่เก็บ >>>>   /attendance-check/SOS101-B01/09:08:55-temp
 
-    // console.log(subject_code);
-    // console.log(section);
-    // console.log(date);
-    // console.log(time);
-    // console.log(path_id);
 
     const post = {
         subject_code: subject_code,
@@ -788,16 +797,30 @@ router_db.route('/attendance-check/:subject_code-:section-:date-:time-:path_id')
 
 //---------!!!!! TEST POST FROM QRCODE T. PAGE END !!!! -------- 
 
-
 router_db.route('/attendance-check')
 .post((req,res)=>{
     const subject_code = req.body.subject_code;
     const section = req.body.section;
-    const date = req.body.date;
+    const date = formatDate();
     const time = req.body.time;
     // const location = req.body.location;
 
+
+
+    // --------- TEST IMG ---------
+    //from input form
     const image = req.body.image;
+    console.log("IMG BASE64 :", image);
+
+    //from .post in js
+    const imageURL = req.body.imageURL;
+    console.log("IMG URL :", imageURL);
+
+    // --------- TEST IMG ---------
+
+
+
+
     var blob = Buffer.from(image,"base64");
 
     // connection.query('select subject_code from subject where name = ?',name,(err,result)=>{

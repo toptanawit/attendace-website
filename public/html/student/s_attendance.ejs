@@ -116,8 +116,8 @@
                 <div class="my-4 d-flex justify-content-between align-items-center">
                     <h1>Attendance</h1>
                     <!-- <a href="/attendance-check"> -->
-                        <button type="submit" class="btn text-white"
-                            style="width: 100px; background-color: #007CB7;">Submit</button>
+                    <button type="submit" class="btn text-white"
+                        style="width: 100px; background-color: #007CB7;">Submit</button>
                     <!-- </a> -->
 
                 </div>
@@ -125,52 +125,53 @@
                 <!-- Text Field Start -->
                 <fieldset>
 
-                    
-                        <div class="row">
-                            <div class="col-12 col-sm-6 justify-content-md-ceneter">
-                                <div class="mb-3">
-                                    <label for="subject_code" class="form-label fw-bold">Course Code</label>
-                                    <input type="text" class="form-control" name="subject_code" id="subject_code" aria-describedby="subject_code"
-                                        value="<%= info.subject_code %>">
-                                </div>
-                            </div>
 
-                            <div class="col-12 col-sm-6 justify-content-md-ceneter">
-                                <div class="mb-3">
-                                    <label for="section" class="form-label fw-bold">Course Section</label>
-                                    <input type="section" class="form-control" name="section" id="section" aria-describedby="section"
-                                        value="<%= info.section %>">
-                                </div>
+                    <div class="row">
+                        <div class="col-12 col-sm-6 justify-content-md-ceneter">
+                            <div class="mb-3">
+                                <label for="subject_code" class="form-label fw-bold">Course Code</label>
+                                <input type="text" class="form-control" name="subject_code" id="subject_code"
+                                    aria-describedby="subject_code" value="<%= info.subject_code %>"
+                                    readonly="readonly">
                             </div>
                         </div>
 
-                        <div class="row">
-                            <div class="col-12 col-sm-6 justify-content-md-ceneter">
-                                <div class="mb-3">
-                                    <label for="date" class="form-label fw-bold">Attendace Date</label>
-                                    <input type="date" class="form-control" name="date" id="date" aria-describedby="date"
-                                        value="<%= info.date %>">
-                                </div>
+                        <div class="col-12 col-sm-6 justify-content-md-ceneter">
+                            <div class="mb-3">
+                                <label for="section" class="form-label fw-bold">Course Section</label>
+                                <input type="section" class="form-control" name="section" id="section"
+                                    aria-describedby="section" value="<%= info.section %>" readonly="readonly">
                             </div>
+                        </div>
+                    </div>
 
-                            <div class="col-12 col-sm-6 justify-content-md-ceneter">
-                                <div class="mb-3">
-                                    <label for="time" class="form-label fw-bold">Attendance Time</label>
-                                    <input type="time" class="form-control" name="time" id="time" aria-describedby="time"
-                                        value="<%= info.time %>">
-                                </div>
+                    <div class="row">
+                        <div class="col-12 col-sm-6 justify-content-md-ceneter">
+                            <div class="mb-3">
+                                <label for="date" class="form-label fw-bold">Attendace Date</label>
+                                <input type="date" class="form-control" name="date" id="date" aria-describedby="date"
+                                    value="<%= info.date %>" readonly="readonly">
                             </div>
                         </div>
-                        
-                        <div class="row">
-                            <div class="col-12 col-sm-6 justify-content-md-ceneter">
-                                <div class="mb-3">
-                                    <!-- <label for="date" class="form-label fw-bold">Attendace Date</label> -->
-                                    <input hidden class="form-control" name="image" id="imagebase64" aria-describedby="image"
-                                        >
-                                </div>
+
+                        <div class="col-12 col-sm-6 justify-content-md-ceneter">
+                            <div class="mb-3">
+                                <label for="time" class="form-label fw-bold">Attendance Time</label>
+                                <input type="time" class="form-control" name="time" id="time" aria-describedby="time"
+                                    value="<%= info.time %>" readonly="readonly">
                             </div>
                         </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-12 col-sm-6 justify-content-md-ceneter">
+                            <div class="mb-3">
+                                <!-- <label for="date" class="form-label fw-bold">Attendace Date</label> -->
+                                <input hidden class="form-control" name="image" id="imagebase64"
+                                    aria-describedby="image">
+                            </div>
+                        </div>
+                    </div>
 
                 </fieldset>
             </form>
@@ -223,9 +224,9 @@
             reader.onerror = reject;
             reader.onload = () => {
                 const base64String = reader.result
-                .replace('data:', '')
-                .replace(/^.+,/, '');
-            console.log(base64String);
+                    .replace('data:', '')
+                    .replace(/^.+,/, '');
+                console.log(base64String);
             };
             reader.readAsDataURL(blob);
         });
@@ -236,6 +237,14 @@
                 img.src = window.URL.createObjectURL(blob);
                 screenshotsEl.appendChild(img);
 
+                $.post("/attendance-check",
+                    {
+                        imageURL: window.URL.createObjectURL(blob)
+                    },
+                    function (data, status) {
+                        console.log(data);
+                    });
+
                 const base64String = convertBlobToBase64(blob);
                 document.getElementById('imagebase64').value = base64String;
             });
@@ -243,7 +252,7 @@
 
             if (countClick != 0) {
                 $('#takeScreenBtn').prop('disabled', true)
-                
+
             }
 
             // const subject_code = '<%= info.subject_code %>';
@@ -262,6 +271,26 @@
             //     function (data, status) {
             //         console.log(data);
             //     });
+
+
+
+
+
+            // // Set the Width and Height you want your resized image to be
+            // var width = 1920;
+            // var height = 1080;
+
+
+            // var canvas = document.createElement('canvas');  // Dynamically Create a Canvas Element
+            // canvas.width = width;  // Set the width of the Canvas
+            // canvas.height = height;  // Set the height of the Canvas
+            // var ctx = canvas.getContext("2d");  // Get the "context" of the canvas 
+            // var img = document.getElementById("myimage");  // The id of your image container
+            // ctx.drawImage(img, 0, 0, width, height);  // Draw your image to the canvas
+
+
+            // var jpegFile = canvas.toDataURL("image/jpeg"); // This will save your image as a 
+            // //jpeg file in the base64 format.
         };
     </script>
 </body>
