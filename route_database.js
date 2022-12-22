@@ -377,34 +377,34 @@ router_db.route('/add-students-to-course/:subject_code-:section')
     for (const stu in students) {
         connection.query(
             'select * from enrollment where subject_code = ? and section = ? and buasri_id = ?',
-            [req.body.subject_code, req.body.section, students[stu]],
+            [req.params.subject_code, req.params.section, students[stu]],
             (err, result)=>{
                 if (result.length == 0) {
                     const enroll = {
-                        subject_code: subject_code,
-                        section: section,
+                        subject_code: req.params.subject_code,
+                        section: req.params.section,
                         buasri_id: students[stu],
                         attendance_count: 0
                     }
                     connection.query('insert into enrollment set ?', enroll, (err)=>{
                         console.log('Add Enrollment for',students[stu],'Successfully');
+
+                        connection.query(
+                            'select count(enroll_id) as student_enroll from enrollment where subject_code = ? and section = ?',
+                            [req.params.subject_code, req.params.section],
+                            (err, result)=>{
+                                console.log(result[0].student_enroll,'enroll')
+                                connection.query('update subject set student_count = ? where subject_code = ? and section = ?',
+                                [result[0].student_enroll,req.params.subject_code,req.params.section],
+                                (err)=>{
+                                    console.log('Update No. of Student To Course Successfully');
+                                });
+                            })
                     })
                 }
             }
         )
     }
-
-    connection.query(
-        'select count(enroll_id) as student_enroll from enrollment where subject_code = ? and section = ?',
-        [subject_code, section],
-        (err, result)=>{
-            console.log(result[0].student_enroll,'enroll')
-            connection.query('update subject set student_count = ? where subject_code = ? and section = ?',
-            [result[0].student_enroll,subject_code,section],
-            (err)=>{
-                console.log('Update No. of Student To Course Successfully');
-            });
-        })
     
     res.redirect(`/edit-courses/${req.params.subject_code}-${req.params.section}`)
 })
@@ -836,6 +836,14 @@ router_db.route('/attendance-check')
                             const studentno = result[0].student;
                             connection.query('update class set student_count = ? where class_id = ?',[studentno,class_id],(err,result)=>{
                                 console.log('Add attendance successfully')
+
+                                connection.query('select * from attendance where buasri_id = ? and subject_code = ? and section = ?',[req.session.userID,subject_code,section],(err,result)=>{
+                                    const count = result.length;
+                                    connection.query('update enrollment set attendance_count = ? where buasri_id = ? and subject_code = ? and section = ?',[count,req.session.userID,subject_code,section],(err,result)=>{
+                                        console.log('Update attendance count successfully')
+                                    })
+                                })
+
                                 res.redirect('/courses');
                             })
                         })
