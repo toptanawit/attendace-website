@@ -159,8 +159,8 @@ function sendmail(toemail, subject, html) {
         host: 'smtp.gmail.com',
         service: 'gmail',  
         auth: {
-            user: 'koppok32a@gmail.com',   // your email
-            pass: 'xfivklpmprvysqza'    // for app password
+            user: '',   // your email
+            pass: ''    // for app password
         }
     });
 
